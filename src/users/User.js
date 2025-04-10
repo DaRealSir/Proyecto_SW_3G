@@ -227,6 +227,13 @@ export class User {
         this.user_type = value;
     }
 
+    get id() {
+        return this.#id;
+    }
+
+    set id(value) {
+        this.#id= value;
+    }
 }
 
 export class userNotFound extends Error {
@@ -237,7 +244,7 @@ export class userNotFound extends Error {
      */
     constructor(username, options) {
         super(`user no encontrado: ${username}`, options);
-        this.name = 'userNotFou';
+        this.name = 'userNotFound';
     }
 }
 
