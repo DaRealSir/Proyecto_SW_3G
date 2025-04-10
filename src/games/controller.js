@@ -387,6 +387,12 @@ export function deleteReview(req, res) {
 
 export function viewAddReview(req, res) {
 
+    /*
+    el id de usuario es irrelevante, solo se debe usar el nombre de usuario para trabajar con eso
+     */
+
+
+
     console.log("HOLAAAAAAAAAAAAAAA");
     console.log(req.params.username);
 
@@ -394,7 +400,7 @@ export function viewAddReview(req, res) {
     const gameId = req.params.game_id;
     const user= User.getUserByUsername(req.params.username);
     console.log(user);
-    const userId = user.id;
+
 
     console.log(gameId);
     console.log(userId);
@@ -415,7 +421,6 @@ export function doAddReviewBD(req, res) {
 
     const gameId = req.body.gameId;
     const user= User.getUserByUsername(req.params.session.UserName);
-    const userId = user.id;
 
     if(!gameId || !userId){
         console.log("gameId or userId not sent");

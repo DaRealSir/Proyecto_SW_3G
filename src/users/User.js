@@ -227,13 +227,6 @@ export class User {
         this.user_type = value;
     }
 
-    get id() {
-        return this.id;
-    }
-
-    set id(value) {
-        this.id = value;
-    }
 }
 
 export class userNotFound extends Error {
