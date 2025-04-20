@@ -19,7 +19,7 @@
 
 <% function mostrarSaludo(session) { %>
     <% if(session.login) { %>
-        <p>Bienvenido <%= session.UserName %>.
+        <p>Bienvenido <%= nombre %>
             <a href='/users/logout'> Logout</a></p>
     <% } else { %>
         <a href='/users/login'> Login</a> <a href='/users/register'>Register</a>
