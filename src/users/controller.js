@@ -95,81 +95,90 @@ export function doRegister(req, res) {
     body('username').escape();
     body('password').escape();
 
+    // Capturo las variables username y password
     const username = req.body.username.trim();
     const password = req.body.password.trim();
-
     let userValue = RolesEnum.USER;
-
     if (req.session.login && req.session.esAdmin) {
+        console.log("Ha entrado admin");
         const user_type = req.body.userRole.trim();
-        userValue = user_type === "admin" ? RolesEnum.ADMIN : RolesEnum.PERIODISTA;
-
+        if (user_type === "admin") {
+            userValue = RolesEnum.ADMIN;
+        } else {
+            userValue = RolesEnum.PERIODISTA;
+        }
         try {
-            const usuario = User.register(username, password, userValue);
-
-            return res.render('page', {
+            const usuario = User.register(username,password,userValue);
+            
+            res.render('page', {
                 contenido: 'pages/homeUser',
-                session: req.session,
-                nombre: usuario.username
-            });
+
+            })
 
         } catch (e) {
-            return res.render('page', {
+            res.render('page', {
                 contenido: 'pages/register',
                 error: 'No se pudo registrar el usuario'
-            });
+            })
         }
-
     } else {
+
         try {
+            console.log("Voy a registrar:", username, userValue);
             const usuario = User.register(username, password, userValue);
             req.session.login = true;
             req.session.UserID = usuario.id;
             req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
-            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
+            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA
 
-            return res.render('page', {
+            res.render('page', {
                 contenido: 'pages/homeUser',
-                session: req.session,
-                nombre: usuario.username
-            });
+
+            })
 
         } catch (e) {
-            return res.render('page', {
+            res.render('page', {
                 contenido: 'pages/register',
                 error: 'No se pudo registrar el usuario'
-            });
+            })
         }
     }
-}
 
+}
 
 export function doLogin(req, res) {
     body('username').escape();
     body('password').escape();
-
+    // Capturo las variables username y password
     const username = req.body.username.trim();
     const password = req.body.password.trim();
 
     try {
         const usuario = User.login(username, password);
+        console.log(usuario);
         req.session.login = true;
         req.session.UserID = usuario.id;
         req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
         req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
-
+        req.session.name=usuario.username;
+        req.session.picture=usuario.profile_picture;
+        
+/*
+        console.log(usuario);
+        console.log(usuario.user_type);
+        console.log(req.session.esAdmin);
+*/
         return res.render('page', {
             contenido: 'pages/homeUser',
-            session: req.session,
-            nombre: usuario.username
+            session: req.session
         });
 
     } catch (e) {
         console.log(e);
-        return res.render('page', {
+        res.render('page', {
             contenido: 'pages/login',
             error: 'El usuario o contraseña no son válidos'
-        });
+        })
     }
 }
 

@@ -36,8 +36,7 @@ app.get('/', (req, res) => {
     const params = {
         contenido: 'pages/index',
         session: req.session,
-        gameList: Game.getGameListLimited(5, 0),
-        nombre:null
+        gameList: Game.getGameListLimited(5, 0)
     }
     res.render('page', params);
 })

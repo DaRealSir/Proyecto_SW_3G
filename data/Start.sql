@@ -35,7 +35,7 @@ INSERT INTO user (username, bio, password, profile_picture, user_type)
 VALUES ('User', 'Gamer de aventuras y RPGs.', '$2b$10$JdCg8yL3rRkkr.hhx1rjqOe30F9lhBlqA1sjYJW6ymzYExvQFHyjy',
         'alice.jpg', 'U'),
        ('Admin', 'Administrador del sistema.', '$2b$10$Htah5iG9eKj8ItIItpzK6uvny3c5/QjdZaLwwmFy32RPrfVspNgYS',
-        'charlie.jpg', 'A');
+        'https://i.pinimg.com/236x/85/9a/f7/859af748d1eed0d67d5801a6df188a89.jpg', 'A');
 
 INSERT INTO user_game (user_id, game_id)
 VALUES (1, 1), -- Alice tiene Zelda

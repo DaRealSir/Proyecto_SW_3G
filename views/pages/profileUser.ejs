@@ -1,0 +1,16 @@
+<% if (userData != null) { %> 
+    <div class="juego_info">
+        <h2>Perfil de Usuario</h2>
+        <p><strong>Nombre:</strong> <%= userData.username %></p> 
+        <p><strong>Bio:</strong> <%= userData.bio %></p> 
+        <p><strong>Tipo de Usuario:</strong> <%= userData.user_type %></p> 
+        <p><strong>Foto de perfil:</strong></p>
+        <img src="<%= userData.profile_picture %>" alt="Foto de perfil" width="150" height="150" />
+    </div>
+<% } else { %>
+    <div>
+        <p>No tienes permisos para acceder a esta página o no has iniciado sesión.</p>
+        <a href="/users/login">Iniciar sesión</a>
+        <a href="/users/register">Registrarse</a>
+    </div>
+<% } %>

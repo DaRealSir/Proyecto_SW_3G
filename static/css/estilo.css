@@ -2,6 +2,55 @@ body {
     background-color: #CDCDCD;
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 30px;
+    background-color: #4d0b5e;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+header .logo-opciones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+header .logo-opciones img {
+    height: 60px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+header .opciones a {
+    display: block;
+    margin-top: 4px;
+    font-size: 16px;
+}
+
+header .saludo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+header .saludo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;
+}
+
+header .saludo p {
+    margin: 0;
+    font-size: 16px;
+    text-align: right;
+}
+
 div#contenedor {
     width: 1200px;
     margin: auto;
