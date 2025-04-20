@@ -1,7 +1,10 @@
 body {
-    background-color: #CDCDCD;
+    /*background-color: #CDCDCD;*/
+    background-image: url("https://p4.wallpaperbetter.com/wallpaper/452/956/838/simple-simple-background-minimalism-video-game-characters-wallpaper-preview.jpg");
+    background-position: right center;
+    background-size: 43%;
+    background-attachment: fixed;
 }
-
 header {
     display: flex;
     justify-content: space-between;
