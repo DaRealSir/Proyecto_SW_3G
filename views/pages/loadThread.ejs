@@ -1,21 +1,5 @@
-<script>
-    function showMore(game_id, last_id, offset, where_id) {
-        fetch(`/forum/loadThread/${game_id}/${last_id}/${offset}`)
-                     .then(response => response.text())
-                     .then(html => {
-                         const element = document.getElementById(where_id);
-                         if (element) {
-                             // Reemplaza el contenido HTML
-                             element.innerHTML = html;
-                         }
-                     })
-                     .catch(error => console.error("Error en loadMore:", error));
-    }
-</script>
 
-
-
-
+<script src="/js/forum-script.js"></script>
 <% showThreadInfo() %>
 
 <% function showThreadInfo() { %>
