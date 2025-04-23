@@ -1,56 +1,89 @@
 <script>
-    function showMore(last_id, offset, where_id) {
-        let threadList = <%- JSON.stringify(threadList) %>;
-        let node = document.getElementById(where_id);
-        if (!node) return;
-        
-        let nodeParent = node.parentNode;
-        nodeParent.removeChild(node);
-        
-        let threads = threadList.filter(thread => thread.original_post_id === last_id);
-        let visibleThreads = threads.slice(offset, offset + 3);
-        
-        let contentHTML = '';
-        visibleThreads.forEach(thread => {
-            contentHTML += `
-                <section class="forum-group">
-                    <h1>${thread.title}</h1>
-                    <p>Creado por: ${thread.user_name}</p>
-                    <p>Descripción: ${thread.description}</p>
-                    <p>Respuestas: ${thread.replies}</p>`;
-            
-            if (thread.replies > 0) {
-                contentHTML += `
-                <div id="ver_respuestas-${thread.id}">
-                    <a href="#" class="show-reply" onclick="showMore(${thread.id}, 0, 'ver_respuestas-${thread.id}')">Ver respuestas</a>
-                </div>`;    
-            }
-            contentHTML += `</section>`;
-        });
-
-        if (threads.length > offset + 3) {
-            contentHTML += `
-                <div id="ver_mas-${last_id}">
-                    <button class="show-more" onclick="showMore(${last_id}, ${offset + 3}, 'ver_mas-${last_id}')">Ver más</button>
-                </div>`;
-        }
-        
-        nodeParent.insertAdjacentHTML('beforeend', contentHTML);
+    function showMore(game_id, last_id, offset, where_id) {
+        fetch(`/forum/loadThread/${game_id}/${last_id}/${offset}`)
+                     .then(response => response.text())
+                     .then(html => {
+                         const element = document.getElementById(where_id);
+                         if (element) {
+                             // Reemplaza el contenido HTML
+                             element.innerHTML = html;
+                         }
+                     })
+                     .catch(error => console.error("Error en loadMore:", error));
     }
+    //Funciones botones eliminar y responder
+    function getThreadById(threadId) {
+        return threadList.find(thread => thread.id === threadId);
+    }
+
+    // Responder
+    document.querySelectorAll('.reply-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const threadId = parseInt(button.dataset.threadId);
+            const gameId = parseInt(button.dataset.gameId);
+
+            const post = getThreadById(threadId);
+            const form = document.getElementById("replyForm");
+            form.action = `/forum/reply/${gameId}/${threadId}`;
+
+            document.getElementById("replyTitle").innerText = post?.title || "(Sin título)";
+            document.getElementById("replyDescription").innerText = post?.description || "";
+            document.getElementById("replyUser").innerText = "Autor: " + (post?.user_name || "desconocido");
+
+            document.getElementById("replyModal").classList.remove("hidden");
+        });
+    });
+
+    // Eliminar
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const threadId = parseInt(button.dataset.threadId);
+            const gameId = parseInt(button.dataset.gameId);
+
+            const post = getThreadById(threadId);
+            const form = document.getElementById("deleteForm");
+            form.action = `/forum/delete/${gameId}/${threadId}`;
+
+            document.getElementById("deleteTitle").innerText = post?.title || "(Sin título)";
+            document.getElementById("deleteDescription").innerText = post?.description || "";
+            document.getElementById("deleteUser").innerText = "Autor: " + (post?.user_name || "desconocido");
+
+            document.getElementById("confirmText").value = "";
+            document.getElementById("deleteModal").classList.remove("hidden");
+        });
+    });
+
+    // Cierre de modales
+    function closeReplyModal() {
+        document.getElementById("replyModal").classList.add("hidden");
+    }
+
+    function closeDeleteModal() {
+        document.getElementById("deleteModal").classList.add("hidden");
+    }
+
+    // Validación "DELETE"
+    document.getElementById("deleteForm").addEventListener("submit", function (e) {
+        const confirm = document.getElementById("confirmText").value;
+        if (confirm !== "DELETE") {
+            e.preventDefault();
+            alert("Debes escribir DELETE para confirmar.");
+        }
+    });
 </script>
 
 <section class="forum-container">
     <% if (session.login) { %>
         <button class="create-forum" onclick="location.href='/forum/reply/<%= game.id %>/-1'">Nuevo Hilo</button>
     <% } %>
-    <% showThreadInfoRecursive(-1, 5); %>
+    <% showThreadInfoRecursive(-1, threadList.last_post); %>
 </section>
 
-<% function showThreadInfoRecursive(last_id, cant) { %>
+<% function showThreadInfoRecursive(last_id, num_replies) { %>
     <% let threads = threadList.filter(thread => thread.original_post_id === last_id); %>
-    <% let visibleThreads = threads.slice(0, cant); %>
-    
-    <% visibleThreads.forEach(thread => { %>
+    <%let i = 0;%>
+    <% threads.forEach(thread => { %>
+        <% i++; %>
         <section class="forum-group">
             <h1><%= thread.title %></h1>
             <% reply(thread.game_id, thread.id); %>
@@ -59,33 +92,71 @@
             <p>Descripción: <%= thread.description %></p>
             <p>Respuestas: <%= thread.replies %></p>
             
-            <% if (thread.replies > 0 && cant < 5) { %>
+            <% if (thread.replies > 0 && last_id != -1) { %>
                 <div id="ver_respuestas-<%= thread.id %>">
-                    <a href="#" class="show-reply" onclick="showMore(<%= thread.id %>, 0, 'ver_respuestas-<%= thread.id %>')">Ver respuestas</a>
+                    <a href="#" class="show-reply" onclick="showMore('<%= thread.game_id %>',<%= thread.id %>, 0, 'ver_respuestas-<%= thread.id %>')">Ver respuestas</a>
                 </div>
             <% } %>
             
-            <% if (cant - 2 > 1) { %>
-                <% showThreadInfoRecursive(thread.id, cant - 2); %>
-            <% } %>
+            <% showThreadInfoRecursive(thread.id, thread.replies); %> 
         </section>
     <% }); %>
-    <% if (threads.length > cant) { %>
-        
+    <% if (num_replies > threads.length && threads.length > 0) { %>
         <div id="ver_mas-<%= last_id %>"> 
-            <button class="show-more" onclick="showMore(<%= last_id %>, 3, 'ver_mas-<%= last_id %>')">Ver más</button>
+            <button class="show-more" onclick="showMore(<%= game.id %>, <%= last_id %>, 3, 'ver_mas-<%= last_id %>')">Ver más</button>
         </div>
     <% } %>
 <% } %>
 
 <% function reply(g_id, id) { %>
     <% if (session.login) { %>
-        <button class="reply-button" onclick="location.href='/forum/reply/<%= g_id %>/<%= id %>'">Responder</button>
+        <button class="reply-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Responder</button>
     <% } %>
 <% } %>
 
 <% function eliminate(g_id, id) { %>
     <% if (session.esAdmin) { %>
-        <button class="delete-button" onclick="location.href='/forum/delete/<%= g_id %>/<%= id %>'">Eliminar</button>
+        <button class="delete-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Eliminar</button>
     <% } %>
 <% } %>
+
+
+<!-- Modal de Respuesta
+<div id="replyModal" class="modal hidden">
+    <div class="modal-content">
+        <h2>Responder al mensaje</h2>
+        <div class="post-preview">
+            <h3 id="replyTitle"></h3>
+            <p id="replyUser"></p>
+            <p id="replyDescription"></p>
+        </div>
+        <form id="replyForm" method="POST">
+            <textarea name="message" required placeholder="Escribe tu respuesta..."></textarea>
+            <div class="modal-buttons">
+                <button type="submit">Enviar</button>
+                <button type="button" onclick="closeReplyModal()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+-->
+<!-- Modal de Eliminación 
+<div id="deleteModal" class="modal hidden">
+    <div class="modal-content">
+        <h2>Confirmar eliminación</h2>
+        <div class="post-preview">
+            <h3 id="deleteTitle"></h3>
+            <p id="deleteUser"></p>
+            <p id="deleteDescription"></p>
+        </div>
+        <p>Escribe <strong>DELETE</strong> para confirmar:</p>
+        <form id="deleteForm" method="POST">
+            <input type="text" name="confirmText" id="confirmText" placeholder="DELETE" required>
+            <div class="modal-buttons">
+                <button type="submit">Eliminar</button>
+                <button type="button" onclick="closeDeleteModal()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+-->

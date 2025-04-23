@@ -75,6 +75,7 @@ CREATE TABLE forum_post (
     description TEXT,
     user_id INTEGER NOT NULL,
     replies INTEGER DEFAULT 0 CHECK (replies >= 0),
+    position_post INTEGER DEFAULT 1 CHECK (position_post >= 0),
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
     FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
     FOREIGN KEY (original_post_id) REFERENCES forum_post(id) ON DELETE CASCADE
