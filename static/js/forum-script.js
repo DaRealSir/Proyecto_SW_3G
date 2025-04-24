@@ -5,16 +5,16 @@ function showMore(game_id, last_id, offset, where_id) {
                         const element = document.getElementById(where_id);
                         if (element) {
                             // Reemplaza el contenido HTML
-                            element.innerHTML = html;
+                            element.outerHTML = html;
                         }
                     })
                     .catch(error => console.error("Error en loadMore:", error));
 }
+
 //Funciones botones eliminar y responder
 function getThreadById(threadId) {
     return threadList.find(thread => thread.id === threadId);
 }
-
 
 // Responder
 document.querySelectorAll('.reply-button').forEach(button => {

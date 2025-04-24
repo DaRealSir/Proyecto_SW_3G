@@ -90,9 +90,14 @@ export class Forum {
         }
         return threadList;
     }
-
-    static getReplies(post_id) {
-        return this.#getRepliesStmt.all({ post_id });
+    static getLastPostGame(game_id) {
+        const lastPost = this.#getLastPostGameStmt.all({ game_id });
+    }
+    static getReplies(post_id, game_id = -1) {
+        if (post_id == -1) {           
+            return this.#getLastPostGameStmt.get({ game_id: game_id }).position_post;
+        }
+        return this.#getRepliesStmt.get({ post_id }).replies;
     }
 
     static createReply(game_id, original_post_id, description, user_id) {

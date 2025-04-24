@@ -23,7 +23,8 @@ export function loadThread(req, res) {
     let contenido = 'pages/loadThread';
     const { game_id, thread_id, offset } = req.params;
     const threadList = Forum.getThreadById(parseInt(game_id), parseInt(thread_id),cantidad, parseInt(offset));
-    const num_replies = Forum.getReplies(thread_id);
+    const num_replies = Forum.getReplies(thread_id,game_id);
+
     if (!threadList) {
         return res.status(404).send("Post no encontrado");
     }
@@ -34,7 +35,7 @@ export function loadThread(req, res) {
         game_id: game_id,
         last_id: thread_id,
         last_position: parseInt(offset) + parseInt(cantidad),
-        num_replies: num_replies[0].replies
+        num_replies: num_replies
      });
 }
 

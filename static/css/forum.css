@@ -34,8 +34,9 @@ h1 {
     background: white;
     padding: 15px;
     border-radius: 8px;
-    width: 80%;
-    max-width: 600px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 15%;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: left;
 }
