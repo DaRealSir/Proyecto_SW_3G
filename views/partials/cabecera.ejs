@@ -1,40 +1,42 @@
-    <!-- Cabecera de la página web -->
+
 <header>
-    <!--<h1>BTS</h1> -->
-
-    <a href="/">
-        <img src="/img/logo.png" alt="BTS Logo" style="height: 60px;">
-    </a>
-
-    <div class="saludo">
-
-        <% mostrarSaludo(session) %>
-        <!--Usuario desconocido. <a href='/usuarios/login'>Login</a>-->
+    <div class="logo-opciones">
+        <a href="/">
+            <img src="/img/logo.png" alt="BTS Logo">
+        </a>
+        <div class="opciones">
+            <% mostrarOpciones(session); %>
+        </div>
     </div>
 
-    <div class="opciones">
-        <% mostrarOpciones(session); %>
+    <div class="saludo">
+        <% mostrarSaludo(session); %>
     </div>
 </header>
 
 <% function mostrarSaludo(session) { %>
     <% if(session.login) { %>
-        <p>Bienvenido <%= session.UserName %>.
-            <a href='/users/logout'> Logout</a></p>
+        <img src="<%= session.picture %>" alt="Foto de perfil" />
+        <p>
+            <a href="/content/normal"> <%= session.name %></a>
+            
+        </p>
+        <p>
+            <a href='/users/logout'> Logout</a>
+        </p>
     <% } else { %>
-        <a href='/users/login'> Login</a> <a href='/users/register'>Register</a>
+        <a href='/users/login'> Login</a>
+        <a href='/users/register'> Register</a>
     <% } %>
     <p> Herramientas admin : <a href="/games/addGame"> Añadir juego</a> </p>
 <% } %>
 
 <% function mostrarOpciones(session) { %>
-    <% if (session.login) { %>
-        <a href="/content/normal">Perfil</a>
         <% if (session.esAdmin) { %>
-            <a href="/content/admin">Administrador</a>
+            <a href="/content/admin">Administrador</a><br>
         <% } %>
         <% if (session.esPeriodista) { %>
             <a href="/content/journal">Artículos</a>
         <% } %>
-    <% } %>
+
 <% } %>

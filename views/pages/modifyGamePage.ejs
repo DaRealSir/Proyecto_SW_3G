@@ -10,18 +10,18 @@
             <p><strong><%= locals.exito %></strong></p>
         <% } %>
         <legend> Modificar Juego</legend>
-        <label>Titulo:</label> <input type="text" name="title" value="<%= game.title %>"><%- helpers.error(errores, 'title') %>
+        <label>Titulo:</label> <input type="text" name="title" value="<%= info.title %>"><%- helpers.error(errores, 'title') %>
         <p></p>
         <label>Descripcion:</label> <input type="text" name="description" style="width: 90%;height: 40px;"
-                                           value="<%= game.description %>"><%- helpers.error(errores, 'description') %>
+                                           value="<%= info.description %>"><%- helpers.error(errores, 'description') %>
         <p></p>
-        <label>Nota:</label> <input type="text" name="rating" value="<%= game.rating %>"/><%- helpers.error(errores, 'rating') %>
+        <label>Nota:</label> <input type="text" name="rating" value="<%= info.rating %>"/><%- helpers.error(errores, 'rating') %>
         <p></p>
-        <label>Número Favoritos:</label> <input type="text" name="favNumber" value="<%= game.favNumber %>"/><%- helpers.error(errores, 'favNumber') %>
+        <label>Número Favoritos:</label> <input type="text" name="favNumber" value="<%= info.favNumber %>"/><%- helpers.error(errores, 'favNumber') %>
         <p></p>
-        <label>Id compañía:</label> <input type="text" name="company_id" value="<%= game.company %>"/><%- helpers.error(errores, 'company_id') %>
+        <label>Id compañía:</label> <input type="text" name="company_id" value="<%= info.company_id %>"/><%- helpers.error(errores, 'company_id') %>
         <p></p>
-        <label>URL imagen:</label> <input type="text" name="url_image"  value="<%= game.image %>"/><%- helpers.error(errores, 'url_image') %>
+        <label>URL imagen:</label> <input type="text" name="url_image"  value="<%= info.url_image %>"/><%- helpers.error(errores, 'url_image') %>
         <p></p>
         <button type="submit">Enviar</button>
     </fieldset>

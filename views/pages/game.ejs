@@ -12,13 +12,21 @@
     </div>
 
     <div class="juego_info3">
+        <h3>NOTICIAS Y GUIAS</h3>
         <% showGameInfo3() %>
     </div>
+    <div class="juego_info3">
+        <h3> REVIEWS </h3>
+        <%- include('reviews/userReviews') %>
+    </div>
+    <div class="juego_info3">
+        <h3> FORO </h3>
+        <%- include('forum') %>
+    </div>
+
 </section>
 
-<p></p>
-<section><%- include('reviews/userReviews') %></section>
-<p></p>
+
 
 <form action="/games/addReview" method="POST">
     <input type="submit" value="Add Review">
@@ -27,7 +35,6 @@
     <%console.log(game.id) %>
 </form>
 
-<section><%- include('forum') %></section>
 
 <% function showGameInfo(){ %>
     <h1><u><%= game.title %></u></h1>
@@ -56,7 +63,6 @@
 <% function showGameInfo3(){ %>
 
 
-    <h3>Noticias & Guías:</h3>
 
     <p>......</p>
     <p>......</p>

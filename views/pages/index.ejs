@@ -6,7 +6,7 @@
 <div class='contenedor-index'>
     <% gameList.forEach(game => { %>
     <div class="bloque-index">
-        <h4><a href="/games/<%= game.id %>"><%= game.title %></a></h4>
+        <div class = "game_title"> <h4><a href="/games/<%= game.id %>"><%= game.title %></a></h4> </div>
         <p><a href="/games/<%= game.id %>"><img src="<%= game.image %>" alt="Imagen de <%= game.title %>"></a></p>
     </div>
     <% }); %>

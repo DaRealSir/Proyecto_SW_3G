@@ -14,53 +14,35 @@ const juegosRouter = express.Router();
 
 
 export function showGameList(req, res) {
-    /*
-    let contenido = 'pages/listajuegos';
-
-    const gameList = Game.getGameList();
-
-    res.render('page', {
-        contenido,
-        session: req.session,
-        gameList: gameList,
-    });*/
-
-    
-    //const gameList = Game.getGameList();
 
     let page = 1;
-    //console.log("req.params.numPage: ", req.params.numPage);
     if (req.params.numPage ){
         page = parseInt(req.params.numPage, 10); 
     }
 
-    console.log("Numero pag: ", page);
+    // 4 para pruebas,  16 de normal
+    let numGamesPerPage = 4;
 
-    // 3 para pruebas,  15 de normal
-    let numGamesPerPage = 3;
-
-    const gameList = Game.getSearchedGameList("", "id", "ASC", numGamesPerPage, (page - 1) *numGamesPerPage);
-
+    const gameList = Game.getSearchedGameList("", "title", "DESC", numGamesPerPage, (page - 1) *numGamesPerPage);
+    const genres = Genre.getListGenres();
     render(req, res, 'pages/listajuegos', {
         errores: {},
         info: {},
         gameList: gameList,
         page,
-        filtersValues: {}
+        filtersValues: {},
+        genreList: genres
 });
 }
 
 export function showGameListSearched(req, res) {
     let page = 1;
-    console.log("req.params.numPage: ", req.params.numPage);
     if (req.params.numPage ){
         page = parseInt(req.params.numPage, 10); 
     }
 
-    console.log("Numero pag: ", page);
-
-    // 3 para pruebas,  15 de normal
-    let numGamesPerPage = 3;
+    // 4 para pruebas,  16 de normal
+    let numGamesPerPage = 4;
 
     const title = req.body.game_title.trim();
     const order_option = req.body.order_option;
@@ -76,7 +58,7 @@ export function showGameListSearched(req, res) {
             order = "favNumber";
             break;
         default:
-            order = "id";
+            order = "title";
             break;
     }
 
@@ -84,54 +66,41 @@ export function showGameListSearched(req, res) {
     let order_dir;
     switch (asc_desc_option) {
         case "optionDesc":
-            order_dir = 'DESC';
+            order_dir = "DESC";
             break;
         case "optionAsc":
-            order_dir = 'ASC';
+            order_dir = "ASC";
             break;
         default:
-            order_dir = 'ASC';
+            order_dir = "DESC";
+            break;
     }
 
+    const genre_option = req.body.genre_option;
+    let gameList;
+    
     // 3 para pruebas,  15 de normal
-    //const gameList = Game.getSearchedGameList(title, order, order_dir, 3, 0);
-    const gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) *numGamesPerPage);
+    if (genre_option === undefined || genre_option === "Cualquiera"){
+         gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) *numGamesPerPage, 0);
+    }
+    else{
+        const genre = Genre.getGenreByName(genre_option)
+        const genre_id = genre.id;
+         gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) *numGamesPerPage, genre_id);
+    }
 
-    console.log("GAME LIST SEARCHED");
-    console.log(gameList);
-    /*
-    res.render('page', {
-<% } %> <% function showGameInfo2(){ %>
-
-
-    <p><u>Descripción del juego</u>:  <%= game.description %></p>
-    <p><u>Desarrollado por</u>: Empresa 1</p>
-
-    <p><u>Publicado por</u>: Empresa 2</p>
-    <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
-
-    <p>Disponible en las siguientes tiendas :</p>
-
-    <p><li>TIENDA1</li></p>
-    <p><li>TIENDA2</li></p>
-    <p><li>TIENDA3</li></p>
-    <p><li>TIENDA4</li></p>
-
-
-<% } %>
-        contenido,
-        session: req.session,
-        gameList: gameList
-    });*/
+    const genres = Genre.getListGenres();
     render(req, res, 'pages/listajuegos', {
         errores: {},
         info: {},
         gameList: gameList,
         page,
+        genreList: genres,
         filtersValues: {
             title: title,
             order_option: order_option,
-            asc_desc_option: asc_desc_option
+            asc_desc_option: asc_desc_option,
+            genre_option: genre_option
         }
     })
     
@@ -147,14 +116,13 @@ export function showGameInfo(req, res) {
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
     const genres = Genre.getGameGenres(game);
     const threadList = Forum.getThreadsByGame(id);
-    res.render('page', {
-        contenido,
-        session: req.session,
+    render(req, res, contenido, {
         game: game,
         reviewList: reviewListByGameId,
         genreList: genres,
         threadList: threadList
     });
+
 }
 
 export function viewAddGameBD(req, res) {
@@ -171,15 +139,6 @@ export function viewAddGameBD(req, res) {
 
 export function doAddGameBD(req, res) {
     const result = validationResult(req);
-    if (! result.isEmpty()) {
-        const errores = result.mapped();
-        const datos = matchedData(req);
-        return render(req, res, 'pages/addGamePage', {
-            datos,
-            errores
-        });
-    }
-
 
     const title = req.body.title.trim();
     const description = req.body.description.trim();
@@ -187,18 +146,30 @@ export function doAddGameBD(req, res) {
     const favNumber = parseInt(req.body.favNumber.trim());
     const company_id = parseInt(req.body.company_id.trim());
     const url_image =  req.body.url_image.trim();
-    const genres = req.body.genres;
-    console.log(genres);
+    if (! result.isEmpty()) {
+        const errores = result.mapped();
+        const datos = matchedData(req);
+        return render(req, res, 'pages/addGamePage', {
+            datos,
+            errores,
+            info:{
+                title: title,
+                description: description,
+                rating: rating,
+                favNumber: favNumber,
+                url_image: url_image,
+                company_id: company_id
+            }
+        });
+    }
+
+
     try {
         const game = new Game(title, description, rating, favNumber, url_image, company_id, null);
 
-        console.log("GAME INFO");
-        console.log(game);
-
         const game2 = Game.insert(game);
-        console.log(game2);
 
-        render(req, res, contenido, {
+        render(req, res, 'pages/addGamePage', {
             errores: {},
             exito: 'Juego insertado con exito en la Base de Datos',
             info:{
@@ -206,19 +177,16 @@ export function doAddGameBD(req, res) {
                 description: description,
                 rating: rating,
                 favNumber: favNumber,
-                url_image: url_image, 
-                company_id: company_id,
+                url_image: url_image,
+                company_id: company_id
             }
         });
-    
-        //return res.redirect('/pages/homeUser');
+
 
     } catch (e) {
-        /*
-        res.render('page', {
-            contenido: 'pages/addGamePage',
-            error: 'ERROR al insertar juego en la Base de Datos'
-        })*/
+       
+
+       logger.error(e);
         logger.error(`Error al hacer inserción de juego ${title}`);
         logger.debug(`Excepcion al hacer inserción de juego ${title}`);
 
@@ -234,7 +202,7 @@ export function doAddGameBD(req, res) {
                 rating: rating,
                 favNumber: favNumber,
                 url_image: url_image, 
-                company_id: company_id,
+                company_id: company_id
             }
         });
     }
@@ -249,15 +217,16 @@ export function viewModifyGameBD(req, res) {
 
     render(req, res, contenido, {
         errores: {},
-        info: {},
+        info: {
+            title: game.title,
+            description: game.description,
+            rating: game.rating,
+            favNumber: game.favNumber,
+            url_image: game.image, 
+            company_id: game.company
+        },
         game: game
     });
-    /*
-    res.render('page', {
-        contenido,
-        session: req.session,
-        game: game
-    });*/
 }
 
 
@@ -277,15 +246,18 @@ export function doModifyGameBD(req, res) {
         const datos = matchedData(req);
         return render(req, res, 'pages/modifyGamePage', {
             datos,
-            errores,
-            game: {
-                id: gameId,
-                title : title,
-                description: description, 
-                rating: rating, 
-                favNumber: favNumber, 
-                image: url_image, 
-                company: company_id
+            errores, 
+            info:{
+                title: title,
+                description: description,
+                rating: rating,
+                favNumber: favNumber,
+                url_image: url_image,
+                company_id: company_id,
+                url_image: url_image
+            },
+            game:{
+                id: gameId
             }
         });
     }
@@ -294,54 +266,31 @@ export function doModifyGameBD(req, res) {
         const new_info_game = new Game(title, description, rating, favNumber, url_image, company_id, null);
 
         const game2 = Game.update(gameId, new_info_game);
+        const reviewListByGameId = Review.getAllReviewsByGameId(gameId);
+        const genres = Genre.getGameGenres(game2);
+        const threadList = Forum.getThreadsByGame(gameId);
 
-        /*
-        return res.render('page', {
-            contenido: 'pages/game',
-            session: req.session,
-            errores: {},
-            game: game2,
-            exito: 'Juego modificado con exito en la Base de Datos'
-        });*/
-        const reviewListByGameId = Review.getAllReviewsByGameId(id);
-        const genres = Genre.getGameGenres(game);
- 
+
         render(req, res, 'pages/game', {
             errores: {},
             exito: 'Juego modificado con exito en la Base de Datos',
             game: game2,
             reviewList: reviewListByGameId,
-            genreList: genres
+            genreList: genres,
+            threadList: threadList
         });
+
+    
     } catch (e) {
-        /*
-        res.render('page', {
-            contenido: 'pages/modifyGamePage',
-            session: req.session,
-            errores: {},
-            game: Game.getGameById(gameId),
-            error: 'ERROR al modificar juego en la Base de Datos'
-        })*/
-       
-            /*
+        
+        //const reviewListByGameId = Review.getAllReviewsByGameId(gameId);
+        //const genres = Genre.getGameGenres(game);
+        //const threadList = Forum.getThreadsByGame(gameId);
+
         render(req, res, 'pages/modifyGamePage', {
             errores: {},
-            error: 'ERROR al modificar juego en la Base de Dato',
-            info:{
-                title: title,
-                description: description,
-                rating: rating,
-                favNumber: favNumber,
-                url_image: url_image, 
-                company_id: company_id,
-            }
-        });*/
-        const reviewListByGameId = Review.getAllReviewsByGameId(id);
-        const genres = Genre.getGameGenres(game);
-        render(req, res, 'pages/game', {
-            errores: {},
             error: 'ERROR al modificar juego en la Base de Datos',
-            game:{
+            info:{
                 id: gameId,
                 title: title,
                 description: description,
@@ -350,24 +299,23 @@ export function doModifyGameBD(req, res) {
                 url_image: url_image, 
                 company_id: company_id,
             },
-            reviewList: reviewListByGameId,
-            genreList: genres
+            game:{
+                id: gameId
+            }
         });
     }
 }
 
 export function doDelete(req, res) {
-    const name = req.params.id;
+    const id = req.params.id;
 
     try {
-        Game.doDelete(id);
-        return res.render('page', {
-            contenido: 'pages/listajuegos'
-        })
+        Game.deleteById(id);
+        
+        return showGameList(req, res);
     } catch (e) {
-        return res.render('page', {
-            contenido: 'pages/listajuegos'
-        })
+    
+        return showGameList(req, res);
     }
 
 }

@@ -12,6 +12,8 @@ export class Game {
     static #getListGamesInitFinalStmt = null
     static #getSearchedListGamesAscStmt = null;
     static #getSearchedListGamesDescStmt = null;
+    static #getSearchedListGamesByGenreAscStmt = null;
+    static #getSearchedListGamesByGenreDescStmt = null;
     static #getByIdStmt = null;
     static result;
     static #deleteByID = null;
@@ -110,6 +112,20 @@ export class Game {
                                                                      END
                                                                 ASC
                                                         LIMIT @number OFFSET @offset`);
+        this.#getSearchedListGamesByGenreAscStmt = db.prepare(`SELECT game.*
+                                                            FROM game
+                                                            JOIN game_genre ON game.id = game_genre.game_id
+                                                            JOIN genre ON genre.id = game_genre.genre_id
+                                                            WHERE title LIKE @title
+                                                             AND genre.id = @genreId
+                                                            ORDER BY CASE
+                                                                         WHEN @orderBy = 'title' THEN title
+                                                                         WHEN @orderBy = 'favNumber' THEN favNumber
+                                                                         WHEN @orderBy = 'rating' THEN rating
+                                                                         ELSE game.id
+                                                                         END
+                                                                    ASC
+                                                            LIMIT @number OFFSET @offset`);
         this.#getSearchedListGamesDescStmt = db.prepare(`SELECT *
                                                          FROM game
                                                          WHERE title LIKE @title
@@ -121,6 +137,21 @@ export class Game {
                                                                       END
                                                                  DESC
                                                          LIMIT @number OFFSET @offset`);
+        this.#getSearchedListGamesByGenreDescStmt = db.prepare(`SELECT game.*
+                                                            FROM game
+                                                            JOIN game_genre ON game.id = game_genre.game_id
+                                                            JOIN genre ON genre.id = game_genre.genre_id
+                                                            WHERE title LIKE @title
+                                                             AND genre.id = @genreId
+                                                            ORDER BY CASE
+                                                                         WHEN @orderBy = 'title' THEN title
+                                                                         WHEN @orderBy = 'favNumber' THEN favNumber
+                                                                         WHEN @orderBy = 'rating' THEN rating
+                                                                         ELSE game.id
+                                                                         END
+                                                                    DESC
+                                                            LIMIT @number OFFSET @offset`);
+   
 
         this.#deleteByID = db.prepare('DELETE FROM game WHERE id = @id');
     }
@@ -153,19 +184,25 @@ export class Game {
         return gameList;
     }
 
-    static getSearchedGameList(title, order, order_dir, number, offset) {
+    static getSearchedGameList(title, order, order_dir, number, offset, genreId) {
 
         if (number === undefined) number = 20;
         if (offset === undefined) offset = 0;
 
-
         const searchedTitle = `%${title}%`;
         let gameList;
-        if (order_dir === 'ASC')
-            gameList = this.#getSearchedListGamesAscStmt.all({title: searchedTitle, orderBy: order, number, offset});
-        else
-            gameList = this.#getSearchedListGamesDescStmt.all({title: searchedTitle, orderBy: order, number, offset});
-
+        if (genreId === undefined || genreId === 0){
+            if (order_dir === "ASC")
+                gameList = this.#getSearchedListGamesAscStmt.all({title: searchedTitle, orderBy: order, number, offset});
+            else
+                gameList = this.#getSearchedListGamesDescStmt.all({title: searchedTitle, orderBy: order, number, offset});
+        }
+        else{
+            if (order_dir === "ASC")
+                gameList = this.#getSearchedListGamesByGenreAscStmt.all({title: searchedTitle, orderBy: order, number, offset, genreId});
+            else
+                gameList = this.#getSearchedListGamesByGenreDescStmt.all({title: searchedTitle, orderBy: order, number, offset, genreId});
+        }
         //   const gameList = this.#getSearchedListGamesStmt.all({title: searchedTitle, orderBy: order, orderDirection: orderDirection, number, offset});
         if (gameList === undefined) throw new GameNotFound(gameList);
 
@@ -199,7 +236,6 @@ export class Game {
                 company
             };
 
-            //console.log(data);
 
             result = this.#insertStmt.run(data);
 
@@ -212,12 +248,19 @@ export class Game {
         }
         return game;
     }
-
+/*
     static delete(title) {
         const resul = this.#deleteByID(title);
         if (resul.changes === 0) throw new GameNotFound(title);
 
     }
+*/
+    static deleteById(id) {
+        const data = {id};
+        const resul = this.#deleteByID.run(data);
+        if (resul.changes === 0) throw new GameNotFound(id);
+    }
+
 
     static update(id_game, game) {
         const title = game.title;
@@ -229,15 +272,11 @@ export class Game {
 
         const data = {title, description, rating, favNumber, image, company, id_game};
 
-        console.log(id_game);
-        console.log(game);
+        const result = this.#updateStmt.run(data);
 
-        this.result = this.#updateStmt.run(data);
-
-        //console.log("Num cambios", result.changes);
 
         if (result.changes === 0) throw new GameNotFound(title);
-        game.id = id_game;
+        game.#id = id_game;
 
         return game;
     }

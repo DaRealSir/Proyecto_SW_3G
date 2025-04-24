@@ -9,6 +9,8 @@ export class Genre {
     static #getGameWithGenre = null;
     static #getGenreWithGame = null;
     static #unassignGenreGame = null;
+    static #getAllGenresStmt = null;
+    
     #id;
     name;
 
