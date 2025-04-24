@@ -3,7 +3,7 @@ import {RolesEnum, User} from './User.js';
 
 export function deleteUser(req,res)
 {
-    console.log("HOLA");
+    
     let contenido = 'pages/admin';
     User.disableUpdate(req.params.username);
 
@@ -34,7 +34,8 @@ export function showUserSearch(req, res) {
 
     let contenido = 'pages/showUsersDel';
 
-    const name = req.body.UserName.trim();
+    //const name = req.body.UserName.trim();
+     
     const order_option = req.body.order_option;
     let order;
     switch (order_option) {
@@ -129,7 +130,9 @@ export function doRegister(req, res) {
             req.session.login = true;
             req.session.UserID = usuario.id;
             req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
-            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA
+            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
+            req.session.name=usuario.username;
+            req.session.picture=usuario.profile_picture;
 
             res.render('page', {
                 contenido: 'pages/homeUser',
@@ -156,20 +159,28 @@ export function doLogin(req, res) {
     try {
         const usuario = User.login(username, password);
         console.log(usuario);
-        req.session.login = true;
-        req.session.UserID = usuario.id;
-        req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
-        req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
-        req.session.name=usuario.username;
-        req.session.picture=usuario.profile_picture;
-        
+        let content='pages/homeUser';
+        if(usuario.user_type!==RolesEnum.BANNED)
+        {
+            req.session.login = true;
+            req.session.UserID = usuario.id;
+            req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
+            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
+            req.session.name=usuario.username;
+            req.session.picture=usuario.profile_picture;
+        }
+        else{
+            content='pages/Banned';
+        }
+      
+    
 /*
         console.log(usuario);
         console.log(usuario.user_type);
         console.log(req.session.esAdmin);
 */
         return res.render('page', {
-            contenido: 'pages/homeUser',
+            contenido: content,
             session: req.session
         });
 

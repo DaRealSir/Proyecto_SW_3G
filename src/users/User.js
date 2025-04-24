@@ -4,7 +4,8 @@ import * as bcrypt from "bcryptjs";
 export const RolesEnum = Object.freeze({
     USER: 'U',
     ADMIN: 'A',
-    PERIODISTA: 'P'
+    PERIODISTA: 'P',
+    BANNED: 'B'
 });
 
 export class User {
@@ -156,9 +157,9 @@ export class User {
             this.#updateStmt.run({
                 username: "Borrado",
                 bio: null,
-                password: "NO",
+                password: user.#password,
                 profile_picture: null,
-                user_type: RolesEnum.USER,
+                user_type: RolesEnum.BANNED,
                 id: user.id
             });
         } catch (e) {
@@ -181,7 +182,7 @@ export class User {
 
     static register(username, password, userValue) {
         const cryptPass = bcrypt.hashSync(password);
-        let user = new User(username, null, cryptPass, null, userValue, null);
+        let user = new User(username, null, cryptPass, "https://variety.com/wp-content/uploads/2019/12/hideo_kojima_v3.png", userValue, null);
         user = this.#insert(user);
         return user;
     }
