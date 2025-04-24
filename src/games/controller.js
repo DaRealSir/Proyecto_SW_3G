@@ -160,10 +160,11 @@ export function showGameInfo(req, res) {
 export function viewAddGameBD(req, res) {
 
     let contenido = 'pages/addGamePage';
-
+    let genreList = Genre.getAllGenres();
     render(req, res, contenido, {
         errores: {},
-        info: {}
+        info: {},
+        genreList: genreList
     });
 }
 
@@ -186,7 +187,8 @@ export function doAddGameBD(req, res) {
     const favNumber = parseInt(req.body.favNumber.trim());
     const company_id = parseInt(req.body.company_id.trim());
     const url_image =  req.body.url_image.trim();
-
+    const genres = req.body.genres;
+    console.log(genres);
     try {
         const game = new Game(title, description, rating, favNumber, url_image, company_id, null);
 

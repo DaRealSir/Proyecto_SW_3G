@@ -21,6 +21,9 @@
         <p></p>
         <label>URL imagen:</label> <input type="text" name="url_image"/><%- helpers.error(errores, 'url_image') %>
         <p></p>
+        <p> Géneros: </p>
+
         <button type="submit">Enviar</button>
     </fieldset>
+    <%- include('./genrePagination/genreDisplay') %>
 </form>

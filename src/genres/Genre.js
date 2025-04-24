@@ -1,4 +1,5 @@
 export class Genre {
+    static #getAllGenres = null;
     static #getByNameStmt = null;
     static #getbyIdStmt = null;
     static #insertGenre = null;
@@ -34,18 +35,21 @@ export class Genre {
 
     static initStatements(db) {
         if (this.#getByNameStmt !== null) return;
-
+        this.#getAllGenres = db.prepare('SELECT DISTINCT * from genre ORDER BY name ASC');
         this.#getByNameStmt = db.prepare('SELECT * FROM genre WHERE name = @genre_name');
         this.#getbyIdStmt = db.prepare('SELECT * FROM genre WHERE id = @genre_id');
         this.#deleteGenre = db.prepare('DELETE FROM genre WHERE id = @genre_id');
         this.#deleteGameGenre = db.prepare('DELETE FROM game_genre WHERE genre_id = @genre_id');
-        this.#insertGenre = db.prepare('INSERT INTO genre(name) VALUES (@genre_name)');
+        this.#insertGenre = db.prepare(     'INSERT INTO genre(name) VALUES (@genre_name)');
         this.#getGenreWithGame = db.prepare('SELECT DISTINCT genre.* FROM game JOIN game_genre ON game_genre.game_id = @game_id JOIN genre ON game_genre.genre_id = genre.id');
         this.#getGameWithGenre = db.prepare('SELECT DISTINCT game.* FROM genre JOIN game_genre ON game_genre.genre_id = @genre_id JOIN game ON game.id = game_genre.game_id');
         this.#assignGenreGame = db.prepare('INSERT INTO game_genre (game_id, genre_id) VALUES (@game_id,@genre_id)');
         this.#unassignGenreGame = db.prepare('DELETE FROM game_genre WHERE game_id = @game_id AND genre_id = @genre_id');
     }
-
+    static getAllGenres(){
+        let res = this.#getAllGenres.all();
+        return res;
+    }
     static getGameGenres(game) {
         let result = null;
         const game_id = game.id;
@@ -154,7 +158,6 @@ export class Genre {
         return result;
     }
     static delete(genre) {
-        console.log('PIÑAS COMO TRANKAS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
         const genre_id = genre.#id;
         const data = {genre_id};
         try {
