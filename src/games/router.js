@@ -43,6 +43,7 @@ juegosRouter.post('/addGame',
     body('company_id', 'No puede ser vacío').trim().notEmpty(), 
     body('company_id', 'Valor entero mayor o igual que 0').trim().isInt({ min: 0 }), 
     body('url_image', 'No puede ser vacío').trim().notEmpty(),
+    body('genres','Generos del juego').isArray(),
     asyncHandler(doAddGameBD));
 juegosRouter.get('/modifyGame/:id',viewModifyGameBD);
 juegosRouter.post('/modifyGame/:id', 
