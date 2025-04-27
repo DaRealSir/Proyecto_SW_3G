@@ -5,84 +5,79 @@ const forumRouter = express.Router();
 
 
 export function viewForum(req, res) {
-    let contenido = 'pages/forum';
-    const game_id = req.params.game_id;
-    const threadList = Forum.getThreadsByGame(game_id);
-    const session = req.session;
-
-    console.log(threadList);
-    res.render('page', {
-        contenido,
-        session: req.session,
-        threadList: threadList,
-        game_id: game_id
-    });
-}
-
-
-export function showThreads(req, res) {
-    console.log("AAAAAAAAAAAAAAAAAAA")
-    let contenido = 'pages/loadThread';
-    const game_id = req.params.game_id;
-    const last_id = req.params.last_id;
-    const cant = req.params.cant;
-    const offset = req.params.offset;
-    const threadList = Forum.getThreadById(game_id,last_id, cant, offset);
-
-    console.log(threadList);
-   
-
-    res.render('p', {
-        contenido,
-        session: req.session,
-        threadList: threadList,
-        offset: (+offset) + (+cant),
-        cant: cant,
-        game_id: game_id,
-        last_id: last_id
-    });
-}
-
-export function viewCreateThread(req, res) {
-    let contenido = 'pages/createThread';
-    res.render('page', {
-        contenido,
-        session: req.session
-    });
-}
-
-export function doCreateThread(req, res) {
-    const game_id = req.body.game_id;
-    const title = req.body.title.trim();
-    const description = req.body.description.trim();
-    const user_id = req.session.user_id;
-
-    try {
-        const threadId = Forum.createThread(game_id, title, description, user_id);
-        return res.redirect(`/forum/thread/${threadId}`);
-    } catch (e) {
+    
+        let contenido = 'pages/forum';
+    
+        let id = req.params.game_id;
+        
+        const threadList = Forum.getThreadsByGame(id);
         res.render('page', {
-            contenido: 'pages/createThread',
+            contenido,
             session: req.session,
-            error: 'ERROR al crear el hilo en la Base de Datos'
+            threadList: threadList
         });
+}
+
+export function loadThread(req, res) {
+    let cantidad = 3;
+    let contenido = 'pages/loadThread';
+    const { game_id, thread_id, offset } = req.params;
+    const threadList = Forum.getThreadById(parseInt(game_id), parseInt(thread_id),cantidad, parseInt(offset));
+    const num_replies = Forum.getReplies(thread_id,game_id);
+
+    if (!threadList) {
+        return res.status(404).send("Post no encontrado");
     }
+    res.render('p', { 
+        contenido,
+        session: req.session,
+        threadList,
+        game_id: game_id,
+        last_id: thread_id,
+        last_position: parseInt(offset) + parseInt(cantidad),
+        num_replies: num_replies
+     });
 }
 
 export function doCreateReply(req, res) {
-    const game_id = req.body.game_id;
-    const original_post_id = req.body.original_post_id;
-    const description = req.body.description.trim();
-    const user_id = req.session.user_id;
+    const { game_id, thread_id } = req.params;
+    const { message } = req.body;
+    const user = req.session.login;
+
+    if (!user) {
+        return res.status(401).send("No autenticado");
+    }
+
+    if (!message || message.trim() === '') {
+        return res.status(400).send("Mensaje vacío");
+    }
 
     try {
-        Forum.createReply(game_id, original_post_id, description, user_id);
-        return res.redirect(`/forum/thread/${original_post_id}`);
-    } catch (e) {
-        res.render('page', {
-            contenido: 'pages/forumThread',
-            session: req.session,
-            error: 'ERROR al responder en el foro'
-        });
+        Forum.createReply(parseInt(game_id), parseInt(thread_id), message, user.id);
+        res.redirect(`/forum/${game_id}`);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error al guardar la respuesta");
+    }
+}   
+export function doDeletebyId(req, res) {
+    const { game_id, thread_id } = req.params;
+    const { confirmText } = req.body;
+    const isAdmin = req.session.esAdmin;
+
+    if (!isAdmin) {
+        return res.status(403).send("No autorizado");
+    }
+
+    if (confirmText !== "DELETE") {
+        return res.status(400).send("Confirmación inválida");
+    }
+
+    try {
+        Forum.delete(parseInt(game_id), parseInt(thread_id));
+        res.redirect(`/forum/${game_id}`);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error al eliminar el post");
     }
 }

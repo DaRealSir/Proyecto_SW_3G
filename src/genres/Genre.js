@@ -8,6 +8,8 @@ export class Genre {
     static #getGameWithGenre = null;
     static #getGenreWithGame = null;
     static #unassignGenreGame = null;
+    static #getAllGenresStmt = null;
+    
     #id;
     name;
 
@@ -35,6 +37,7 @@ export class Genre {
     static initStatements(db) {
         if (this.#getByNameStmt !== null) return;
 
+        this.#getAllGenresStmt = db.prepare('SELECT * FROM genre');
         this.#getByNameStmt = db.prepare('SELECT * FROM genre WHERE name = @genre_name');
         this.#getbyIdStmt = db.prepare('SELECT * FROM genre WHERE id = @genre_id');
         this.#deleteGenre = db.prepare('DELETE FROM genre WHERE id = @genre_id');
@@ -45,6 +48,13 @@ export class Genre {
         this.#assignGenreGame = db.prepare('INSERT INTO game_genre (game_id, genre_id) VALUES (@game_id,@genre_id)');
         this.#unassignGenreGame = db.prepare('DELETE FROM game_genre WHERE game_id = @game_id AND genre_id = @genre_id');
     }
+
+    static getListGenres(){
+        const genreList = this.#getAllGenresStmt.all();
+
+        return genreList;
+    }
+
 
     static getGameGenres(game) {
         let result = null;

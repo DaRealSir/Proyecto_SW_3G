@@ -1,3 +1,4 @@
+/* Pagina general*/
 body {
     /*background-color: #CDCDCD;*/
     background-image: url("https://p4.wallpaperbetter.com/wallpaper/452/956/838/simple-simple-background-minimalism-video-game-characters-wallpaper-preview.jpg");
@@ -55,52 +56,127 @@ header .saludo p {
 }
 
 div#contenedor {
-    width: 1200px;
+    max-width: 1350px;
+    min-width: 720px;
+    width: 100%;
     margin: auto;
     border: 1px solid black;
     background-color: #aaaaaa;
-    margin-top: 15px;
 }
 
+/* Index page ---------*/
 .contenedor-index {
     width: 100%;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #efe9f0;
-    padding: 20px 0;
-    align-items: flex-start;
+    padding: 10px 0;
 }
 
 .bloque-index {
+    height: 330px;
     flex: 1;
     text-align: center;
-    padding: 10px;
-
+    padding: 15px;
     border: 1px solid rgb(87, 69, 79);
-    background-color: #dccfdf;
-
-    margin-bottom: 10px;
+    background-color: #c8b4cc;
     border-radius: 5px;
-
     margin-left: 10px;
     margin-right: 10px;
 }
 
+.bloque-index .game_title{
+    margin-top: -20px;
+    height: 30px;
+}
+
 .bloque-index img{
+    width: 100%;
+    height: 280px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* GAME LIST ---------*/
+.game_list {
+    display: flex;
+    justify-content: center;
+}
+
+.game_list_grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 100%;
+    /*margin: auto;*/
+}
+
+@media (max-width: 719px) {
+    .game_list_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 720px) {
+    .game_list_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1000px) {
+    .game_list_grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (min-width: 1300px) {
+    .game_list_grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.game-card {
+    width: 92%;
+    background-color: #dccfdf;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-card .game_title{
+    height: 20px;
+    text-align: center;
+    max-width: 25em;
+    overflow: hidden;
+}
+
+.game-card img {
     width: 100%;
     height: 200px;
     border-radius: 5px;
     object-fit: cover;
 }
-
-.bloque img {
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+.game-description {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+/*
+ .bloque img {
     width: 80%;
     max-width: 150px;
     height: auto;
     margin-top: 10px;
-}
+}*/
+
+
 
 div#bloque_genero {
     flex: 1;
@@ -121,49 +197,38 @@ div#game_list {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }*/
-
+/* GAME PAGE --------*/
 .juego_info_superior {
     width: 100%;
-    margin: auto;
     background-color: #ffffff;
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    margin-top: 10px;
+    /*justify-content: space-between;*/
+    /*flex-wrap: wrap;*/
 }
 
 .juego_info {
     width: 25%;
-    float: left;
+    /*float: left;*/
     margin: auto;
     border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
-    margin-top: 10px;
     text-align: center;
     border-radius: 5px;
 }
 
 .juego_info img{
     width: 70%;
-    height: 200px;
+    height: 280px;
     border-radius: 5px;
     object-fit: cover;
 }
 
-div#review_juego {
-    width: 560px;
-    float: left;
-    margin: auto;
-    border: 1px solid rgb(87, 69, 79);
-    background-color: #dccfdf;
-    margin-top: 10px;
-}
-
 .juego_info2 {
     width: 68%;
-    float: right;
+    /*float: right;*/
     border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
-    margin-top: 10px; 
     border-radius: 5px;
 }
 .juego_info2 p, li, button{
@@ -172,15 +237,44 @@ div#review_juego {
 
 .juego_info3 {
     width: 100%;
-    float: left;
+    /*float: left;*/
     margin: auto;
     border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
     margin-top: 20px;
     border-radius: 5px;
-    
 }
 
+.juego_info3 h3{
+    text-align: center;
+}
+ 
+.review_juego{
+    width: 70%;
+    background-color: #ffffff;
+    align-items: center;
+    border: 1px solid rgb(87, 69, 79);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 15%;
+    border-radius: 5px;
+
+}
+
+.review_juego p{
+    margin-left: 10px;
+}
+/*
+div#review_juego {
+    width: 100%;
+    float: left;
+    margin: auto;
+    border: 1px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
+    margin-top: 10px;
+}*/
+
+/*
 div#juego_info_in_list {
     background-color: #dccfdf;
 
@@ -189,12 +283,12 @@ div#juego_info_in_list {
     border-radius: 5px;
 
     margin-left: 10px;
-}
+}*/
 
 header {
-    padding: 30px;
-    background-color: #4d0b5e;
-    color: white;
+    padding: 20px;
+    /*background-color: #4d0b5e;*/
+    /*color: white;*/
 }
 
 header a, header a:visited {
@@ -208,28 +302,24 @@ header a:hover {
     text-decoration: underline;
 }
 
+/*
 main {
     padding: 20px;
-    min-height: 600px;
     height: auto;
-    /* min-height: 600px; */
+    min-height: 600px;
     width: 96.5%;
     background-color: white;
-}
+}*/
 
-header a:hover {
-    color: red;
-    font-weight: bold;
-    text-decoration: underline;
-}
 
 main {
     padding: 20px;
     min-height: 600px;
-    width: 96.5%;
+    width: 97%;
     background-color: white;
 }
 
+/*
 footer {
     clear: both;
     padding: 20px;
@@ -237,10 +327,10 @@ footer {
     color: white;
     text-align: center;
     width: 100%;
-}
+}*/
 
 .pagina-boceto img {
-    width: 1000px;
+    width: 100%;
 }
 
 .pagina-miembros img {
@@ -282,45 +372,6 @@ h1 {
     text-align: left;
 }
 
-.game_list {
-    display: flex;
-    justify-content: center;
-}
-.game_list_grid{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 1200px;
-    margin: auto;
-}
-.game-card {
-    background-color: #dccfdf;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.game-card img {
-    width: 100%;
-    height: 200px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-.game-info {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 5px 10px;
-}
-.game-description {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #333;
-    text-align: justify;
-}
 
 .dropdown_genres_button{
     margin-bottom: 5px;
@@ -364,7 +415,7 @@ header::before {
     height: 100%;
     background-image: url("https://img.freepik.com/premium-vector/joystick-seamless-vector-pattern-game-console-symbol-gamepad-video-3d-vr-ar-bright-modern-gadget_642977-759.jpg");
     background-position: center;
-    filter: brightness(45%); /* Ajusta el brillo: 100% es normal, <100% oscurece, >100% aclara */
+    filter: brightness(45%);
     z-index: -1;
 }
 
