@@ -36,6 +36,7 @@ export class User {
         this.#id = id;
     }
 
+
     set password(newPassword) {
         this.#password = bcrypt.hashSync(newPassword);
     }
@@ -48,13 +49,38 @@ export class User {
         this.#bio = value;
     }
 
-    get profile_picture() {
+    get username() {
+        return this.#username;
+    }
+
+    set username(value) {
+        this.#username = value;
+    }
+
+    get user_type() {
+        return this.#user_type;
+    }
+
+    set user_type(value) {
+        this.#user_type = value;
+    }
+
+    get id() {
+        return this.#id;
+    }
+
+    set id(value) {
+        this.#id = value;
+    }
+
+    set profile_picture(profile_picture){
+        this.#profile_picture=profile_picture;
+    }
+    get profile_picture()
+    {
         return this.#profile_picture;
     }
 
-    set profile_picture(value) {
-        this.#profile_picture = value;
-    }
 
     static initStatements(db) {
         this.#deleteUser = db.prepare('DELETE FROM user WHERE id = @id');
@@ -63,7 +89,7 @@ export class User {
         this.#getByIdStmt = db.prepare('SELECT * FROM user WHERE id = @id');
         this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password, profile_picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
         this.#updateStmt = db.prepare('UPDATE user SET username = @username, bio = @bio, password = @password,  profile_picture = @profile_picture, user_type = @user_type WHERE id = @id');
-        this.#getAllUsersStmt = db.prepare("SELECT * FROM user WHERE username != 'Borrado'");
+       this.#getAllUsersStmt = db.prepare("SELECT * FROM user WHERE username != 'Borrado'");
         this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM user WHERE username LIKE @username ORDER BY 
                                                             CASE 
                                                                 WHEN @orderBy = 'title' THEN username
@@ -109,10 +135,12 @@ export class User {
     }
 
     static getUserByUsername(username) {
+        
         const user = this.#getByUsernameStmt.get({username});
         if (user === undefined) throw new userNotFound(username);
         const {bio, password, profile_picture, user_type, id} = user;
-        return new User(username, bio, password, profile_picture, user_type, id);
+        
+        return new User(user.username, bio, password, profile_picture, user_type, id);
     }
 
     static getUserByID(id) {
@@ -153,14 +181,18 @@ export class User {
 
     static disableUpdate(username) {
         try {
+            username=username.trim();
+            console.log(username);
             const user = this.getUserByUsername(username);
+            console.log(user.username);
+            console.log(user.id);
             this.#updateStmt.run({
                 username: "Borrado",
                 bio: null,
                 password: user.#password,
                 profile_picture: null,
                 user_type: RolesEnum.BANNED,
-                id: user.id
+                id: Math.floor(user.id)
             });
         } catch (e) {
             throw new userNotFound(username);
@@ -213,37 +245,8 @@ export class User {
         return User.#update(this);
     }
 
-    get username() {
-        return this.#username;
-    }
 
-    set username(value) {
-        this.#username = value;
-    }
 
-    get user_type() {
-        return this.#user_type;
-    }
-
-    set user_type(value) {
-        this.#user_type = value;
-    }
-
-    get id() {
-        return this.#id;
-    }
-
-    set id(value) {
-        this.#id = value;
-    }
-
-    set profile_picture(profile_picture){
-        this.#profile_picture=profile_picture;
-    }
-    get profile_picture()
-    {
-        return this.#profile_picture;
-    }
 }
 
 export class userNotFound extends Error {
