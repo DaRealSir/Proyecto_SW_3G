@@ -1,11 +1,20 @@
+
+import { User } from "../users/User.js";
+
 export function viewContenidoNormal(req, res) {
-    let contenido = 'pages/noPermisos';//Inicializa a page sin permisos
-    if (req.session != null && req.session.nombre != null) {//Si tiene la sesion activa y un nombre en la sesion, muestra la page normal
-        contenido = 'pages/normal';
+    let contenido=null;
+    let user=null;
+    if (req.session != null ) {//Si tiene la sesion activa y un nombre en la sesion, muestra la page normal
+        contenido = 'pages/profileUser';
+         user = User.getUserByID(req.session.UserID)
+         console.log(user);
     }
+  
+
     res.render('page', {
         contenido,
-        session: req.session//Renderizado de la page con la info de la sesion actual
+        session: req.session,//Renderizado de la page con la info de la sesion actual
+        userData: user,
     });
 }
 

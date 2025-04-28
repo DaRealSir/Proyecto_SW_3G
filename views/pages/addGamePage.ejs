@@ -9,17 +9,17 @@
             <p><strong><%= locals.exito %></strong></p>
         <% } %>
         <legend> Añadir Juego</legend>
-        <label>Titulo:</label> <input type="text" name="title"/><%- helpers.error(errores, 'title') %>
+        <label>Titulo:</label> <input type="text" name="title" value="<%= info.title %>"/><%- helpers.error(errores, 'title') %>
         <p></p>
-        <label>Descripcion:</label> <input type="text" name="description" style="width: 80%;height: 40px;"><%- helpers.error(errores, 'description') %>
+        <label>Descripcion:</label> <input type="text" name="description" style="width: 80%;height: 40px;" value="<%= info.description %>"/><%- helpers.error(errores, 'description') %>
         <p></p>
-        <label>Nota:</label> <input type="text" name="rating"/><%- helpers.error(errores, 'rating') %>
+        <label>Nota:</label> <input type="text" name="rating" value="<%= info.rating %>"/><%- helpers.error(errores, 'rating') %>
         <p></p>
-        <label>Número Favoritos:</label> <input type="text" name="favNumber"/><%- helpers.error(errores, 'favNumber') %>
+        <label>Número Favoritos:</label> <input type="text" name="favNumber" value="<%= info.favNumber %>"/><%- helpers.error(errores, 'favNumber') %>
         <p></p>
-        <label>Id compañía:</label> <input type="text" name="company_id"/><%- helpers.error(errores, 'company_id') %>
+        <label>Id compañía:</label> <input type="text" name="company_id"value="<%= info.company_id %>"/><%- helpers.error(errores, 'company_id') %>
         <p></p>
-        <label>URL imagen:</label> <input type="text" name="url_image"/><%- helpers.error(errores, 'url_image') %>
+        <label>URL imagen:</label> <input type="text" name="url_image"value="<%= info.url_image %>"/><%- helpers.error(errores, 'url_image') %>
         <p></p>
         <button type="submit">Enviar</button>
     </fieldset>

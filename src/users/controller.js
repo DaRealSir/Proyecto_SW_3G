@@ -5,10 +5,10 @@ export function deleteUser(req,res)
 {
     console.log("HOLA");
     let contenido = 'pages/admin';
+    User.disableUpdate(req.params.username);
 
-    User.delete(req.params.username);
+   // User.delete(req.params.username);
     const userList = User.getUserList();
-    console.log(req.params.username);
    
     res.render('page', {
         contenido,
@@ -160,7 +160,9 @@ export function doLogin(req, res) {
         req.session.UserID = usuario.id;
         req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
         req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
-
+        req.session.name=usuario.username;
+        req.session.picture=usuario.profile_picture;
+        
 /*
         console.log(usuario);
         console.log(usuario.user_type);
