@@ -60,7 +60,7 @@ juegosRouter.get('/:id', showGameInfo);
 juegosRouter.post('/deleteGame/:id', doDelete);
 juegosRouter.post('/deleteReview/:id', deleteReview);
 
-juegosRouter.get('/addReview/:game_id/:username', viewAddReview);
+juegosRouter.get('/addReview/:game_id', viewAddReview);
 juegosRouter.post('/addReview',
     body('description', 'No puede ser vacío').trim().notEmpty(),
     body('description', 'No puede tener más de 200 palabras').trim().custom(value => {
