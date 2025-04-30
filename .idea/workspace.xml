@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/views/pages/reviews/addReview.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/Game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reviews/Review.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/Review.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reviews/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reviews/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/game.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/game.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" afterDir="false" />
-    </list>
+    <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +26,18 @@
     </favorite-branches>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Alberto-Del"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ignadome/Proyecto_SW_3G.git",
+    "accountId": "66b1515c-fcc6-4563-8184-890e40aa10b3"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
@@ -54,7 +54,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Reviews&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Downloads/peticionesAJAX&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -70,7 +70,8 @@
     ],
     &quot;RunConfigurationTargetLRU&quot;: [
       &quot;2b62d813-a430-4477-aa6d-6135676f0823&quot;,
-      &quot;47e1ced0-d937-4b4b-8684-5538b5e3de77&quot;
+      &quot;47e1ced0-d937-4b4b-8684-5538b5e3de77&quot;,
+      &quot;c8526b50-dd49-465b-b5e4-45f9686a7356&quot;
     ]
   }
 }</component>
@@ -84,7 +85,7 @@
       <script-file value="$PROJECT_DIR$/data/DB.sql" />
       <script-file value="$PROJECT_DIR$/data/Start.sql" />
       <script-mode>FILE</script-mode>
-      <data-source id="47e1ced0-d937-4b4b-8684-5538b5e3de77" />
+      <data-source id="c8526b50-dd49-465b-b5e4-45f9686a7356" />
       <method v="2" />
     </configuration>
     <configuration name="Start.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
@@ -134,7 +135,11 @@
       <workItem from="1743663988526" duration="4969000" />
       <workItem from="1743755492082" duration="5094000" />
       <workItem from="1743773163643" duration="5879000" />
-      <workItem from="1743946108387" duration="1311000" />
+      <workItem from="1743946108387" duration="1916000" />
+      <workItem from="1744181898625" duration="2731000" />
+      <workItem from="1745478374648" duration="21000" />
+      <workItem from="1745830641067" duration="3345000" />
+      <workItem from="1745910592073" duration="6556000" />
     </task>
     <servers />
   </component>

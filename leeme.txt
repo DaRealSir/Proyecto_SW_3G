@@ -1,2 +1,6 @@
-- Listado de videojuegos en la base de datos
-- Visualizacon de la información del videojuego en su página correspondiente
+- Visualizacion y eliminacion de reviews
+- Visualizacion, adicion y eliminacion de reviews
+- Visualizacion del foro
+- Lista de videojuegos con diferentes formas de ordenar
+- Inicio de sesion para usuarios, periodistas y admins
+- Adicion, modificacion y eliminacion de videojuegos
