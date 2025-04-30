@@ -19,6 +19,14 @@
             <option value="optionAsc"  <%= filtersValues.asc_desc_option === "optionAsc" ? "selected" : "" %>> Ascendente</option>
         </select>
 
+        
+        <label for="options" style="margin-left: 20px;"> Género: </label>
+        <select id="genre_option" name="genre_option" style="margin-left: 10px;" value = "<%=filtersValues.genre_option%>">
+            <option value= "Cualquiera"  <%= filtersValues.genre_option ===  "cualquiera"  ? "selected" : "" %>> Cualquiera </option>
+            <% genreList.forEach(genre=>{ %>
+                <option value= "<%= genre.name %>"  <%= filtersValues.genre_option ===  genre.name  ? "selected" : "" %>> <%= genre.name %></option>
+            <% }) %>
+        </select>
     </h4>
 
     </h4>
@@ -29,7 +37,7 @@
     <div class="game_list_grid">
         <% gameList.forEach(game=>{ %>
             <div class="game-card">
-                <h3><a href="/games/<%= game.id %>"><%= game.title %></a></h3>
+                <h3 class = "game_title"><a href="/games/<%= game.id %>"><%= game.title %></a></h3>
                 <a href="/games/<%= game.id %>"><img src="<%= game.image %>" alt="Imagen de <%= game.title %>"></a>
                 <div class="game-info">
                     <p>Valoración: <%= game.rating %></p>
@@ -48,6 +56,9 @@
     </p>
 </div>
 
+
+
+
 <% function showGameInfo(game){ %>
     <h3 style="margin-left: 20px;"><a href="/games/<%= game.id %>"><%= game.title %></a></h3>
     <p><a href="/games/<%= game.id %>"></a><img src="<%= game.image %>"></a></p>
@@ -61,6 +72,7 @@
     <% if(session.esAdmin ) { %>
         <p> Herramientas admin : <a href="/games/addGame"> Añadir juego</a> </p>
 <% }} %>
+
 
 <script>
     /*
