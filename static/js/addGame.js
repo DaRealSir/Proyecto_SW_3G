@@ -69,23 +69,25 @@ function checkRating(e) {
     if (validRating(rating.value)) {
         rating.setCustomValidity('');
     } else {
-        rating.setCustomValidity("Rating must be >= 0 and <=5 ");
+        rating.setCustomValidity("Rating must be and integer and >= 0 and <=10 ");
     }
 
     const isValidRating = rating.checkValidity();
     if (isValidRating) {
         rating.setCustomValidity('');
         feedback.textContent = '✔';
+        feedback.style.color = 'green';
     } else {
         feedback.textContent = '⚠';
+        document.style.color = 'red';
     }
     // Muestra el mensaje de validación
     rating.reportValidity();
 }
 
 function validRating(rating) {
-    
-    return Number.isInteger(rating) && (intRating >= 0 && intRating <= 10);
+    let intRating = parseInt(rating);
+    return Number.isInteger(intRating) && (intRating >= 0 && intRating <= 10);
 }
 
 async function titleAvailable(e) {
@@ -105,11 +107,11 @@ async function titleAvailable(e) {
         if (estaDisponible) {
             title.setCustomValidity('');
             feedback.textContent = '✔';
-            document.querySelector('.feedback').style.color = 'green';
+            feedback.style.color = 'green';
         } else {
             title.setCustomValidity('El titulo ya existe en la base de datos!');
             feedback.textContent = '⚠';
-            document.querySelector('.feedback').style.color = 'red';
+            feedback.style.color = 'red';
         }
     } catch (err) {
         console.error(`Error: `, err);

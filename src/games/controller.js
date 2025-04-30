@@ -24,7 +24,7 @@ export function showGameList(req, res) {
     let numGamesPerPage = 4;
 
     const gameList = Game.getSearchedGameList("", "title", "DESC", numGamesPerPage, (page - 1) *numGamesPerPage);
-    const genres = Genre.getListGenres();
+    const genres = Genre.getAllGenres();
     render(req, res, 'pages/listajuegos', {
         errores: {},
         info: {},
@@ -89,7 +89,7 @@ export function showGameListSearched(req, res) {
          gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) *numGamesPerPage, genre_id);
     }
 
-    const genres = Genre.getListGenres();
+    const genres = Genre.getAllGenres();
     render(req, res, 'pages/listajuegos', {
         errores: {},
         info: {},

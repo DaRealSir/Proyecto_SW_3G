@@ -302,8 +302,12 @@ export class Game {
         return Game.#update(this);
     }
     static titleAvailable(title) {
-        const  titleExists = this.getGameByTitle({title});
-        return titleExists === 1;
+        try{
+        this.getGameByTitle(title);
+        }catch(e){
+            return true; //Salta un error de GameNotFound
+        }
+        return false;
     }
 }
 

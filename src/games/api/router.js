@@ -1,12 +1,12 @@
 import express from 'express';
 import { query, body } from 'express-validator';
-import {checktTitle} from './controller.js';
+import {checkTitle} from './controller.js';
 import asyncHandler from 'express-async-handler';
 
-const usuariosApiRouter = express.Router();
+const gamesApiRouter = express.Router();
 
-usuariosApiRouter.post('/disponible'
+gamesApiRouter.post('/available'
     , body('title', 'Title taken')
-    , asyncHandler(checktTitle));
+    , asyncHandler(checkTitle));
     
 export default gamesApiRouter;

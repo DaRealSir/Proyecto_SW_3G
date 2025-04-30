@@ -1,15 +1,16 @@
 import { validationResult, matchedData } from 'express-validator';
-import { Usuario } from '../Usuario.js';
+import { Game } from '../Game.js';
 
-export async function checkUsername(req, res) {
+export async function checkTitle(req, res) {
     const result = validationResult(req);
     const datos = matchedData(req, { includeOptionals: true });
     if (! result.isEmpty()) {
         const errores = result.array();
         return res.status(400).json({ status: 400, errores });
     }
-    const { username } = datos;
-    const disponible = ! Usuario.existeUsername(username);
+    const {title} = datos;
+    console.log(title);
+    const disponible = Game.titleAvailable(title);
 
     return res.status(200).json(disponible);
 }
