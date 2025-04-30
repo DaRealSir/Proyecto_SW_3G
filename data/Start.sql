@@ -19,7 +19,10 @@ VALUES ('Action'),
        ('Adventure'),
        ('RPG'),
        ('Shooter'),
-       ('Open World');
+       ('Open World'),
+       ('Mistery'),
+       ('FPS'),
+       ('Rogue-lite');
 
 INSERT INTO game_genre (game_id, genre_id)
 VALUES (1, 2), -- Zelda - Adventure
