@@ -127,7 +127,7 @@ export function showGameInfo(req, res) {
 
 export function viewAddGameBD(req, res) {
 
-    let contenido = 'pages/addGamePage';
+    let contenido = 'pages/addGameForm/addGamePage';
     let genreList = Genre.getAllGenres();
     render(req, res, contenido, {
         errores: {},
@@ -149,7 +149,7 @@ export function doAddGameBD(req, res) {
     if (! result.isEmpty()) {
         const errores = result.mapped();
         const datos = matchedData(req);
-        return render(req, res, 'pages/addGamePage', {
+        return render(req, res, 'pages/addGameForm/addGamePage', {
             datos,
             errores,
             info:{
@@ -169,7 +169,7 @@ export function doAddGameBD(req, res) {
 
         const game2 = Game.insert(game);
 
-        render(req, res, 'pages/addGamePage', {
+        render(req, res, 'pages/addGameForm/addGamePage', {
             errores: {},
             exito: 'Juego insertado con exito en la Base de Datos',
             info:{
@@ -192,7 +192,7 @@ export function doAddGameBD(req, res) {
 
         let error = 'No se ha podido insertar juego';
 
-        render(req, res, 'pages/addGamePage', {
+        render(req, res, 'pages/addGameForm/addGamePage', {
             error,
             datos: {},
             errores: {},

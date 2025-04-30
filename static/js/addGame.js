@@ -84,6 +84,7 @@ function checkRating(e) {
 }
 
 function validRating(rating) {
+    
     return Number.isInteger(rating) && (intRating >= 0 && intRating <= 10);
 }
 

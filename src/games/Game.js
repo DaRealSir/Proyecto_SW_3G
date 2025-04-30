@@ -302,13 +302,8 @@ export class Game {
         return Game.#update(this);
     }
     static titleAvailable(title) {
-<<<<<<< HEAD
-        const  titleExists = this.#getByTitleStmt.get({title});
-        return titleExists !== undefined;
-=======
         const  titleExists = this.getGameByTitle({title});
         return titleExists === 1;
->>>>>>> parent of 65424be (Arreglos de errores que no me di cuenta)
     }
 }
 
