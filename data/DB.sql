@@ -26,7 +26,6 @@ CREATE TABLE game
     favNumber   INTEGER DEFAULT 0 CHECK (favNumber >= 0),
     image       TEXT, -- Columna para las imágenes (puedes almacenar varias rutas separadas por comas)
     company_id  INTEGER NOT NULL,
-    genre       NOT_NULL,
     FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
 );
 

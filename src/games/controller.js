@@ -128,10 +128,11 @@ export function showGameInfo(req, res) {
 export function viewAddGameBD(req, res) {
 
     let contenido = 'pages/addGamePage';
-
+    let genreList = Genre.getAllGenres();
     render(req, res, contenido, {
         errores: {},
-        info: {}
+        info: {},
+        genreList: genreList
     });
 }
 
@@ -432,3 +433,4 @@ function getCurrentUTCTime() {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+

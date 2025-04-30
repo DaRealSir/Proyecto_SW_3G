@@ -301,6 +301,15 @@ export class Game {
         if (this.#id === null) return Game.#insert(this);
         return Game.#update(this);
     }
+    static titleAvailable(title) {
+<<<<<<< HEAD
+        const  titleExists = this.#getByTitleStmt.get({title});
+        return titleExists !== undefined;
+=======
+        const  titleExists = this.getGameByTitle({title});
+        return titleExists === 1;
+>>>>>>> parent of 65424be (Arreglos de errores que no me di cuenta)
+    }
 }
 
 export class GameNotFound extends Error {
@@ -326,4 +335,6 @@ export class GameExists extends Error {
         super(`Game already exists: ${title}`, options);
         this.name = 'GameExists';
     }
+
 }
+
