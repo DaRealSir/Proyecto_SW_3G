@@ -24,7 +24,7 @@ export function showGameList(req, res) {
     let numGamesPerPage = 4;
 
     const gameList = Game.getSearchedGameList("", "title", "DESC", numGamesPerPage, (page - 1) *numGamesPerPage);
-    const genres = Genre.getListGenres();
+    const genres = Genre.getAllGenres();
     render(req, res, 'pages/listajuegos', {
         errores: {},
         info: {},
@@ -89,7 +89,7 @@ export function showGameListSearched(req, res) {
          gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) *numGamesPerPage, genre_id);
     }
 
-    const genres = Genre.getListGenres();
+    const genres = Genre.getAllGenres();
     render(req, res, 'pages/listajuegos', {
         errores: {},
         info: {},
@@ -127,7 +127,7 @@ export function showGameInfo(req, res) {
 
 export function viewAddGameBD(req, res) {
 
-    let contenido = 'pages/addGamePage';
+    let contenido = 'pages/addGameForm/addGamePage';
     let genreList = Genre.getAllGenres();
     render(req, res, contenido, {
         errores: {},
@@ -149,7 +149,7 @@ export function doAddGameBD(req, res) {
     if (! result.isEmpty()) {
         const errores = result.mapped();
         const datos = matchedData(req);
-        return render(req, res, 'pages/addGamePage', {
+        return render(req, res, 'pages/addGameForm/addGamePage', {
             datos,
             errores,
             info:{
@@ -169,7 +169,7 @@ export function doAddGameBD(req, res) {
 
         const game2 = Game.insert(game);
 
-        render(req, res, 'pages/addGamePage', {
+        render(req, res, 'pages/addGameForm/addGamePage', {
             errores: {},
             exito: 'Juego insertado con exito en la Base de Datos',
             info:{
@@ -192,7 +192,7 @@ export function doAddGameBD(req, res) {
 
         let error = 'No se ha podido insertar juego';
 
-        render(req, res, 'pages/addGamePage', {
+        render(req, res, 'pages/addGameForm/addGamePage', {
             error,
             datos: {},
             errores: {},
@@ -433,3 +433,4 @@ function getCurrentUTCTime() {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
