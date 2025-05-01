@@ -6,7 +6,7 @@ import reviewRouter from './reviews/router.js';
 import informacionRouter from './information/router.js';
 import usersRouter from './users/router.js';
 import contentRouter from './content/router.js';
-
+import apiRouter from './apiRouter.js';
 import { errorHandler } from './middleware/error.js';
 import forumRouter from './forum/router.js';
 
@@ -60,4 +60,5 @@ app.use('/reviews', reviewRouter);
 app.use('/genres', genreRouter);
 app.use('/content', contentRouter);
 app.use('/forum', forumRouter);
+app.use('/api',apiRouter);
 app.use(errorHandler);

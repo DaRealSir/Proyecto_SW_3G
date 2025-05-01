@@ -301,6 +301,14 @@ export class Game {
         if (this.#id === null) return Game.#insert(this);
         return Game.#update(this);
     }
+    static titleAvailable(title) {
+        try{
+        this.getGameByTitle(title);
+        }catch(e){
+            return true; //Salta un error de GameNotFound
+        }
+        return false;
+    }
 }
 
 export class GameNotFound extends Error {
@@ -326,4 +334,6 @@ export class GameExists extends Error {
         super(`Game already exists: ${title}`, options);
         this.name = 'GameExists';
     }
+
 }
+
