@@ -28,7 +28,7 @@
     <% function showUserList() { %>
         <% userList.forEach(User => { %>
         <div id="user_info_in_list">
-            <form action="/users/delete/<%= User.username %>" method="POST">
+            <form action="/users/delete/<%= User.id %>" method="POST">
                 <input type="hidden" name="username" value="<%= User.username %>">
                 <button type="submit">Eliminar <%= User.username %></button>
             </form>

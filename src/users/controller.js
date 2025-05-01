@@ -5,10 +5,10 @@ export function deleteUser(req,res)
 {
     
     let contenido = 'pages/admin';
-    let name=req.params.username.trim();
+    
  
   
-    User.disableUpdate(name);
+    User.update(new User("Borrado",null,"NO",null,RolesEnum.BANNED,req.params.id));
 
    // User.delete(req.params.username);
     const userList = User.getUserList();

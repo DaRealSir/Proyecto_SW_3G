@@ -145,7 +145,9 @@ export class User {
 
     static getUserByID(id) {
         const user = this.#getByIdStmt.get({id});
-        if (user == undefined) throw new userNotFound(id);
+       
+        if (user == undefined){ throw new userNotFound(id);}
+        console.log(user.username);
         const {username, bio, password, profile_picture, user_type} = user;
         return new User(username, bio, password, profile_picture, user_type, id);
     }
@@ -179,27 +181,10 @@ export class User {
         return user;
     }
 
-    static disableUpdate(username) {
-        try {
-            username=username.trim();
-            console.log(username);
-            const user = this.getUserByUsername(username);
-            console.log(user.username);
-            console.log(user.id);
-            this.#updateStmt.run({
-                username: "Borrado",
-                bio: null,
-                password: user.#password,
-                profile_picture: null,
-                user_type: RolesEnum.BANNED,
-                id: Math.floor(user.id)
-            });
-        } catch (e) {
-            throw new userNotFound(username);
-        }
-    }
+   
 
-    static #update(user) {
+    static update(user) {
+        
         const datos = {
             username: user.#username,
             bio: user.#bio,
@@ -208,6 +193,7 @@ export class User {
             user_type: user.#user_type,
             id: user.#id
         };
+        console.log(datos);
         this.#updateStmt.run(datos);
         return user;
     }
@@ -242,7 +228,7 @@ export class User {
 
     persist() {
         if (this.#id === null) return User.#insert(this);
-        return User.#update(this);
+        return User.update(this);
     }
 
 

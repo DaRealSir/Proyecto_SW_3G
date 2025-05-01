@@ -20,5 +20,5 @@ usersRouter.get('/register', viewRegister)
 usersRouter.get('/register', viewRegister);
 usersRouter.get('/listausuarios', viewUserList);
 usersRouter.post('/listausuarios', showUserSearch);
-usersRouter.post('/delete/:username', deleteUser);
+usersRouter.post('/delete/:id', deleteUser);
 export default usersRouter;
