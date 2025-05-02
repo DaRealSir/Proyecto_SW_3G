@@ -365,7 +365,7 @@ export function viewAddReview(req, res) {
             info: {},
             gameId: gameId,
             userId: userId,
-            game: game // <--- ¡Pasa el objeto 'game' a la vista!
+            game: game
         });
 
     } catch (e) {
@@ -430,7 +430,7 @@ export function doAddReviewBD(req, res) {
 
 }
 
-function getCurrentUTCTime() {
+export function getCurrentUTCTime() {
 
     // padStart(x, y) adds y value to the left of the value x times
     const date = new Date();

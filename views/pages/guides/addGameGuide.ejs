@@ -1,0 +1,37 @@
+<h1>Escribir guia para <%= game.title %></h1>
+
+<form action="/games/addGuide" method="POST">
+    <input type="hidden" name="game_id" value="<%= gameId %>">
+    <input type="hidden" name="user_id" value="<%= userId %>">
+    <fieldset>
+        <% if (locals.error) { %>
+            <p class="error"><%= locals.error %></p>
+        <% } %>
+        <% if (locals.exito) { %>
+            <p class="success"><%= locals.exito %></p>
+        <% } %>
+
+
+        <legend>Escribir guia</legend>
+        <div class="form-group">
+            <label for="guideContent">Texto:</label>
+            <textarea id="guideContent" name="content"></textarea>
+            <%- locals.helpers && helpers.error(errores, 'content') %>
+        </div>
+        <button type="submit">Guardar guia</button>
+    </fieldset>
+</form>
+
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: '#guideContent',
+        plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
+        toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+        height: 500,
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    });
+</script>
