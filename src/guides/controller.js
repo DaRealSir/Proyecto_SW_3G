@@ -3,7 +3,7 @@ import {Guides} from "./Guides.js";
 import {logger} from "../logger.js";
 import {Game} from "../games/Game.js";
 import {getCurrentUTCTime} from "../games/controller.js";
-
+import {render} from "../utils/render.js";
 const guidesRouter = express.Router();
 
 export function viewAddGuide(req, res) {
@@ -13,6 +13,7 @@ export function viewAddGuide(req, res) {
     console.log("VIEW ADD GUIDE");
     console.log(req.session);
     console.log(userId);
+    console.log(gameId);
 
     if (!userId) {
         return res.redirect('/users/login');
@@ -20,13 +21,13 @@ export function viewAddGuide(req, res) {
 
     try {
         const game = Game.getGameById(gameId);
-
+        console.log(game);
         if (!game) {
             logger.error(`Juego no encontrado`);
             return res.status(404).render('pages/error', {message: 'Game not found'});
         }
 
-        res.render(req, res, 'pages/guides/addGuide', {
+        render(req, res, 'pages/guides/addGameGuide', {
             errores: {},
             info: {},
             gameId: gameId,
@@ -60,7 +61,9 @@ export function doAddGuide(req, res) {
         logger.error('Error insertando guia');
         logger.debug('Excepcion al insertar guia');
 
-        res.render(req, res, 'pages/guides/addGuide', {
+        let contenido = 'pages/guides/addGameGuide';
+
+        render(req, res, contenido, {
             errores: {},
             error: 'No se pudo guardar la guia',
             info: { content },

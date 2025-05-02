@@ -63,4 +63,5 @@ app.use('/content', contentRouter);
 app.use('/forum', forumRouter);
 app.use('/api',apiRouter);
 app.use('/guides', guidesRouter);
+app.use('/tinymce', express)
 app.use(errorHandler);
