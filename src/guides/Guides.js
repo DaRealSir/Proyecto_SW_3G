@@ -98,7 +98,7 @@ export class Guides{
     }
 
     static insertGuide(guide){
-        const result = this.#insertGuideStmt.run({user_id: guide.user_id, game_id: guide.game_id, date: guide.date, content: guide.content});
+        const result = this.#insertGuideStmt.run({user_id: guide._user_id, game_id: guide._game_id, date: guide._date, content: guide._content});
         guide.#id = result.lastInsertRowid;
         return guide;
     }

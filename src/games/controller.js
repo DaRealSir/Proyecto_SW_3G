@@ -112,11 +112,13 @@ export function showGameInfo(req, res) {
 
     const game = Game.getGameById(id);
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
+    const guidesListByGameId = Guides.getGuideByGame(id);
     const genres = Genre.getGameGenres(game);
     const threadList = Forum.getThreadsByGame(id);
     render(req, res, contenido, {
         game: game,
         reviewList: reviewListByGameId,
+        guidesList: guidesListByGameId,
         genreList: genres,
         threadList: threadList
     });

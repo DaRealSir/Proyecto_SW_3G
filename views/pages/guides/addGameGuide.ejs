@@ -1,9 +1,9 @@
 <h1>Escribir guía para <%= game.title %></h1>
 
-<form action="/games/addGuide" method="POST">
+<form action="/guides/addGuide/<%= game.id %>" method="POST">
 
     <input type="hidden" name="game_id" value="<%= gameId %>">
-    <input type="hidden" name="user_id" value="<%= userId %>">
+    <input type="hidden" name="user_id" value="<%= session.UserID %>">
 
     <fieldset>
         <legend>Escribir guía</legend>
