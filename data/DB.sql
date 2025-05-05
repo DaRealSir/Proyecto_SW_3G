@@ -100,6 +100,8 @@ CREATE TABLE guides(
     user_id INTEGER NOT NULL,
     game_id INTEGER NOT NULL,
     date DATETIME NOT NULL,
+    title TEXT NOT NULL,
+    guide_type TEXT CHECK (guide_type IN ('N', 'G')) NOT NULL,
     content TEXT NOT NULL,
     FOREIGN KEY (game_id) REFERENCES game (id) on DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE

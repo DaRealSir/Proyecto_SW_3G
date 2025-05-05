@@ -8,6 +8,7 @@ import {matchedData, validationResult} from 'express-validator';
 
 import {logger} from '../logger.js';
 import {Forum} from '../forum/Forum.js';
+import {Guides} from "../guides/Guides.js";
 
 const juegosRouter = express.Router();
 

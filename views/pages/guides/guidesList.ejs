@@ -1,9 +1,26 @@
 <section>
-    <% showGuidesList(game.id) %>
-</section>
+    <% if (guidesList && guidesList.length > 0) { %>
+        <% guidesList.forEach(guide => { %>
+            <div class="guide-item">
+                <a href="/guides/<%= guide.id %>" class="guide-link">
+                    <span class="guide-type"><%= guide.guide_type === 'N' ? 'N' : 'G' %></span>
+                    <span class="guide-title">
+            <%= guide.title.length > 30
+                    ? guide.title.slice(0, 30) + '...'
+                    : guide.title %>
+          </span>
 
-<%function showGuidesList(id) {%>
-    <%guidesList.forEach(guide => {
-        <p>
-        }%>
-<%}%>
+                    <span class="guide-date">
+            <%= new Date(guide.date).toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }) %>
+          </span>
+                </a>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>No hay guías disponibles para este juego.</p>
+    <% } %>
+</section>

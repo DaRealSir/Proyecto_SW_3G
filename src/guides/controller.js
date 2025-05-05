@@ -40,6 +40,8 @@ export function doAddGuide(req, res) {
     const gameId = req.body.game_id;
     const userId = req.body.user_id;
     const content = req.body.content;
+    const title = req.body.title;
+    const guide_type = req.body.guide_type;
     const date = getCurrentUTCTime();
 
 
@@ -49,7 +51,7 @@ export function doAddGuide(req, res) {
     }
 
     try {
-        const guide = new Guides(null, userId, gameId, date, content);
+        const guide = new Guides(null, userId, gameId, date, content, title, guide_type);
         Guides.insertGuide(guide);
 
         return res.redirect(`/games/${gameId}`);
@@ -80,6 +82,35 @@ export function listGuidesByGameId(req, res) {
 
     try{
         const guideList = Guides.getGuideByGame(gameId);
+        render(req, res, 'pages/guides/listGuides', {
+            guides: guideList,
+            gameId: gameId
+        });
+    } catch (e) {
+        logger.error(`Error getting guides for game ${gameId}: ${e.message}`);
+        res.status(500).render('pages/error', {message: 'Error loading guides'});
+    }
+}
 
+export function showFullGuide(req, res){
+    const guideId = req.params.guide_id;
+
+    if (!guideId) {
+        logger.error('guide_id no encontrado');
+        return res.status(404).render('pages/error', { message: 'Guía no encontrada' });
+    }
+
+    try {
+        const guide = Guides.getGuideById(guideId);
+
+        if (!guide) {
+            logger.warn(`No existe la guía con ID ${guideId}`);
+            return res.status(404).render('pages/error', { message: 'Guía no encontrada' });
+        }
+
+        return render(req, res, 'pages/guides/fullGuide', { guide });
+    } catch (e) {
+        logger.error(`Error al obtener la guía ${guideId}: ${e.message}`);
+        return res.status(500).render('pages/error', { message: 'Error al cargar la guía completa' });
     }
 }

@@ -4,9 +4,15 @@
 
     <input type="hidden" name="game_id" value="<%= gameId %>">
     <input type="hidden" name="user_id" value="<%= session.UserID %>">
+    <input type="hidden" name="guide_type" value="G">
+
 
     <fieldset>
         <legend>Escribir guía</legend>
+
+        <label>Titulo:</label> <label>
+            <textarea name="title"></textarea>
+        </label><%- helpers.error(errores, 'title') %>
 
         <% if (locals.error) { %>
             <p class="error"><%= locals.error %></p>
