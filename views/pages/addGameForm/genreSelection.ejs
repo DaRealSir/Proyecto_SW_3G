@@ -1,0 +1,11 @@
+<form id="genreForm" action= "/games/addGame" method="GET">
+<select name = "genres" id = "genres" multiple>
+    <%
+    let numberGenres = genreList.length;
+    for(let i = 0; i < numberGenres; i++){
+        let genre = genreList[i];
+        if(genre != undefined){%>
+        <option value = <%= genre.id %>><%= genre.name %></option>
+    <%}}%>
+</select>
+</form>

@@ -447,12 +447,12 @@ header::before {
 
     /*Cosas dropdown generos*/
 .dropdown_genres_button{
-        color: rgb(255,255,255);
+        color: white;
         background: #3f033c;
         width: inherit;
 }
 .dropdown_genres_content{
-        border-bottom: 2px solid rgb(255, 255, 255);
+        border-bottom: 2px solid white;
         visibility:hidden;
         max-height: 1000px;
         display: flex;
@@ -467,7 +467,7 @@ header::before {
     align-items: center;
     text-align: center;
     justify-content: space-between;
-    background-color: #d19ecb;
+    background-color: indianred;
     border-radius: 5px;
     width: 90%;
 }
@@ -538,4 +538,34 @@ header::before {
     margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+    /* Cosas para los géneros en la creación de un juego */
+.genre_list_grid{
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    gap: 5px;
+}
+.selected_genre_list{
+    display: grid;
+    grid-template-columns: repeat(1, max-content);
+    grid-template-rows: repeat(5,max-content);
+    gap: 5px;
+}
+.genre_grid_item{
+    text-align: center;
+    border-radius: 5px;
+    background-color: indianred;
+}
+.genre_pagination{
+    display: flex;
+    align-items: center;
+}
+.genre_pagination_button{
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 5px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color:rgb(113, 35, 87);
 }
