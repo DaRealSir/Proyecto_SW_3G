@@ -1,21 +1,29 @@
 <article class="full-guide">
-    <h1 class="full-guide-title"><%= guide.title %></h1>
+    <h1 class="full-guide-title"><%= guide._title %></h1>
 
     <div class="full-guide-meta">
-        <span class="guide-type"><%= guide.guide_type === 'N' ? 'Noticia' : 'Guía' %></span>
+        <span class="guide-type">
+      <%= guide._guide_type === 'N' ? 'Noticia' : 'Guía' %>
+    </span>
         &nbsp;|&nbsp;
         <span class="guide-date">
-      <%= new Date(guide.date).toLocaleDateString('es-ES', {
+      <%= new Date(guide._date).toLocaleDateString('es-ES', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric'
       }) %>
     </span>
         &nbsp;|&nbsp;
-        <span class="guide-user">Por <%= guide.user_name %></span>
+        <span class="guide-user">
+      Por <a href="/users/<%= guide._user_id %>"><%= guide._user_name %></a>
+    </span>
+        &nbsp;|&nbsp;
+        <span class="guide-game">
+      Juego: <a href="/games/<%= guide._game_id %>"><%= guide._game_title %></a>
+    </span>
     </div>
 
     <div class="full-guide-content">
-        <%= guide.content %>
+        <%- guide._content %>
     </div>
 </article>

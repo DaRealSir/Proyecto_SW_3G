@@ -3,13 +3,14 @@
         <% guidesList.forEach(guide => { %>
             <div class="guide-item">
                 <a href="/guides/<%= guide.id %>" class="guide-link">
-                    <span class="guide-type"><%= guide.guide_type === 'N' ? 'N' : 'G' %></span>
+          <span class="guide-type">
+            <%= guide.guide_type === 'N' ? 'N' : 'G' %>
+          </span>
                     <span class="guide-title">
             <%= guide.title.length > 30
                     ? guide.title.slice(0, 30) + '...'
                     : guide.title %>
           </span>
-
                     <span class="guide-date">
             <%= new Date(guide.date).toLocaleDateString('es-ES', {
                 day: '2-digit',

@@ -28,9 +28,6 @@
 
 
 
-<script>console.log("USERIDDDDD" + session.UserID)</script>
-
-
 <form action="/games/addReview/<%= game.id %>" method="GET">
     <input type="hidden" name="user_id" value="<%= session.UserID %>">
     <button type="submit">Añadir review </button>

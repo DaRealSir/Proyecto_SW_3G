@@ -4,6 +4,7 @@ import {logger} from "../logger.js";
 import {Game} from "../games/Game.js";
 import {getCurrentUTCTime} from "../games/controller.js";
 import {render} from "../utils/render.js";
+import {User} from "../users/User.js";
 const guidesRouter = express.Router();
 
 export function viewAddGuide(req, res) {
@@ -21,6 +22,7 @@ export function viewAddGuide(req, res) {
             logger.error(`Juego no encontrado`);
             return res.status(404).render('pages/error', {message: 'Game not found'});
         }
+        const guide = Guides.getGuideById(guideId);
 
         render(req, res, 'pages/guides/addGameGuide', {
             errores: {},
@@ -83,8 +85,8 @@ export function listGuidesByGameId(req, res) {
     try{
         const guideList = Guides.getGuideByGame(gameId);
         render(req, res, 'pages/guides/listGuides', {
-            guides: guideList,
-            gameId: gameId
+            guidesList: guideList,
+            gameId
         });
     } catch (e) {
         logger.error(`Error getting guides for game ${gameId}: ${e.message}`);
@@ -102,6 +104,17 @@ export function showFullGuide(req, res){
 
     try {
         const guide = Guides.getGuideById(guideId);
+
+        console.log("GUIA");
+        console.log(guide);
+        const user = User.getUserByID( guide._user_id);
+        guide._user_name = user.username || user.name;
+
+        const game = Game.getGameById(guide._game_id);
+        guide._game_title = game.title;
+
+        console.log("GUIA");
+        console.log(guide);
 
         if (!guide) {
             logger.warn(`No existe la guía con ID ${guideId}`);
