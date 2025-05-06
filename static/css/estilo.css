@@ -11,12 +11,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 20px 30px;
+    padding: 15px 20px;
     background-color: #4d0b5e;
     color: white;
     position: relative;
     z-index: 1;
 }
+
 
 header .logo-opciones {
     display: flex;
@@ -36,6 +37,36 @@ header .opciones a {
     font-size: 16px;
 }
 
+header .saludo a{
+    
+    color: #ffffff; 
+    
+    font-size: 18px;
+}
+
+header .saludo p{
+    
+    color: #ffffff; 
+    
+    font-size: 18px;
+}
+
+
+/*
+.saludo, .opciones{
+    color: #ffffff; 
+} 
+
+.saludo a{
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.saludo p{
+    color: #ffffff;
+    font-size: 20px;
+}*/
+
 header .saludo {
     display: flex;
     flex-direction: column;
@@ -45,9 +76,9 @@ header .saludo {
 header .saludo img {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
+    border-radius: 25%;
     object-fit: cover;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
 }
 
 header .saludo p {
@@ -56,10 +87,77 @@ header .saludo p {
     text-align: right;
 }
 
+
+header a, header a:visited {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+header a:hover {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+@media (max-width: 719px) {
+    header {
+        padding: 5px 10px;
+    }
+
+    header .saludo img {
+        width: 40px;
+        height: 40px;
+    }
+
+    header .logo-opciones img {
+        height: 50px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+    }
+
+    header .saludo p {
+        font-size: 12px;
+    }
+    header .saludo a {
+        font-size: 12px;
+    }
+    
+    header .opciones a {
+        margin-top: 2px;
+        font-size: 14px;
+    }
+}
+
+
+main {
+    padding: 20px;
+    min-height: 600px;
+    /*width: 97%;*/
+    background-color: white;
+}
+
+
+@media (max-width: 719px) {
+    main{
+    padding: 10px;
+    }
+
+    h1{
+        font-size: 20px;
+        margin-top: 5px;
+        margin-left: 5px;
+    }
+
+    label{
+        
+        font-size: 14px;
+    }
+}
+
 div#contenedor {
     
     max-width: 1350px;
-    min-width: 720px;
+    /*min-width: 400px;*/
     width: 100%;
     margin: auto;
     border: 1px solid black;
@@ -136,7 +234,7 @@ div#contenedor {
     height: 330px;
     flex: 1;
     text-align: center;
-    padding: 15px;
+    padding: 5px;
     border: 1px solid rgb(87, 69, 79);
     background-color: #c8b4cc;
     border-radius: 5px;
@@ -145,8 +243,16 @@ div#contenedor {
 }
 
 .bloque-index .game_title{
+    /*
     margin-top: -20px;
     height: 30px;
+    max-width: 25em;
+*/
+    margin-top: -20px;
+    height: 40px;
+    text-align: center;
+    font-size: 16px;
+    overflow: hidden;
 }
 
 .bloque-index img{
@@ -154,6 +260,33 @@ div#contenedor {
     height: 280px;
     border-radius: 5px;
     object-fit: cover;
+    
+}
+
+
+
+@media (max-width: 720px) {
+    
+    .bloque-index {
+        height: 230px;
+            
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+
+    .bloque-index .game_title{
+    
+        text-align: center;
+      
+    }
+
+    .bloque-index img{
+        width: 98%;
+        height: 180px;
+        border-radius: 5px;
+        object-fit: cover;
+    }
 }
 
 /* GAME LIST ---------*/
@@ -226,6 +359,26 @@ div#contenedor {
     color: #333;
     text-align: center;
 }
+
+@media (max-width: 719px) {
+    
+    .game-card {
+        width: 100%;
+    }
+    .game-card p{
+        font-size: 14px;
+    }
+    .game-card .game_title{
+        font-size: 15px;
+    }
+    .game-info {
+        width: 98%;
+    }
+    .game-card img {
+        width: 96%;
+        height: 160px;
+    }
+}
 /*
  .bloque img {
     width: 80%;
@@ -293,6 +446,23 @@ div#game_list {
     margin-left : 10px;
 }
 
+
+@media (max-width: 720px) {
+    .juego_info_superior {
+        flex-direction: column;
+        align-items: center; 
+    }
+    .juego_info {
+        width: 98%;
+        margin-bottom: 10px; 
+
+    }
+    .juego_info2 {
+        width: 98%;
+
+    }
+}
+
 .juego_info3 {
     width: 100%;
     /*float: left;*/
@@ -343,22 +513,7 @@ div#juego_info_in_list {
     margin-left: 10px;
 }*/
 
-header {
-    padding: 20px;
-    /*background-color: #4d0b5e;*/
-    /*color: white;*/
-}
 
-header a, header a:visited {
-    font-weight: bold;
-    text-decoration: none;
-}
-
-header a:hover {
-    color: red;
-    font-weight: bold;
-    text-decoration: underline;
-}
 
 /*
 main {
@@ -370,12 +525,6 @@ main {
 }*/
 
 
-main {
-    padding: 20px;
-    min-height: 600px;
-    width: 97%;
-    background-color: white;
-}
 
 /*
 footer {
@@ -477,19 +626,6 @@ header::before {
     z-index: -1;
 }
 
-.saludo, .opciones{
-    color: #ffffff; 
-} 
-
-.saludo a{
-    color: #ffffff;
-    font-size: 20px;
-}
-
-.saludo p{
-    color: #ffffff;
-    font-size: 20px;
-}
 
 .opciones a{
     color: #ffffff;
