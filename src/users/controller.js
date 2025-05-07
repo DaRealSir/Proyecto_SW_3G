@@ -172,11 +172,7 @@ export function doLogin(req, res) {
             req.session.name=usuario.username;
             req.session.picture=usuario.profile_picture;
         }
-        else{
-            content='pages/Banned';
-        }
-      
-    
+
 /*
         console.log(usuario);
         console.log(usuario.user_type);
