@@ -1,6 +1,59 @@
 import {body} from 'express-validator';
 import {RolesEnum, User} from './User.js';
 
+
+export function showUserEdit(req,res)
+{
+    let contenido='pages/viewUserEdit';
+    const userID = req.params.id;
+    const user =User.getUserByID(userID);
+
+    res.render(contenido,{
+       
+        info:{
+            username: user.username,
+            bio: user.bio,
+            pfp: user.profile_picture,
+            id: user.id
+        }
+    });
+}
+
+
+export function doUserEdit(req,res)
+{
+    const username= req.body.username.trim();
+    const bio=req.body.bio.trim();
+    const pfp=req.body.pfp.trim();
+    const newP=req.bio.new_pass;
+    const id=req.params.id;
+    const user=User.getUserByID(id);
+
+
+    let contenido='pages/admin';
+
+    if(!newP||newP.trim()==='')
+    {
+        const userEdit =new User(username,bio,newP,pfp,user.user_type,id);
+        console.log(userEdit);
+        User.update(userEdit);
+    }
+    else{
+        const userEdit = new User(username,bio,user.password,user.user,id);
+        console.log(userEdit);
+        User.update(userEdit);
+    }
+    req.session.name = username;
+    req.session.profile_picture=pfp;
+   
+    res.render('page',{
+        contenido ,
+        session : req.session
+
+    });
+
+}
+
 export function deleteUser(req,res)
 {
     

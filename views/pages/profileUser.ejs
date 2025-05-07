@@ -12,7 +12,9 @@
 
 
         <div class="buttons-page">
-            <button onclick="location.href='/users/viewMod/<%= userData.id %>'">Editar</button>
+            <form action="/users/editUser/<%= userData.id %>" method="GET" style="display:inline;">
+                <button type="submit">Editar</button>
+            </form>
         </div>
     </div>
 <% } else { %>
