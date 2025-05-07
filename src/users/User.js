@@ -36,8 +36,13 @@ export class User {
         this.#id = id;
     }
 
+    get password()
+    {
+        return this.#password;
+    }
 
     set password(newPassword) {
+        console.log(newPassword);
         this.#password = bcrypt.hashSync(newPassword);
     }
 

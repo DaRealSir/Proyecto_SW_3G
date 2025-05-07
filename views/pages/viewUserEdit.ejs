@@ -1,6 +1,6 @@
 <h1>Editar usuario <%= info.username %> </h1>
 
-<form action="/user/<%= info.id %>" method="POST">
+<form action="/users/editUser/<%= info.id %>" method="POST">
     <fieldset>
         <legend>Modificar Usuario</legend>
         <label>Nombre</label><input type="text"name="username" value="<%= info.username %>">
