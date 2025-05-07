@@ -90,7 +90,7 @@ export class User {
         this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password, profile_picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
         this.#updateStmt = db.prepare('UPDATE user SET username = @username, bio = @bio, password = @password,  profile_picture = @profile_picture, user_type = @user_type WHERE id = @id');
        this.#getAllUsersStmt = db.prepare("SELECT * FROM user WHERE username != 'Borrado'");
-        this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM user WHERE username LIKE @username ORDER BY 
+        this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM user WHERE username LIKE @username AND user_type != 'B' ORDER BY 
                                                             CASE 
                                                                 WHEN @orderBy = 'title' THEN username
                                                                 WHEN @orderBy = 'Type' THEN user_type
@@ -98,7 +98,7 @@ export class User {
                                                              END 
                                                              ASC
                                                          LIMIT @number OFFSET @offset`);
-        this.#getSearchedListGamesDescStmt = db.prepare(`SELECT * FROM user WHERE username LIKE @username ORDER BY 
+        this.#getSearchedListGamesDescStmt = db.prepare(`SELECT * FROM user WHERE username LIKE @username AND user_type != 'B' ORDER BY 
                                                             CASE 
                                                                 WHEN @orderBy = 'title' THEN username
                                                                 WHEN @orderBy = 'Type' THEN user_type

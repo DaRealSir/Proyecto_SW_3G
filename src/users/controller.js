@@ -77,7 +77,7 @@ export function viewUserList(req, res) {
     let contenido = 'pages/showUsersDel';
 
 
-    const userList = User.getUserList();
+    const userList = User.getSearchedUserList("", "id", 'ASC', 50, 0); //User.getUserList();
 
     res.render('page', {
         contenido,
@@ -90,7 +90,7 @@ export function showUserSearch(req, res) {
 
     let contenido = 'pages/showUsersDel';
 
-    //const name = req.body.UserName.trim();
+    const name = req.body.UserName.trim();
      
     const order_option = req.body.order_option;
     let order;
@@ -225,11 +225,7 @@ export function doLogin(req, res) {
             req.session.name=usuario.username;
             req.session.picture=usuario.profile_picture;
         }
-        else{
-            content='pages/Banned';
-        }
-      
-    
+
 /*
         console.log(usuario);
         console.log(usuario.user_type);

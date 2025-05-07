@@ -1,7 +1,7 @@
 <h1>Seleccione el usuario que quiere eliminar </h1>
 
-<!--<form action="/users/listausuarios" method="POST">-->
- <!-- <h4>
+<form action="/users/listausuarios" method="POST">
+  <h4>
         <label for="UserName">Search</label>
         <input type="text" name="UserName">
         <button style="margin-left: 10px;" type="submit">Buscar</button>
@@ -20,18 +20,20 @@
 
 
     </h4>
--->  
+
     <div id="user_list">
         <% showUserList() %>
     </div>
 
     <% function showUserList() { %>
         <% userList.forEach(User => { %>
+        <% if(User.id !== session.UserID) { %>   
         <div id="user_info_in_list">
             <form action="/users/delete/<%= User.id %>" method="POST">
                 <input type="hidden" name="username" value="<%= User.username %>">
                 <button type="submit">Eliminar <%= User.username %></button>
             </form>
         </div>
+        <% } %>
         <% }) %>
     <% } %>

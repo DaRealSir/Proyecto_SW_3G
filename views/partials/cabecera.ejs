@@ -31,11 +31,15 @@
 <% } %>
 
 <% function mostrarOpciones(session) { %>
+
+ 
         <% if (session.esAdmin) { %>
             <a href="/content/admin">Administrador</a><br>
         <% } %>
-        <% if (session.esPeriodista) { %>
-            <a href="/content/journal">Artículos</a>
+
+
+        <% if (session.esJournal) { %>
+            <a href="/content/journal">Artículos</a><br>
         <% } %>
 
 <% } %>
