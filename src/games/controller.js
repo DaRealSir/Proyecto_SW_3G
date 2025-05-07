@@ -102,7 +102,6 @@ export function showGameListSearched(req, res) {
             genre_option: genre_option
         }
     })
-
 }
 
 export function showGameInfo(req, res) {

@@ -11,6 +11,10 @@ export function viewAddGuide(req, res) {
     const gameId = req.params.game_id;
     const userId = req.session.UserID;
 
+    console.log("VIEW ADD GUIDE");
+    console.log(gameId);
+    console.log(userId);
+
     if (!userId) {
         return res.redirect('/users/login');
     }
@@ -22,7 +26,7 @@ export function viewAddGuide(req, res) {
             logger.error(`Juego no encontrado`);
             return res.status(404).render('pages/error', {message: 'Game not found'});
         }
-        const guide = Guides.getGuideById(guideId);
+        //const guide = Guides.getGuideById(guideId);
 
         render(req, res, 'pages/guides/addGameGuide', {
             errores: {},
@@ -33,7 +37,7 @@ export function viewAddGuide(req, res) {
         });
 
     } catch (e) {
-        logger.error(`Error, faltan datos `);
+        logger.error(`Error, faltan datos , ${e.message}`);
         res.status(500).render('pages/error', {message: 'Error loading guide creation page.'});
     }
 }
