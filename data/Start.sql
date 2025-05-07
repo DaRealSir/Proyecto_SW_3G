@@ -34,6 +34,18 @@ VALUES (1, 2), -- Zelda - Adventure
        (5, 1), -- RDR2 - Action
        (5, 5); -- RDR2 - Open World
 
+
+INSERT INTO shop (name, image )
+VALUES ('Steam', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/640px-Steam_icon_logo.svg.png'),
+       ('PlayStation', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/PlayStation_logo.svg/991px-PlayStation_logo.svg.png'),
+       ('Nintendo', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Nintendo_red_logo.svg/1024px-Nintendo_red_logo.svg.png');
+
+INSERT INTO game_shop (game_id, shop_id, url)
+VALUES (1, 3, 'https://store.nintendo.es/es/the-legend-of-zelda-breath-of-the-wild-000000000002560066?srsltid=AfmBOopx-0AUpxIQkwtamHZIwtZGI2sYD4DJYv6syEVK_UhSuAgikKtd'), -- Zelda - Nintendo
+       (2, 2, 'https://store.playstation.com/es-es/product/EP9000-CUSA07411_00-0000000GODOFWARN'), -- God of War - PlayStation
+       (2, 1, 'https://store.steampowered.com/app/1593500/God_of_War/'); -- God of War - Steam
+
+
 INSERT INTO user (username, bio, password, profile_picture, user_type)
 VALUES ('User', 'Gamer de aventuras y RPGs.', '$2b$10$JdCg8yL3rRkkr.hhx1rjqOe30F9lhBlqA1sjYJW6ymzYExvQFHyjy',
         'alice.jpg', 'U'),

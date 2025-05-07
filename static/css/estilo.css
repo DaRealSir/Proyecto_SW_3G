@@ -447,6 +447,11 @@ div#game_list {
 }
 
 
+.juego_info2 img{
+    width: 60px;
+}
+ 
+
 @media (max-width: 720px) {
     .juego_info_superior {
         flex-direction: column;
@@ -463,6 +468,7 @@ div#game_list {
     }
 }
 
+
 .juego_info3 {
     width: 100%;
     /*float: left;*/
@@ -476,7 +482,8 @@ div#game_list {
 .juego_info3 h3{
     text-align: center;
 }
- 
+
+
 .review_juego{
     width: 70%;
     background-color: #ffffff;

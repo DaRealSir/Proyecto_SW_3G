@@ -2,6 +2,7 @@ import express from 'express';
 import {Game} from "./Game.js";
 import {Review} from "../reviews/Review.js";
 import {Genre} from "../genres/Genre.js"
+import {Shop} from "../shop/Shop.js"
 
 import {render} from '../utils/render.js';
 import {matchedData, validationResult} from 'express-validator';
@@ -114,11 +115,13 @@ export function showGameInfo(req, res) {
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
     const genres = Genre.getGameGenres(game);
     const threadList = Forum.getThreadsByGame(id);
+    const shopList = Shop.getShopListByGameId(id);
     render(req, res, contenido, {
         game: game,
         reviewList: reviewListByGameId,
         genreList: genres,
-        threadList: threadList
+        threadList: threadList,
+        shopList: shopList
     });
 
 }

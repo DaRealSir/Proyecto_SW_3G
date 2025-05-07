@@ -6,6 +6,8 @@ DROP TABLE if EXISTS user;
 DROP TABLE IF EXISTS user_game;
 DROP TABLE IF EXISTS forum_post;
 DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS shop;
+DROP TABLE IF EXISTS game_shop;
 --Para pruebas
 
 
@@ -29,14 +31,14 @@ CREATE TABLE game
     FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
 );
 
--- Crear tabla de géneros
+-- Crear tabla de generos
 CREATE TABLE genre
 (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT UNIQUE NOT NULL
 );
 
--- Crear tabla de relación entre juegos y géneros
+-- Crear tabla de relacion entre juegos y generos
 CREATE TABLE game_genre
 (
     game_id  INTEGER,
@@ -90,4 +92,23 @@ rating REAL NOT NULL,
 description TEXT NOT NULL,
 FOREIGN KEY (game_id) REFERENCES game (id) on DELETE CASCADE,
 FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE
+);
+
+-- Crear tabla de tiendas
+CREATE TABLE shop
+(
+    id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL,
+    image       TEXT
+);
+
+-- Crear tabla de relacion entre juegos y tiendas
+CREATE TABLE game_shop
+(
+    game_id  INTEGER,
+    shop_id INTEGER,
+    url TEXT,
+    PRIMARY KEY (game_id, shop_id),
+    FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE,
+    FOREIGN KEY (shop_id) REFERENCES shop (id) ON DELETE CASCADE
 );

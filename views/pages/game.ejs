@@ -53,10 +53,13 @@
 
     <p>Disponible en las siguientes tiendas :</p>
 
-    <p><li>TIENDA1</li></p>
-    <p><li>TIENDA2</li></p>
-    <p><li>TIENDA3</li></p>
-    <p><li>TIENDA4</li></p>
+    <% shopList.forEach(shop=>{ %>
+        
+        <div class="shop-games">
+            <a href="<%= shop.url %>"><img src="<%= shop.image %>" alt="Imagen de <%= shop.name %>"></a>
+           
+</div>
+     <% }) %>
 
 
 <% } %>
