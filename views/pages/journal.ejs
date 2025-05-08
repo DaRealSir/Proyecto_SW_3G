@@ -1,18 +1,16 @@
-<div class="buttons-page">
-    <h1>Panel de Administración</h1>
-    <form action="/games/addGame" method="GET">
-        <button type="submit">Add Game</button>
-    </form>
-    <p>
+<h1>My Publications</h1>
 
-    </p>
-    <form action="/users/register" method="GET">
-        <button type="submit">Add Special User</button>
-    </form>
-    <p>
-        
-    </p>
-    <form action="/users/listausuarios" method="GET">
-        <button type="submit">Delete User</button>
-    </form>
+<div id="news_list">
+ <% showNewsList() %>
 </div>
+
+<% function showUserList() { %>
+    <% newslist.forEach(News => { %>
+    <div id="Noticia">
+        <form action="/guides/<%= News._id %>" method="GET">
+            <button type="submit"><%= News._title %> <%= News._date %></button>
+        </form>
+    </div>
+    
+    <% }) %>
+<% } %>
