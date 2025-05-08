@@ -15,10 +15,10 @@
 
 <% function mostrarSaludo(session) { %>
     <% if(session.login) { %>
-        <img src="/static/img/<%= session.picture %>" alt="Foto de perfil"/>
+        <img src="<%= session.picture %>" alt="Foto de perfil" />
         <p>
             <a href="/content/normal"> <%= session.name %></a>
-
+            
         </p>
         <p>
             <a href='/users/logout'> Logout</a>
