@@ -36,16 +36,15 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Llama a tinymce.init para configurar el editor
         tinymce.init({
             selector: '#guideContent',
-            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount emoticons ',
             toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | image link | code | help',
-            height: 500,
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                'bold italic backcolor |' +
+                'bullist numlist outdent indent | ' +
+                'removeformat | image link | code | help | fontsize | fontfamily | h1 h2 h3 | aidialog | emoticons',
+            height: 700,
+            emoticons_database: 'emojiimages',
         });
     });
 </script>
