@@ -1,0 +1,50 @@
+<h1>Escribir guía para <%= game.title %></h1>
+
+<form action="/guides/addGuide/<%= game.id %>" method="POST">
+
+    <input type="hidden" name="game_id" value="<%= gameId %>">
+    <input type="hidden" name="user_id" value="<%= session.UserID %>">
+    <input type="hidden" name="guide_type" value="G">
+
+
+    <fieldset>
+        <legend>Escribir guía</legend>
+
+        <label>Titulo:</label> <label>
+            <textarea name="title"></textarea>
+        </label><%- helpers.error(errores, 'title') %>
+
+        <% if (locals.error) { %>
+            <p class="error"><%= locals.error %></p>
+        <% } %>
+        <% if (locals.exito) { %>
+            <p class="success"><%= locals.exito %></p>
+        <% } %>
+
+        <div class="form-group">
+            <label for="guideContent">Contenido de la Guía:</label>
+            <textarea id="guideContent" name="content"></textarea>
+
+            <%- locals.helpers && helpers.error(errores, 'content') %>
+        </div>
+
+        <button type="submit">Guardar guía</button>
+    </fieldset>
+</form>
+
+<script src="/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        tinymce.init({
+            selector: '#guideContent',
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount emoticons ',
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor |' +
+                'bullist numlist outdent indent | ' +
+                'removeformat | image link | code | help | fontsize | fontfamily | h1 h2 h3 | aidialog | emoticons',
+            height: 700,
+            emoticons_database: 'emojiimages',
+        });
+    });
+</script>

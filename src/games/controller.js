@@ -8,6 +8,7 @@ import {matchedData, validationResult} from 'express-validator';
 
 import {logger} from '../logger.js';
 import {Forum} from '../forum/Forum.js';
+import {Guides} from "../guides/Guides.js";
 
 const juegosRouter = express.Router();
 
@@ -101,7 +102,6 @@ export function showGameListSearched(req, res) {
             genre_option: genre_option
         }
     })
-
 }
 
 export function showGameInfo(req, res) {
@@ -112,11 +112,13 @@ export function showGameInfo(req, res) {
 
     const game = Game.getGameById(id);
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
+    const guidesListByGameId = Guides.getGuideByGame(id);
     const genres = Genre.getGameGenres(game);
     const threadList = Forum.getThreadsByGame(id);
     render(req, res, contenido, {
         game: game,
         reviewList: reviewListByGameId,
+        guidesList: guidesListByGameId,
         genreList: genres,
         threadList: threadList
     });
@@ -365,7 +367,7 @@ export function viewAddReview(req, res) {
             info: {},
             gameId: gameId,
             userId: userId,
-            game: game // <--- ¡Pasa el objeto 'game' a la vista!
+            game: game
         });
 
     } catch (e) {
@@ -430,7 +432,7 @@ export function doAddReviewBD(req, res) {
 
 }
 
-function getCurrentUTCTime() {
+export function getCurrentUTCTime() {
 
     // padStart(x, y) adds y value to the left of the value x times
     const date = new Date();
