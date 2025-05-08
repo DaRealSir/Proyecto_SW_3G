@@ -6,7 +6,6 @@ body {
     background-size: 43%;
     background-attachment: fixed;
 }
-
 header {
     display: flex;
     justify-content: space-between;
@@ -695,4 +694,33 @@ header::before {
     border: none;
     border-radius: 5px;
     background-color:rgb(113, 35, 87);
+}
+/*Profile user*/
+.display_profile {
+    background-color: #dccfdf;
+    border: 1px solid rgb(87, 69, 79);
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.display_profile h2 {
+    margin-bottom: 15px;
+    color: #4d0b5e;
+}
+
+.display_profile p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.display_profile img {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4d0b5e;
+    margin-bottom: 15px;
 }
