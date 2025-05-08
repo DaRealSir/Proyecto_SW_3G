@@ -112,10 +112,11 @@ export class Forum {
     }
 
     static createReply(game_id, original_post_id,title, description, user_id) {
+        const num_replies = parseInt(this.getReplies(original_post_id, game_id)) + 1;
         if(original_post_id != -1) {
             this.#updateReplyCountStmt.run({ post_id: original_post_id, cant: 1 }); // Actualiza el número de respuestas
         }
-        const num_replies = parseInt(this.getReplies(original_post_id, game_id)) + 1;
+        
    
         console.log("game_id: ", game_id);
         console.log("original_post_id: ", original_post_id);

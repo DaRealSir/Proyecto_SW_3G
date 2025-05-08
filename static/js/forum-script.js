@@ -40,6 +40,7 @@ function showMore(event) {
     const game_id = event.target.dataset.gameId;
     const last_id = event.target.dataset.lastId;
     const offset = event.target.dataset.offset;
+    console.log(`/forum/loadThread/${game_id}/${last_id}/${offset}`);
     fetch(`/forum/loadThread/${game_id}/${last_id}/${offset}`)
                     .then(response => response.text())
                     .then(html => {
