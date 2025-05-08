@@ -700,7 +700,7 @@ header::before {
 	transition: opacity 200ms;
     z-index: 999;
 }
-.close-reply-modal, .close-delete-modal, .delete-button {
+.close-reply-modal, .close-delete-modal, .close-edit-modal ,.delete-button {
     position: absolute;
     top: 10px;
     right: 15px;
@@ -713,7 +713,7 @@ header::before {
     text-decoration: none;
     margin: 3px;
 }
-.reply-button, .delete-sumit-button {
+.reply-button, .edit-button ,.delete-sumit-button {
     background-color: #4CAF50;
     float: right;
     color: white;
