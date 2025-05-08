@@ -1,6 +1,8 @@
 <h1> Escribe una review de <%= game.title %></h1>
 
-<form action="games/addReview" method="POST">
+<form action="/games/addReview" method="POST">
+    <input type="hidden" name="gameId" value="<%= gameId %>">
+    <input type="hidden" name="userId" value="<%= userId %>">
     <fieldset>
         <% if (locals.error) { %>
             <p><strong><%= locals.error %></strong></p>
@@ -8,14 +10,14 @@
         <% if (locals.exito) { %>
             <p><strong><%= locals.exito %></strong></p>
         <% } %>
-        <legend> Escribir review </legend>
+        <legend> Escribir review</legend>
         <label>Descripcion:</label> <label>
-                <textarea name="description"></textarea>
+            <textarea name="description"></textarea>
         </label><%- helpers.error(errores, 'description') %>
         <p></p>
         <label>Nota:</label> <label>
-                <input type="number" name="rating"/>
-            </label><%- helpers.error(errores, 'rating') %>
+            <input type="number" name="rating"/>
+        </label><%- helpers.error(errores, 'rating') %>
         <p></p>
         <button type="submit">Enviar</button>
     </fieldset>

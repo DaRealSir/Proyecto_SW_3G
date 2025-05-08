@@ -3,21 +3,20 @@ import {Game} from "./Game.js";
 import {Review} from "../reviews/Review.js";
 import {Genre} from "../genres/Genre.js"
 
-import { render } from '../utils/render.js';
-import { validationResult, matchedData } from 'express-validator';
+import {render} from '../utils/render.js';
+import {matchedData, validationResult} from 'express-validator';
 
-import {User} from "../users/User.js";
+import {logger} from '../logger.js';
+import {Forum} from '../forum/Forum.js';
 
-import {logger} from '../logger.js'; 
-import { Forum } from '../forum/Forum.js';
 const juegosRouter = express.Router();
 
 
 export function showGameList(req, res) {
 
     let page = 1;
-    if (req.params.numPage ){
-        page = parseInt(req.params.numPage, 10); 
+    if (req.params.numPage) {
+        page = parseInt(req.params.numPage, 10);
     }
 
     // 4 para pruebas,  16 de normal
@@ -32,13 +31,13 @@ export function showGameList(req, res) {
         page,
         filtersValues: {},
         genreList: genres
-});
+    });
 }
 
 export function showGameListSearched(req, res) {
     let page = 1;
-    if (req.params.numPage ){
-        page = parseInt(req.params.numPage, 10); 
+    if (req.params.numPage) {
+        page = parseInt(req.params.numPage, 10);
     }
 
     // 4 para pruebas,  16 de normal
@@ -78,15 +77,14 @@ export function showGameListSearched(req, res) {
 
     const genre_option = req.body.genre_option;
     let gameList;
-    
+
     // 3 para pruebas,  15 de normal
-    if (genre_option === undefined || genre_option === "Cualquiera"){
-         gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) *numGamesPerPage, 0);
-    }
-    else{
+    if (genre_option === undefined || genre_option === "Cualquiera") {
+        gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) * numGamesPerPage, 0);
+    } else {
         const genre = Genre.getGenreByName(genre_option)
         const genre_id = genre.id;
-         gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) *numGamesPerPage, genre_id);
+        gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) * numGamesPerPage, genre_id);
     }
 
     const genres = Genre.getAllGenres();
@@ -103,7 +101,7 @@ export function showGameListSearched(req, res) {
             genre_option: genre_option
         }
     })
-    
+
 }
 
 export function showGameInfo(req, res) {
@@ -111,7 +109,7 @@ export function showGameInfo(req, res) {
     let contenido = 'pages/game';
 
     let id = req.params.id;
-    
+
     const game = Game.getGameById(id);
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
     const genres = Genre.getGameGenres(game);
@@ -145,14 +143,14 @@ export function doAddGameBD(req, res) {
     const rating = Number(req.body.rating.trim());
     const favNumber = parseInt(req.body.favNumber.trim());
     const company_id = parseInt(req.body.company_id.trim());
-    const url_image =  req.body.url_image.trim();
-    if (! result.isEmpty()) {
+    const url_image = req.body.url_image.trim();
+    if (!result.isEmpty()) {
         const errores = result.mapped();
         const datos = matchedData(req);
         return render(req, res, 'pages/addGameForm/addGamePage', {
             datos,
             errores,
-            info:{
+            info: {
                 title: title,
                 description: description,
                 rating: rating,
@@ -172,7 +170,7 @@ export function doAddGameBD(req, res) {
         render(req, res, 'pages/addGameForm/addGamePage', {
             errores: {},
             exito: 'Juego insertado con exito en la Base de Datos',
-            info:{
+            info: {
                 title: title,
                 description: description,
                 rating: rating,
@@ -184,9 +182,9 @@ export function doAddGameBD(req, res) {
 
 
     } catch (e) {
-       
 
-       logger.error(e);
+
+        logger.error(e);
         logger.error(`Error al hacer inserción de juego ${title}`);
         logger.debug(`Excepcion al hacer inserción de juego ${title}`);
 
@@ -196,12 +194,12 @@ export function doAddGameBD(req, res) {
             error,
             datos: {},
             errores: {},
-            info:{
+            info: {
                 title: title,
                 description: description,
                 rating: rating,
                 favNumber: favNumber,
-                url_image: url_image, 
+                url_image: url_image,
                 company_id: company_id
             }
         });
@@ -222,7 +220,7 @@ export function viewModifyGameBD(req, res) {
             description: game.description,
             rating: game.rating,
             favNumber: game.favNumber,
-            url_image: game.image, 
+            url_image: game.image,
             company_id: game.company
         },
         game: game
@@ -241,13 +239,13 @@ export function doModifyGameBD(req, res) {
     const url_image = req.body.url_image.trim();
 
     const result = validationResult(req);
-    if (! result.isEmpty()) {
+    if (!result.isEmpty()) {
         const errores = result.mapped();
         const datos = matchedData(req);
         return render(req, res, 'pages/modifyGamePage', {
             datos,
-            errores, 
-            info:{
+            errores,
+            info: {
                 title: title,
                 description: description,
                 rating: rating,
@@ -256,7 +254,7 @@ export function doModifyGameBD(req, res) {
                 company_id: company_id,
                 url_image: url_image
             },
-            game:{
+            game: {
                 id: gameId
             }
         });
@@ -280,9 +278,9 @@ export function doModifyGameBD(req, res) {
             threadList: threadList
         });
 
-    
+
     } catch (e) {
-        
+
         //const reviewListByGameId = Review.getAllReviewsByGameId(gameId);
         //const genres = Genre.getGameGenres(game);
         //const threadList = Forum.getThreadsByGame(gameId);
@@ -290,16 +288,16 @@ export function doModifyGameBD(req, res) {
         render(req, res, 'pages/modifyGamePage', {
             errores: {},
             error: 'ERROR al modificar juego en la Base de Datos',
-            info:{
+            info: {
                 id: gameId,
                 title: title,
                 description: description,
                 rating: rating,
                 favNumber: favNumber,
-                url_image: url_image, 
+                url_image: url_image,
                 company_id: company_id,
             },
-            game:{
+            game: {
                 id: gameId
             }
         });
@@ -311,72 +309,92 @@ export function doDelete(req, res) {
 
     try {
         Game.deleteById(id);
-        
+
         return showGameList(req, res);
     } catch (e) {
-    
+
         return showGameList(req, res);
     }
 
 }
 
 export function deleteReview(req, res) {
-    const gameId = req.body.gameId;
-    const user= User.getUserByUsername(req.params.session.UserName);
-    const userId = user.id;
 
-    if(!gameId || !userId){
-        console.log("gameId or userId not sent");
+    const reviewId = req.params.id;
+    const userId = req.session.UserID;
+
+    if (!reviewId) {
+        console.error("Review ID no encontrado en la ruta");
         return res.redirect('/games/listajuegos');
     }
 
-    console.log(gameId);
-    console.log(userId);
+    try {
+        Review.deleteReview(reviewId);
 
-    console.log("ANTES DE ELIMINAR");
+        return res.redirect('/games/listajuegos');
 
-    Review.deleteReview(id);
-
-    console.log("DESPUES DE ELIMINAR");
-
-    showGameInfo(req, res);
+    } catch (e) {
+        logger.error(`Error al intentar borrar la review ${reviewId}: ${e.message}`);
+        return res.render('pages/error', {message: 'No se pudo borrar la review.'});
+    }
 }
 
 export function viewAddReview(req, res) {
-    let contenido = 'pages/reviews/addReview';
-    render(req, res, contenido, {
-        errores: {},
-        info: {}
-    })
+
+    const gameId = req.params.game_id;
+    const userId = req.session.UserID;
+
+    if (!userId) {
+        logger.warn('Intento de acceso a addReview sin sesión activa.');
+        return res.redirect('/users/login');
+    }
+
+
+    try {
+        const game = Game.getGameById(gameId);
+
+        if (!game) {
+            logger.error(`Juego con ID ${gameId} no encontrado para añadir review.`);
+            return res.status(404).render('pages/error', {message: 'Juego no encontrado'});
+        }
+        // -------------------------------------------
+
+        let contenido = 'pages/reviews/addReview';
+        render(req, res, contenido, {
+            errores: {},
+            info: {},
+            gameId: gameId,
+            userId: userId,
+            game: game // <--- ¡Pasa el objeto 'game' a la vista!
+        });
+
+    } catch (e) {
+        logger.error(`Error al obtener datos para viewAddReview (Game ID: ${gameId}): ${e.message}`);
+        // Renderizar una página de error genérica
+        res.status(500).render('pages/error', {message: 'Error al cargar la página para añadir review.'});
+    }
 }
 
 
-
 export function doAddReviewBD(req, res) {
-    console.log("DOADDREVIEWBD INICIO");
-    console.log(req.body.gameId);
-    console.log(req.body.UserName);
+
+    console.log("DO ADD REVIEW GAMES/CONTROLLER");
 
     const gameId = req.body.gameId;
-    const userId = User.getUserByUsername(req.body.userName).id;
+    const userId = req.body.userId;
 
-    console.log("DOADDREVIEWBD SEGUNDO");
-    console.log(gameId);
-    console.log(userId);
-
-
-    if(!gameId || !userId){
+    if (!gameId || !userId) {
         console.log("gameId or userId not sent");
         return res.redirect('/games/listajuegos');
     }
 
     const result = validationResult(req);
-    if (! result.isEmpty()) {
+    if (!result.isEmpty()) {
         const errores = result.mapped();
         const datos = matchedData(req);
-        return render(req, res, 'pages/addReviewPage', {
-            datos,
-            errores
+        return render(req, res, 'pages/reviews/addReview', {
+            errores, info: {description: req.body.description, rating: req.body.rating},
+            gameId, userId, game: Game.getGameById(gameId)
         })
     }
 
@@ -385,33 +403,27 @@ export function doAddReviewBD(req, res) {
     const date = getCurrentUTCTime();
 
 
-    try{
+    try {
         const rev = new Review(gameId, userId, date, rating, description);
+
+        console.log("REVIEW DATA");
+        console.log(rev);
 
         Review.insert(rev);
 
-        render(req, res, contenido, {
-            errores: {},
-            exito: 'Review insertado con exito',
-            info:{
-                description: description,
-                rating: rating,
-            }
-        });
+        return res.redirect(`/games/${gameId}`);
+
     } catch (e) {
         logger.error('Error al insertar review');
         logger.debug('Excepcion al insertar review');
 
         let error = 'No se ha podido insertar la review';
 
-        render(req, res, 'pages/addReviewPage', {
-            error,
-            datos: {},
+        render(req, res, 'pages/reviews/addReview', {
             errores: {},
-            info:{
-                description: description,
-                rating: rating,
-            }
+            exito: 'No se ha podido insertar la review',
+            info: {description, rating},
+            gameId, userId, game: Game.getGameById(gameId)
         });
     }
 

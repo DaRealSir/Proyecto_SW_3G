@@ -38,7 +38,8 @@ INSERT INTO user (username, bio, password, profile_picture, user_type)
 VALUES ('User', 'Gamer de aventuras y RPGs.', '$2b$10$JdCg8yL3rRkkr.hhx1rjqOe30F9lhBlqA1sjYJW6ymzYExvQFHyjy',
         'alice.jpg', 'U'),
        ('Admin', 'Administrador del sistema.', '$2b$10$Htah5iG9eKj8ItIItpzK6uvny3c5/QjdZaLwwmFy32RPrfVspNgYS',
-        'https://i.pinimg.com/236x/85/9a/f7/859af748d1eed0d67d5801a6df188a89.jpg', 'A');
+        'https://i.pinimg.com/236x/85/9a/f7/859af748d1eed0d67d5801a6df188a89.jpg', 'A'),
+        ('Journal','Periodista mal pagado','$2b$10$xQ.IghpkQqgC.9kHoX89yeD0dw/388ZEDQjv1IfEHfrLgoDujZpze','https://preview.redd.it/anyone-have-the-nerd-dog-in-hq-v0-akkxz5ofa3ob1.jpg?width=1080&crop=smart&auto=webp&s=4274966cc0ac71b1129f4e53ee829e10102ff24c','P');
 
 INSERT INTO user_game (user_id, game_id)
 VALUES (1, 1), -- Alice tiene Zelda

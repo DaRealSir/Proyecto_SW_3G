@@ -20,7 +20,6 @@
     <% if(session.esAdmin) {%>
         <form action = "/games/deleteReview/<%= rev.reviewId%>" method = "POST">
             <input type = "hidden" name = "gameId" value = "<%= game.id %>">
-<!--            <input type = "hidden" name = "userId" value = "<%= session.UserName%>">-->
             <button type ="submit">Eliminar review</button>
         </form>
     <% }%>

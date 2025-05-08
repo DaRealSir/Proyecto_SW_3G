@@ -10,6 +10,69 @@ export class Review {
     static #getAllReviewsByGameIdStmt = null;
     static #getByIdStmt = null;
     static #deleteReviewByIdStmt = null;
+    #id;
+    game_id;
+    user_id;
+    rating;
+    description; // review text
+    date;
+
+    constructor(game_id, user_id, date, rating, description) {
+        this._game_id = game_id;
+        this.game_id = game_id;
+
+        this._user_id = user_id;
+        this.user_id = user_id;
+
+        this._date = date;
+        this.date = date;
+
+        this._rating = rating;
+        this.rating = rating;
+
+        this._description = description;
+        this.description = description;
+    }
+
+    get game_id() {
+        return this._game_id;
+    }
+
+    set game_id(value) {
+        this._game_id = value;
+    }
+
+    get user_id() {
+        return this._user_id;
+    }
+
+    set user_id(value) {
+        this._user_id = value;
+    }
+
+    get date() {
+        return this._date;
+    }
+
+    set date(value) {
+        this._date = value;
+    }
+
+    get rating() {
+        return this._rating;
+    }
+
+    set rating(value) {
+        this._rating = value;
+    }
+
+    get description() {
+        return this._description;
+    }
+
+    set description(value) {
+        this._description = value;
+    }
 
     static initStatements(db) {
         this.#getByTextStmt = db.prepare(
@@ -19,8 +82,18 @@ export class Review {
             "SELECT * FROM review WHERE user_id = @userid"
         );
         this.#getAllReviewsByGameIdStmt = db.prepare(
-            `SELECT review.id AS reviewId, user.username, user.profile_picture, user.id AS userId, game.id AS gameId, review.description, review.rating, review.date
-    FROM review JOIN game on review.game_id = game.id JOIN user on review.user_id = user.id WHERE game_id = @gameId`
+            `SELECT review.id AS reviewId,
+                    user.username,
+                    user.profile_picture,
+                    user.id AS userId,
+                    game.id AS gameId,
+                    review.description,
+                    review.rating,
+                    review.date
+             FROM review
+                      JOIN game on review.game_id = game.id
+                      JOIN user on review.user_id = user.id
+             WHERE game_id = @gameId`
         );
         this.#insertStmt = db.prepare(
             "INSERT INTO review(user_id, game_id, description, rating, date) VALUES (@user_id, @game_id, @description, @rating, @date)"
@@ -73,7 +146,7 @@ export class Review {
         return reviewlist;
     }
 
-    static deleteReview(id){
+    static deleteReview(id) {
         console.log("ANTES DELETE REVIEW DE REVIEW");
         const res = this.#deleteReviewByIdStmt.run({id});
         console.log("DESPUES DELETE REVIEW DE REVIEW");
@@ -126,61 +199,6 @@ export class Review {
         if (result.changes === 0) throw new ReviewNotFound(review.id);
 
         return review;
-    }
-
-    #id;
-    game_id;
-    user_id;
-    rating;
-    description; // review text
-    date;
-
-    constructor(game_id, user_id, date, rating, description) {
-        this._game_id = game_id;
-        this._user_id = user_id;
-        this._date = date;
-        this._rating = rating;
-        this._description = description;
-    }
-
-    get game_id() {
-        return this._game_id;
-    }
-
-    set game_id(value) {
-        this._game_id = value;
-    }
-
-    get user_id() {
-        return this._user_id;
-    }
-
-    set user_id(value) {
-        this._user_id = value;
-    }
-
-    get date() {
-        return this._date;
-    }
-
-    set date(value) {
-        this._date = value;
-    }
-
-    get rating() {
-        return this._rating;
-    }
-
-    set rating(value) {
-        this._rating = value;
-    }
-
-    get description() {
-        return this._description;
-    }
-
-    set description(value) {
-        this._description = value;
     }
 }
 

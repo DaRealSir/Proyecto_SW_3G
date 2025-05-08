@@ -1,4 +1,3 @@
-
 <header>
     <div class="logo-opciones">
         <a href="/">
@@ -28,15 +27,18 @@
         <a href='/users/login'> Login</a>
         <a href='/users/register'> Register</a>
     <% } %>
-    <p> Herramientas admin : <a href="/games/addGame"> Añadir juego</a> </p>
 <% } %>
 
 <% function mostrarOpciones(session) { %>
+
+ 
         <% if (session.esAdmin) { %>
             <a href="/content/admin">Administrador</a><br>
         <% } %>
-        <% if (session.esPeriodista) { %>
-            <a href="/content/journal">Artículos</a>
+
+
+        <% if (session.esJournal) { %>
+            <a href="/content/journal">Artículos</a><br>
         <% } %>
 
 <% } %>

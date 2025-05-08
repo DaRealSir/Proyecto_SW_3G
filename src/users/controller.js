@@ -1,19 +1,73 @@
 import {body} from 'express-validator';
 import {RolesEnum, User} from './User.js';
 
+
+export function showUserEdit(req,res)
+{
+    let content='pages/viewUserEdit';
+    const userID = req.params.id;
+    const user =User.getUserByID(userID);
+
+    res.render('page',{
+       contenido:content,
+        info:{
+            username: user.username,
+            bio: user.bio,
+            pfp: user.profile_picture,
+            id: user.id
+        }
+    });
+}
+
+
+export function doUserEdit(req,res)
+{
+    const username= req.body.username.trim();
+    const bio=req.body.bio.trim();
+    const pfp=req.body.pfp;
+    const newP=req.body.new_pass;
+    const id=req.params.id;
+    const user=User.getUserByID(id);
+
+
+    let contenido='pages/admin';
+
+    if(!newP || newP.trim() === '')
+    {
+        const userEdit =new User(username,bio,user.password,pfp,user.user_type,id);
+        console.log(userEdit);
+        User.update(userEdit);
+    }
+    else{
+        const userEdit = new User(username,bio,user.password,pfp,user.user_type,id);
+        userEdit.password=newP;
+        console.log(userEdit.password);
+        User.update(userEdit);
+    }
+    req.session.name = username;
+    req.session.profile_picture=pfp;
+   
+    res.render('page',{
+        contenido ,
+        session : req.session
+
+    });
+
+}
+
 export function deleteUser(req,res)
 {
-    console.log("HOLA");
+    
     let contenido = 'pages/admin';
-    User.disableUpdate(req.params.username);
+  
+  
+    User.update(new User("Borrado",null,"NO",null,RolesEnum.BANNED,req.params.id));
 
    // User.delete(req.params.username);
-    const userList = User.getUserList();
    
     res.render('page', {
         contenido,
         session: req.session,
-        userList: userList
     });
 }
 
@@ -21,7 +75,7 @@ export function viewUserList(req, res) {
     let contenido = 'pages/showUsersDel';
 
 
-    const userList = User.getUserList();
+    const userList = User.getSearchedUserList("", "id", 'DESC', 50, 0);
 
     res.render('page', {
         contenido,
@@ -35,6 +89,7 @@ export function showUserSearch(req, res) {
     let contenido = 'pages/showUsersDel';
 
     const name = req.body.UserName.trim();
+     
     const order_option = req.body.order_option;
     let order;
     switch (order_option) {
@@ -129,7 +184,9 @@ export function doRegister(req, res) {
             req.session.login = true;
             req.session.UserID = usuario.id;
             req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
-            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA
+            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
+            req.session.name=usuario.username;
+            req.session.picture=usuario.profile_picture;
 
             res.render('page', {
                 contenido: 'pages/homeUser',
@@ -156,20 +213,28 @@ export function doLogin(req, res) {
     try {
         const usuario = User.login(username, password);
         console.log(usuario);
-        req.session.login = true;
-        req.session.UserID = usuario.id;
-        req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
-        req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
-        req.session.name=usuario.username;
-        req.session.picture=usuario.profile_picture;
-        
+        let content='pages/homeUser';
+        if(usuario.user_type!==RolesEnum.BANNED)
+        {
+            req.session.login = true;
+            req.session.UserID = usuario.id;
+            req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
+            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
+            req.session.name=usuario.username;
+            req.session.picture=usuario.profile_picture;
+        }
+        else{
+            content='pages/Banned';
+        }
+      
+    
 /*
         console.log(usuario);
         console.log(usuario.user_type);
         console.log(req.session.esAdmin);
 */
         return res.render('page', {
-            contenido: 'pages/homeUser',
+            contenido: content,
             session: req.session
         });
 
