@@ -52,6 +52,7 @@ VALUES (1, 1, '2025-03-20 08:20:07', 8, 'esta golden este juego'),
 
 
 INSERT INTO forum_post (id, game_id, original_post_id, title, description, user_id, replies, position_post) VALUES
+(-1,-1,-1, "DUMMY", "este post es falso",0,0,0)
 (1, 1, -1, 'Explorando Hyrule: Estrategias y builds', '¿Cómo optimizas tus habilidades y equipo en The Legend of Zelda: BotW? ¡Comparte tus mejores tácticas!', 2, 0, 1),
 (2, 1, -1, 'Descubre nuevas formas de abordar el juego', '¿Qué opinas de las diferentes formas de explorar Hyrule? ¿Cuál es tu estilo de juego?', 3, 0, 2),
 (3, 1, -1, 'El desafío de las tierras salvajes', 'Hablemos sobre las mejores builds y estrategias para sobrevivir en Hyrule. ¿Prefieres agilidad o poder?', 1, 0, 3),
