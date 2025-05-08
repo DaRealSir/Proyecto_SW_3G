@@ -59,8 +59,7 @@ export function deleteUser(req,res)
 {
     
     let contenido = 'pages/admin';
-    
-    console.log("HOLAAAAAAA");
+  
   
     User.update(new User("Borrado",null,"NO",null,RolesEnum.BANNED,req.params.id));
 
