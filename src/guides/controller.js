@@ -11,22 +11,16 @@ export function viewAddGuide(req, res) {
     const gameId = req.params.game_id;
     const userId = req.session.UserID;
 
-    console.log("VIEW ADD GUIDE");
-    console.log(gameId);
-    console.log(userId);
-
     if (!userId) {
         return res.redirect('/users/login');
     }
 
     try {
         const game = Game.getGameById(gameId);
-        console.log(game);
         if (!game) {
             logger.error(`Juego no encontrado`);
             return res.status(404).render('pages/error', {message: 'Game not found'});
         }
-        //const guide = Guides.getGuideById(guideId);
 
         render(req, res, 'pages/guides/addGameGuide', {
             errores: {},
@@ -48,6 +42,8 @@ export function doAddGuide(req, res) {
     const content = req.body.content;
     const title = req.body.title;
     const guide_type = req.body.guide_type;
+
+
     const date = getCurrentUTCTime();
 
 
@@ -109,16 +105,12 @@ export function showFullGuide(req, res){
     try {
         const guide = Guides.getGuideById(guideId);
 
-        console.log("GUIA");
-        console.log(guide);
         const user = User.getUserByID( guide._user_id);
         guide._user_name = user.username || user.name;
 
         const game = Game.getGameById(guide._game_id);
         guide._game_title = game.title;
 
-        console.log("GUIA");
-        console.log(guide);
 
         if (!guide) {
             logger.warn(`No existe la guía con ID ${guideId}`);

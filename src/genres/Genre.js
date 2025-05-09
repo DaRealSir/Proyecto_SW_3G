@@ -122,18 +122,17 @@ export class Genre {
         const data = {genre_name};
         let id;
         try {
-            for(let i = 0; i < 10; i++) console.log('#');
+            for(let i = 0; i < 10; i++) 
             result = this.#insertGenre.run(data);
             id = result.lastInsertRowid;
-            for(let i = 0; i < 10; i++) console.log('!');
+            for(let i = 0; i < 10; i++) 
         } catch (e) {
             if (e.code === 'SQLITE_CONSTRAINT') {
                 throw new genreAlreadyExists(genre_name);
             }
             throw new ErrorDatos("Genre couldn't be inserted", {cause: e});
         }
-        for(let i = 0; i < 10; i++) console.log(' ');
-        console.log(id + ' ' + genre_name);
+        for(let i = 0; i < 10; i++) 
         return new Genre(id,genre_name);
     }
     /*Recive como parametros: Nuevo genero, el juego a modificar generos y la id del genero previo, para poder eliminarlo*/ 

@@ -6,9 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/api/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/api/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/genres/Genre.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/genres/Genre.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/genres/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/genres/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guides/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/guides/controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/guides/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/guides/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/estilo.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/estilo.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reviews/Review.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/Review.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reviews/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/users/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/03-notificaciones.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/03-notificaciones.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/tinymce/plugins/emoticons/plugin.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/tinymce/plugins/emoticons/plugin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/tinymce/themes/silver/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/tinymce/themes/silver/theme.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/tinymce/tinymce.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/tinymce/tinymce.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/pages/guides/addGameGuide.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/guides/addGameGuide.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +178,10 @@
       <workItem from="1746533747082" duration="1704000" />
       <workItem from="1746601197989" duration="1509000" />
       <workItem from="1746619065540" duration="7502000" />
-      <workItem from="1746687891869" duration="1750000" />
+      <workItem from="1746687891869" duration="3125000" />
+      <workItem from="1746692254789" duration="503000" />
+      <workItem from="1746727294476" duration="605000" />
+      <workItem from="1746808965515" duration="1753000" />
     </task>
     <servers />
   </component>

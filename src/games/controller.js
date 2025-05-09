@@ -380,13 +380,11 @@ export function viewAddReview(req, res) {
 
 export function doAddReviewBD(req, res) {
 
-    console.log("DO ADD REVIEW GAMES/CONTROLLER");
 
     const gameId = req.body.gameId;
     const userId = req.body.userId;
 
     if (!gameId || !userId) {
-        console.log("gameId or userId not sent");
         return res.redirect('/games/listajuegos');
     }
 
@@ -408,8 +406,6 @@ export function doAddReviewBD(req, res) {
     try {
         const rev = new Review(gameId, userId, date, rating, description);
 
-        console.log("REVIEW DATA");
-        console.log(rev);
 
         Review.insert(rev);
 

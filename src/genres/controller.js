@@ -10,8 +10,6 @@ export function deleteGenre(req,res){
     let aux = Genre.getGenreGames(genre);
     let aux_length = aux.length;
     if(aux_length == 1){
-        console.log(aux);
-        console.log(aux.lenght);
         Genre.delete(genre);
     }
     else Genre.deleteGenreFromGame(game,genre);

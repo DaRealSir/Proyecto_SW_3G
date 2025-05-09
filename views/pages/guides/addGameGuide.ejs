@@ -4,7 +4,6 @@
 
     <input type="hidden" name="game_id" value="<%= gameId %>">
     <input type="hidden" name="user_id" value="<%= session.UserID %>">
-    <input type="hidden" name="guide_type" value="G">
 
 
     <fieldset>
@@ -19,6 +18,24 @@
         <% } %>
         <% if (locals.exito) { %>
             <p class="success"><%= locals.exito %></p>
+        <% } %>
+        <% if (session.esPeriodista || session.esAdmin) { %>
+            <div>
+                <input type="radio"
+                       id="type_G"
+                       name="guide_type"
+                       value="G"
+                       checked>
+                <label for="type_G">Guía</label>
+
+                <input type="radio"
+                       id="type_N"
+                       name="guide_type"
+                       value="N">
+                <label for="type_N">Noticia</label>
+            </div>
+        <% } else { %>
+            <input type="hidden" name="guide_type" value="G">
         <% } %>
 
         <div class="form-group">

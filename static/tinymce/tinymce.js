@@ -19695,7 +19695,6 @@
         if (console.error) {
           console.error(message, ...x);
         } else {
-          console.log(message, ...x);
         }
       }
     };

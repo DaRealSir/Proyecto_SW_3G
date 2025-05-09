@@ -14,6 +14,7 @@ const guidesRouter = express.Router();
 guidesRouter.post('/addGuide/:game_id',
     body('title', 'No puede ser vacio').trim().notEmpty(),
     body('content', 'No puede ser vacio').trim().notEmpty(),
+    body('guide_type', 'Tipo de guía inválido').isIn(['G', 'N']),
     asyncHandler(doAddGuide));
 guidesRouter.get('/addGuide/:game_id', viewAddGuide);
 guidesRouter.get('/games/:game_id/guides', listGuidesByGameId);
