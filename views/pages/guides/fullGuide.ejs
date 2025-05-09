@@ -21,6 +21,10 @@
         <span class="guide-game">
       Juego: <a href="/games/<%= guide._game_id %>"><%= guide._game_title %></a>
     </span>
+        <%if(guide._user_id === session.UserID){%>
+            <a href="/guides/addGuide/<%= guide._game_id %>?guide_id=<%= guide.id %>"
+                    class="btn-edit-guide"> Editar guía </a>
+        <%}%>
     </div>
 
     <div class="full-guide-content">

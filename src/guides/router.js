@@ -6,7 +6,8 @@ import {
     doAddGuide,
     listGuidesByGameId,
     viewAddGuide,
-    showFullGuide
+    showFullGuide,
+    doEditGuide
 } from './controller.js';
 
 const guidesRouter = express.Router();
@@ -19,6 +20,10 @@ guidesRouter.post('/addGuide/:game_id',
 guidesRouter.get('/addGuide/:game_id', viewAddGuide);
 guidesRouter.get('/games/:game_id/guides', listGuidesByGameId);
 guidesRouter.get('/:guide_id', showFullGuide);
-
+guidesRouter.post('/edit/:guide_id',
+    body('title').trim().notEmpty(),
+    body('content').trim().notEmpty(),
+    asyncHandler(doEditGuide)
+);
 
 export default guidesRouter;

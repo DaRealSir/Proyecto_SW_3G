@@ -1,17 +1,26 @@
-<h1>Escribir guía para <%= game.title %></h1>
+<h1>
+    <%= info.guide_id ? 'Editar guía de' : 'Escribir guía para' %>
+    <%= game.title %>
+</h1>
 
-<form action="/guides/addGuide/<%= game.id %>" method="POST">
-
-    <input type="hidden" name="game_id" value="<%= gameId %>">
-    <input type="hidden" name="user_id" value="<%= session.UserID %>">
-
+<form
+        action="<%= info.guide_id
+                ? '/guides/edit/' + info.guide_id
+                : '/guides/addGuide/' + game.id %>"
+        method="POST"
+>
+    <input type="hidden" name="game_id"  value="<%= gameId %>">
+    <input type="hidden" name="user_id"  value="<%= session.UserID %>">
+    <% if (info.guide_id) { %>
+        <input type="hidden" name="guide_id" value="<%= info.guide_id %>">
+    <% } %>
 
     <fieldset>
-        <legend>Escribir guía</legend>
+        <legend><%= info.guide_id ? 'Modifica tu guía' : 'Escribe tu guía' %></legend>
 
-        <label>Titulo:</label> <label>
-            <textarea name="title"></textarea>
-        </label><%- helpers.error(errores, 'title') %>
+        <label for="title">Título:</label>
+        <textarea id="title" name="title"><%= info.title %></textarea>
+        <%- helpers.error(errores, 'title') %>
 
         <% if (locals.error) { %>
             <p class="error"><%= locals.error %></p>
@@ -19,33 +28,33 @@
         <% if (locals.exito) { %>
             <p class="success"><%= locals.exito %></p>
         <% } %>
+
         <% if (session.esPeriodista || session.esAdmin) { %>
             <div>
-                <input type="radio"
-                       id="type_G"
-                       name="guide_type"
-                       value="G"
-                       checked>
-                <label for="type_G">Guía</label>
-
-                <input type="radio"
-                       id="type_N"
-                       name="guide_type"
-                       value="N">
-                <label for="type_N">Noticia</label>
+                <label>
+                    <input
+                            type="radio" name="guide_type" value="G"
+                            <%= info.guide_type === 'G' ? 'checked' : '' %>
+                    > Guía
+                </label>
+                <label>
+                    <input
+                            type="radio" name="guide_type" value="N"
+                            <%= info.guide_type === 'N' ? 'checked' : '' %>
+                    > Noticia
+                </label>
             </div>
         <% } else { %>
-            <input type="hidden" name="guide_type" value="G">
+            <input type="hidden" name="guide_type" value="<%= info.guide_type %>">
         <% } %>
 
-        <div class="form-group">
-            <label for="guideContent">Contenido de la Guía:</label>
-            <textarea id="guideContent" name="content"></textarea>
+        <label for="guideContent">Contenido:</label>
+        <textarea id="guideContent" name="content"><%= info.content %></textarea>
+        <%- helpers.error(errores, 'content') %>
 
-            <%- locals.helpers && helpers.error(errores, 'content') %>
-        </div>
-
-        <button type="submit">Guardar guía</button>
+        <button type="submit">
+            <%= info.guide_id ? 'Actualizar guía' : 'Guardar guía' %>
+        </button>
     </fieldset>
 </form>
 

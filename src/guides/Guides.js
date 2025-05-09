@@ -74,6 +74,7 @@ export class Guides{
     static #insertGuideStmt = null;
     static #deleteGuideStmtById = null;
     static #getByIdStmt = null;
+    static #updateGuideStmt = null;
 
     constructor(id, user_id, game_id, date, content, title, guide_type) {
         this._id = id;
@@ -94,6 +95,7 @@ export class Guides{
         this.#insertGuideStmt = db.prepare('INSERT INTO guides(user_id, game_id, date, content, title, guide_type) VALUES (@user_id, @game_id, @date, @content, @title, @guide_type)');
         this.#deleteGuideStmtById = db.prepare('DELETE FROM guides WHERE id = @id');
         this.#getByIdStmt = db.prepare('SELECT * FROM guides WHERE id = @id');
+        this.#updateGuideStmt = db.prepare(`UPDATE guides SET title = @title,content = @content, guide_type = @guide_type WHERE id = @id`);
 
     }
 
@@ -145,6 +147,11 @@ export class Guides{
     static deleteGuide(id){
         const result = this.#deleteGuideStmtById.run(id);
         if(result.changes === 0) throw new GuideNotFound();
+    }
+
+    static getUpdateStmt() {
+
+        return this.#updateGuideStmt;
     }
 }
 
