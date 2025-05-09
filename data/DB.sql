@@ -57,7 +57,7 @@ CREATE TABLE user
     bio             TEXT,
     password        TEXT                                      NOT NULL,
     profile_picture TEXT,
-    user_type       TEXT CHECK (user_type IN ('A', 'U', 'P')) NOT NULL
+    user_type       TEXT CHECK (user_type IN ('A', 'U', 'P','B')) NOT NULL
 );
 
 CREATE TABLE user_game

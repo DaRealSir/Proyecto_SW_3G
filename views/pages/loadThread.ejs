@@ -5,36 +5,43 @@
 <% function showThreadInfo() { %>
 
     <% threadList.forEach(thread => { %>
-        <section class="forum-group">
-            <h1><%= thread.title %></h1>
-            <% reply(thread.game_id, thread.id); %>
-            <% eliminate(thread.game_id, thread.id); %>
-            <p>Creado por: <%= thread.user_name %></p>
-            <p>Descripción: <%= thread.description %></p>
+        <section class="forum-group" id = "thread-<%= thread.id %>">
+            <h1 class = thread-title><%= thread.title %></h1>
+            <p class = thread-username>Creado por: <%= thread.user_name %></p>
+            <p class = thread-message><%= thread.description %></p>
             <p>Respuestas: <%= thread.replies %></p>
             
+            <% reply(thread.game_id, thread.id); %>
+            <% eliminate(thread.game_id, thread.id); %>
+            <% edit(thread.game_id, thread.id, thread.user_id); %>
+
             <% if (thread.replies > 0) { %>
                 <div id="ver_respuestas-<%= thread.id %>">
-                    <a href="#" class="show-reply" onclick="showMore('<%= thread.game_id %>',<%= thread.id %>, 0, 'ver_respuestas-<%= thread.id %>')">Ver respuestas</a>
+                    <a href="#" class="show-reply" data-game-id='<%= thread.game_id %>' data-last-id='<%= thread.id %>' data-offset="<%= thread.replies %>" data-where-id='<%= thread.id %>'>Ver respuestas</a>
                 </div>
             <% } %>
         </section>
     <% }); %>
-    <% if (num_replies > last_position && last_position > 0) { %>
-        <div id="ver_mas-<%= last_id %>"> 
-            <button class="show-more" onclick="showMore(<%= game_id %>, <%= last_id %>, <%= last_position %> , 'ver_mas-<%= last_id %>')">Ver más</button>
+    <% if (last_position > 0) { %>
+        <div id="ver_mas-<%= last_id %>">    
+            <a href="#" class="show-more" data-game-id = '<%= game_id %>' data-last-id = '<%= last_id %>' data-offset = '<%= last_position - threadList.length %>' data-where-id = '<%= last_id %>'>Ver más</a>
         </div>
     <% } %>
 <% } %>
 
+<% function edit(g_id, id, user_id) { %>
+    <% if (session.login && session.UserID == user_id) { %>
+        <a href="#editModal" class="edit-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Editar</a>
+    <% } %>
+<% } %>
 <% function reply(g_id, id) { %>
     <% if (session.login) { %>
-        <button class="reply-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Responder</button>
+        <a href="#replyModal" class="reply-button" data-game-id= "<%= g_id %>" data-thread-id="<%= id %>">Responder</a>
     <% } %>
 <% } %>
 
 <% function eliminate(g_id, id) { %>
     <% if (session.esAdmin) { %>
-        <button class="delete-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Eliminar</button>
+        <a href="#deleteModal" class="delete-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Eliminar</a>
     <% } %>
 <% } %>

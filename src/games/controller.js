@@ -120,7 +120,8 @@ export function showGameInfo(req, res) {
         reviewList: reviewListByGameId,
         guidesList: guidesListByGameId,
         genreList: genres,
-        threadList: threadList
+        threadList: threadList,
+        game_id: id
     });
 
 }
