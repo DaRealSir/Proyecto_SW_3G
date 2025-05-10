@@ -6,13 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genres/Genre.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/genres/Genre.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guides/Guides.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/guides/Guides.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guides/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/guides/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guides/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/guides/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/estilo.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/estilo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/guides/addGameGuide.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/guides/addGameGuide.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/guides/fullGuide.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/guides/fullGuide.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/DB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/DB.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/Start.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/Start.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +35,11 @@
         </map>
       </branch-storage>
     </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -63,35 +63,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Database Script.DB.sql.executor&quot;: &quot;Run&quot;,
-    &quot;Database Script.Start.sql.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;GameGuides&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G/static&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/alberto/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Database Script.DB.sql.executor": "Run",
+    "Database Script.Start.sql.executor": "Run",
+    "Database Script.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "GameGuides",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/home/alberto/Proyecto_SW_3G/data/Start.sql",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/home/alberto/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ],
-    &quot;RunConfigurationTargetLRU&quot;: [
-      &quot;2b62d813-a430-4477-aa6d-6135676f0823&quot;,
-      &quot;47e1ced0-d937-4b4b-8684-5538b5e3de77&quot;,
-      &quot;c8526b50-dd49-465b-b5e4-45f9686a7356&quot;
+    "RunConfigurationTargetLRU": [
+      "c8526b50-dd49-465b-b5e4-45f9686a7356",
+      "2b62d813-a430-4477-aa6d-6135676f0823",
+      "47e1ced0-d937-4b4b-8684-5538b5e3de77"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/static" />
@@ -100,26 +101,14 @@
       <recent name="$PROJECT_DIR$/views/pages" />
     </key>
   </component>
-  <component name="RunManager" selected="Database Script.DB.sql">
-    <configuration name="DB.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="Unnamed" type="DatabaseScript" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/data/DB.sql" />
       <script-file value="$PROJECT_DIR$/data/Start.sql" />
       <script-mode>FILE</script-mode>
       <data-source id="c8526b50-dd49-465b-b5e4-45f9686a7356" />
       <method v="2" />
     </configuration>
-    <configuration name="Start.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
-      <script-file value="$PROJECT_DIR$/data/Start.sql" />
-      <script-mode>FILE</script-mode>
-      <data-source id="2b62d813-a430-4477-aa6d-6135676f0823" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Database Script.DB.sql" />
-        <item itemvalue="Database Script.Start.sql" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -174,6 +163,7 @@
       <workItem from="1746727294476" duration="605000" />
       <workItem from="1746808965515" duration="3876000" />
       <workItem from="1746815506920" duration="3965000" />
+      <workItem from="1746890220840" duration="1606000" />
     </task>
     <servers />
   </component>
