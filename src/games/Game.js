@@ -17,6 +17,9 @@ export class Game {
     static #getByIdStmt = null;
     static result;
     static #deleteByID = null;
+    static #addShopToGameStmt = null;
+    static #existhopAndGameStmt = null;
+
     #id;
     title;
     description;
@@ -154,6 +157,9 @@ export class Game {
    
 
         this.#deleteByID = db.prepare('DELETE FROM game WHERE id = @id');
+        this.#addShopToGameStmt = db.prepare('INSERT INTO game_shop(game_id, shop_id, url) VALUES (@game_id, @shop_id, @url) ');
+        
+        this.#existhopAndGameStmt = db.prepare('SELECT 1 FROM game_shop WHERE game_id = @game_id AND shop_id = @shop_id ');
     }
 
     static getGameByTitle(title) {
@@ -175,6 +181,31 @@ export class Game {
 
 
         return new Game(title, description, rating, favNumber, image, company_id, id);
+    }
+
+    static addShopToGame(id, shop, url){
+
+
+        try{
+            const data2= {
+                game_id : id,
+                shop_id : shop.id
+            };
+            const exists = this.#existhopAndGameStmt.get(data2);
+            if (exists)
+                return;
+            
+            const data = {
+                    game_id : id, 
+                    shop_id: shop.id, 
+                    url
+                };
+            const result = this.#addShopToGameStmt.run(data);
+        }
+        catch(e){
+            throw new GameNotFound(game_id);
+        }
+
     }
 
     static getGameList() {

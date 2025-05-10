@@ -11,3 +11,16 @@
     </div>
     <% }); %>
 </div>
+
+<ul>
+    <li><h3><a href="/shop/shopList">Lista de Tiendas</a></h3></li>
+</ul>
+
+<div class='contenedor-index'>
+    <% shopList.forEach(shop => { %>
+    <div class="bloque-index">
+        <div class = "game_title"> <h4><a href="/shop/<%= shop.id %>"><%= shop.name %></a></h4> </div>
+        <p><a href="/shop/<%= shop.id %>"><img src="<%= shop.image %>" alt="Imagen de <%= shop.title %>"></a></p>
+    </div>
+    <% }); %>
+</div>

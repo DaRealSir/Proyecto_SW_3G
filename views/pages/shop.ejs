@@ -1,0 +1,41 @@
+<% adminOptions(session) %>
+
+    
+    <div class="shop_info">
+    <div class="shop_info1">
+        <h1><u><%= shop.name %></u></h1>
+        <a><img src="<%= shop.image %>" alt="Imagen de <%= shop.title %>"></a>
+    </div>
+     <div class="shop_info2">
+        <h2> Juegos </h2>
+        <% gameList.forEach(game=>{ %>
+            <div class="game-card" style="margin-top: 2px">
+                <h3 class = "game_title"><a href="/games/<%= game.id %>"><%= game.title %></a></h3>
+                <a href="/games/<%= game.id %>"><img src="<%= game.image %>" alt="Imagen de <%= game.title %>"></a>
+                <div class="game-info">
+                    <p>Valoración: <%= game.rating %></p>
+                    <p>Favoritos: <%= game.favNumber %></p>
+                </div>
+                <p class="game-description"><%= game.description %></p>
+            </div>
+         <% }) %>
+    </div>
+
+<% function adminOptions(session) { %>
+
+     <form action="/shop/modifyShop/<%= shop.id %>" method="GET" style="display:inline;">
+        <button type="submit">Modificar tienda</button>
+    </form>
+ <% if(session.esAdmin) { %>
+
+    <p> Herramientas admin:
+        <form action="/shop/deleteShop/<%= shop.id %>" method="POST" style="display:inline;">
+    <button type="submit">Eliminar tienda</button>
+    </form>
+
+     <form action="/shop/modifyShop/<%= shop.id %>" method="GET" style="display:inline;">
+        <button type="submit">Modificar tienda</button>
+    </form>
+       
+<% } %>
+<% } %>
