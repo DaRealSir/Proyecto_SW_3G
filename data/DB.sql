@@ -6,8 +6,12 @@ DROP TABLE if EXISTS user;
 DROP TABLE IF EXISTS user_game;
 DROP TABLE IF EXISTS forum_post;
 DROP TABLE IF EXISTS review;
+
 DROP TABLE IF EXISTS shop;
 DROP TABLE IF EXISTS game_shop;
+
+DROP TABLE IF EXISTS guides;
+
 --Para pruebas
 
 
@@ -56,7 +60,7 @@ CREATE TABLE user
     bio             TEXT,
     password        TEXT                                      NOT NULL,
     profile_picture TEXT,
-    user_type       TEXT CHECK (user_type IN ('A', 'U', 'P')) NOT NULL
+    user_type       TEXT CHECK (user_type IN ('A', 'U', 'P','B')) NOT NULL
 );
 
 CREATE TABLE user_game
@@ -83,17 +87,26 @@ CREATE TABLE forum_post (
 );
 
 
-CREATE TABLE review(
-id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-game_id INTEGER NOT NULL,
-user_id INTEGER NOT NULL,
-date DATETIME NOT NULL,
-rating REAL NOT NULL,
-description TEXT NOT NULL,
-FOREIGN KEY (game_id) REFERENCES game (id) on DELETE CASCADE,
-FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE
+CREATE TABLE review(   id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+    game_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    date DATETIME NOT NULL,
+    rating REAL NOT NULL,
+    description TEXT NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES game (id) on DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE
 );
 
+CREATE TABLE guides(
+    id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+    user_id INTEGER NOT NULL,
+    game_id INTEGER NOT NULL,
+    date DATETIME NOT NULL,
+    title TEXT NOT NULL,
+    guide_type TEXT CHECK (guide_type IN ('N', 'G')) NOT NULL,
+    content TEXT NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES game (id) on DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE
 -- Crear tabla de tiendas
 CREATE TABLE shop
 (

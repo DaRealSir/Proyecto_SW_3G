@@ -10,6 +10,7 @@ import contentRouter from './content/router.js';
 import apiRouter from './apiRouter.js';
 import { errorHandler } from './middleware/error.js';
 import forumRouter from './forum/router.js';
+import guidesRouter from "./guides/router.js";
 
 import { logger } from './logger.js';
 import pinoHttp  from 'pino-http';
@@ -66,4 +67,6 @@ app.use('/content', contentRouter);
 app.use('/forum', forumRouter);
 app.use('/shop', shopRouter);
 app.use('/api',apiRouter);
+app.use('/guides', guidesRouter);
+app.use('/tinymce', express)
 app.use(errorHandler);

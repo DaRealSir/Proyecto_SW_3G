@@ -1,16 +1,26 @@
 <% if (userData != null) { %> 
-    <div class="juego_info">
-        <h2>Perfil de Usuario</h2>
-        <p><strong>Nombre:</strong> <%= userData.username %></p> 
-        <p><strong>Bio:</strong> <%= userData.bio %></p> 
-        <p><strong>Tipo de Usuario:</strong> <%= userData.user_type %></p> 
-        <p><strong>Foto de perfil:</strong></p>
+    <div class="display_profile">
+        <h2>Perfil de <%= userData.username %></h2>
+        
         <img src="<%= userData.profile_picture %>" alt="Foto de perfil" width="150" height="150" />
+
+        <p><strong>Nombre de usuario:</strong> <%= userData.username %></p>
+
+        <% if (userData.bio) { %>
+            <p><strong>Biografía:</strong> <%= userData.bio %></p>
+        <% } %>
+
+
+        <div class="buttons-page">
+            <form action="/users/editUser/<%= userData.id %>" method="GET" style="display:inline;">
+                <button type="submit">Editar</button>
+            </form>
+        </div>
     </div>
 <% } else { %>
-    <div>
+    <div class="display_profile">
         <p>No tienes permisos para acceder a esta página o no has iniciado sesión.</p>
-        <a href="/users/login">Iniciar sesión</a>
+        <a href="/users/login">Iniciar sesión</a> |
         <a href="/users/register">Registrarse</a>
     </div>
 <% } %>

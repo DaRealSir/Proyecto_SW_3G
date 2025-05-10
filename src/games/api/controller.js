@@ -9,7 +9,6 @@ export async function checkTitle(req, res) {
         return res.status(400).json({ status: 400, errores });
     }
     const {title} = datos;
-    console.log(title);
     const disponible = Game.titleAvailable(title);
 
     return res.status(200).json(disponible);

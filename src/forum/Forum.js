@@ -7,6 +7,8 @@ export class Forum {
     static #insertThreadStmt = null;
     static #insertReplyStmt = null;
     static #updateReplyCountStmt = null;
+    static #updatePostStmt = null;
+    static #updatePositionStmt = null;
     static #getThreadByIdStmt = null;
     static #getNextPostByIdStmt = null;
     static #deleteStmt = null;
@@ -17,7 +19,7 @@ export class Forum {
         if (this.#getByIdStmt !== null) return;
         let str ="";
         for(let i = 1; i < this.#NUMBER_OF_THREADS; i++) {
-            str += ` OR (forum_post.original_post_id = @ids${i} AND forum_post.position_post <= ${this.#NUMBER_OF_REPLIES})`;
+            str += ` OR (forum_post.original_post_id = @ids${i} AND forum_post.position_post > @max${i}-${this.#NUMBER_OF_REPLIES} AND forum_post.position_post <= @max${i})`;
 
         }
 
@@ -28,14 +30,17 @@ export class Forum {
             JOIN user ON forum_post.user_id = user.id
             WHERE forum_post.game_id = @game_id 
             AND forum_post.original_post_id = @last_id 
-            AND forum_post.position_post > @offset AND forum_post.position_post <= @cant+@offset
+            AND forum_post.position_post > @offset-@cant AND forum_post.position_post <= @offset
+            ORDER BY forum_post.position_post DESC
         `);
         this.#getNextPostByIdStmt = db.prepare('SELECT forum_post.*, user.username as user_name FROM forum_post JOIN user ON forum_post.user_id = user.id WHERE game_id = @game_id AND original_post_id = @last_id LIMIT 1 OFFSET @offset');
         this.#getByGameIdsStmt = db.prepare(`
-                SELECT forum_post.id 
+                SELECT forum_post.id, forum_post.replies
                 FROM forum_post
                 WHERE game_id = @game_id AND original_post_id = -1
-                AND forum_post.position_post <= ${this.#NUMBER_OF_THREADS}
+                AND forum_post.position_post > @offset - ${this.#NUMBER_OF_THREADS}
+                AND forum_post.position_post <= @offset
+                ORDER BY position_post DESC
             `);
         this.#getLastPostGameStmt = db.prepare(`
             SELECT forum_post.position_post FROM forum_post
@@ -47,12 +52,15 @@ export class Forum {
             SELECT forum_post.* , user.username as user_name
             FROM forum_post
             LEFT JOIN user ON forum_post.user_id = user.id
-            WHERE game_id = @game_id AND ((forum_post.original_post_id = -1 AND forum_post.position_post <= ${this.#NUMBER_OF_THREADS} )${str})
+            WHERE game_id = @game_id AND ((forum_post.original_post_id = -1 AND forum_post.position_post > @offset - ${this.#NUMBER_OF_THREADS} AND forum_post.position_post <= @offset)${str} )
+            ORDER BY position_post DESC
         `);
         this.#getRepliesStmt = db.prepare('SELECT replies FROM forum_post WHERE id = @post_id');
         this.#insertThreadStmt = db.prepare('INSERT INTO forum_post (game_id, original_post_id, title, description, user_id) VALUES (@game_id, -1, @title, @description, @user_id)');
-        this.#insertReplyStmt = db.prepare('INSERT INTO forum_post (game_id, original_post_id, description, user_id) VALUES (@game_id, @original_post_id, @description, @user_id)');
-        this.#updateReplyCountStmt = db.prepare('UPDATE forum_post SET replies = replies + 1 WHERE id = @post_id');
+        this.#insertReplyStmt = db.prepare('INSERT INTO forum_post (game_id, original_post_id, title, description, user_id, position_post) VALUES (@game_id, @original_post_id, @title, @description, @user_id, @num_replies)');
+        this.#updateReplyCountStmt = db.prepare('UPDATE forum_post SET replies = replies + @cant WHERE id = @post_id');
+        this.#updatePostStmt = db.prepare('UPDATE forum_post SET title = @title, description = @description WHERE id = @post_id');
+        this.#updatePositionStmt = db.prepare('UPDATE forum_post SET position_post = position_post-1 WHERE original_post_id = @orignial_post_id AND position_post > @position_post');
         this.#deleteStmt = db.prepare('DELETE FROM forum_post WHERE game_id = @game_id AND id = @thread_id');
     }
 
@@ -64,46 +72,82 @@ export class Forum {
 
     static getThreadById(game_id, last_id, cant, offset) {
         const thread = this.#getThreadByIdStmt.all({ game_id, last_id, cant, offset });
-        const nextPost = this.#getNextPostByIdStmt.get({ game_id, last_id, offset: (+offset) + (+cant) });
-        const showMore = nextPost ? true : false;
-        if (showMore) {
-            thread.showMore = true;
-        } else {
-            thread.showMore = false;
-        }
         thread.last_id = last_id;
         return thread;
     }
 
     static getThreadsByGame(game_id) {
-        let ids = this.#getByGameIdsStmt.all({ game_id});
-        ids.push({ id: -1 });
-        while (ids.length < this.#NUMBER_OF_THREADS) {
-            ids.push({ id: -5 });
-        }
-        const threadList = this.#getByGameStmt.all({ game_id, ids1: ids[0].id, ids2: ids[1].id, ids3: ids[2].id, ids4: ids[3].id, ids5: ids[4].id });
         const lastPost = this.#getLastPostGameStmt.get({ game_id });
+        
+        let lp;
         if (lastPost) {
-            threadList.last_post = lastPost.position_post;
+            lp = lastPost.position_post;
         } else {
-            threadList.last_post = 0;
+            lp= 0;
         }
+        const ids = this.#getByGameIdsStmt.all({ game_id, offset: lp });
+        
+        ids.push({ id: -1, replies: 0 });
+        
+        while (ids.length < this.#NUMBER_OF_THREADS) {
+            ids.push({ id: -5 , replies: 0 });
+        }
+        
+        const threadList = this.#getByGameStmt.all({ game_id, ids1: ids[0].id, ids2: ids[1].id, ids3: ids[2].id, ids4: ids[3].id, ids5: ids[4].id , max1: ids[0].replies, max2: ids[1].replies, max3: ids[2].replies, max4: ids[3].replies, max5: ids[4].replies,offset: lp});
+
+        threadList.last_post = lp;
+        
         return threadList;
     }
-
-    static getReplies(post_id) {
-        return this.#getRepliesStmt.all({ post_id });
+    static getLastPostGame(game_id) {
+        const lastPost = this.#getLastPostGameStmt.get({ game_id });
+    }
+    static getReplies(post_id, game_id = -1) {
+        if (post_id == -1) {
+            const lastPost = this.#getLastPostGameStmt.get({ game_id });
+            if (!lastPost) return 0;
+            return this.#getLastPostGameStmt.get({ game_id: game_id }).position_post;
+        }
+        return this.#getRepliesStmt.get({ post_id }).replies;
     }
 
-    static createReply(game_id, original_post_id, description, user_id) {
-        const result = this.#insertReplyStmt.run({ game_id, original_post_id, description, user_id });
-        if(game_id != -1) {
-            this.#updateReplyCountStmt.run({ post_id: original_post_id }); // Actualiza el número de respuestas
+    static createReply(game_id, original_post_id,title, description, user_id) {
+        const num_replies = parseInt(this.getReplies(original_post_id, game_id)) + 1;
+        if(original_post_id != -1) {
+            this.#updateReplyCountStmt.run({ post_id: original_post_id, cant: 1 }); // Actualiza el número de respuestas
         }
+        
+   
+        console.log("game_id: ", game_id);
+        console.log("original_post_id: ", original_post_id);
+        console.log("title: ", title);
+        console.log("description: ", description);
+        console.log("user_id: ", user_id);
+        console.log("num_replies: ", num_replies);
+        
+        const result = this.#insertReplyStmt.run({ game_id, original_post_id, title, description, user_id, num_replies});
+        console.log("result: ", result);
+        
+        console.log("Respuesta creada con ID: ", result.lastInsertRowid);
         return result.lastInsertRowid;
     }
+    static updatePost(post_id, title, description) {
+        const result = this.#updatePostStmt.run({ post_id, title, description });
+        if (result.changes === 0) {
+            throw new ForumNotFound(post_id);
+        }
+        return result.changes;
+
+    }
     static delete(game_id, thread_id) {
+        const post = this.getPostById(thread_id);
+        this.#updatePositionStmt.run({ orignial_post_id: post.original_post_id, position_post: post.position_post });
+        const parentPostID = post.original_post_id;
         const result = this.#deleteStmt.run({ game_id, thread_id });
+        if(parentPostID != -1)
+        {
+            this.#updateReplyCountStmt.run({ post_id: parentPostID, cant: -1 }); // Actualiza el número de respuestas
+        }
         if (result.changes === 0) {
             throw new ForumNotFound(thread_id);
         }

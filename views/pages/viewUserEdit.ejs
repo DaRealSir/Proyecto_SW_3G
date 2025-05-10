@@ -1,0 +1,18 @@
+<h1>Editar usuario <%= info.username %> </h1>
+
+<form action="/users/editUser/<%= info.id %>" method="POST">
+    <fieldset>
+        <legend>Modificar Usuario</legend>
+        <label>Nombre</label><input type="text"name="username" value="<%= info.username %>">
+        <p></p>
+        <label>Bio</label><input type="text"name="bio" value="<%= info.bio %>">
+        <p></p>
+        <label>Url Foto Perfil</label><input type="text"name="pfp" value="<%= info.pfp %>">
+        <p></p>
+        <label>Nueva Contraseña</label><input type="text"name="new_pass" value="">
+        <p></p>
+
+        <button type="submit">Enviar</button>
+    </fieldset>
+
+</form>
