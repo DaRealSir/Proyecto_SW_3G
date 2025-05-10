@@ -23,9 +23,7 @@
 
 <% function adminOptions(session) { %>
 
-     <form action="/shop/modifyShop/<%= shop.id %>" method="GET" style="display:inline;">
-        <button type="submit">Modificar tienda</button>
-    </form>
+     
  <% if(session.esAdmin) { %>
 
     <p> Herramientas admin:

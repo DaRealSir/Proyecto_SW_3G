@@ -11,8 +11,9 @@
             <% }) %>
         </select>
 </form>-->
-
+<% if(session.esAdmin ) { %>
  <p> Herramientas admin : <a href="/shop/addShop"> Añadir tienda</a> </p>
+ <% } %>
 <div class="game_list">
     <div class="game_list_grid">
         <% shopList.forEach(shop=>{ %>
