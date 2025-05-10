@@ -16,6 +16,8 @@ import pinoHttp  from 'pino-http';
 const pinoMiddleware = pinoHttp(config.logger.http(logger));
 
 import {Game} from "./games/Game.js";
+
+import {Shop} from "./shop/Shop.js";
 import genreRouter from './genres/router.js';
 
 
@@ -37,7 +39,8 @@ app.get('/', (req, res) => {
     const params = {
         contenido: 'pages/index',
         session: req.session,
-        gameList: Game.getGameListLimited(5, 0)
+        gameList: Game.getGameListLimited(5, 0),
+        shopList: Shop.getShopListLimited(5,0)
     }
     res.render('page', params);
 })

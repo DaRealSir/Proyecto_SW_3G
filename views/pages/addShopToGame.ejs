@@ -1,0 +1,27 @@
+<h1>Añadir tienda a Juego</h1>
+
+<form id = "addShop" action="/games/addShop/<%= game.id %>" method="POST">
+    <fieldset>
+        <% if (locals.error) { %>
+            <p><strong><%= locals.error %></strong></p>
+        <% } %>
+        <% if (locals.exito) { %>
+            <p><strong><%= locals.exito %></strong></p>
+        <% } %>
+        <legend> Añadir Tienda a : <%= game.title %></legend>
+
+        <label for="options" style="margin-left: 20px;"> Tienda: </label>
+        <select id="shop_option" name="shop_option" style="margin-left: 10px;" >
+            <% shopList.forEach(shop=>{ %>
+                <option value= "<%= shop.name %>"> <%= shop.name %></option>
+            <% }) %>
+        </select>
+
+        <p></p>
+        <label>URL juego en tienda:</label> <input type="text" name="url"/><%- helpers.error(errores, 'url') %>
+        <p></p>
+
+        <button type="submit">Enviar</button>
+    </fieldset>
+
+</form>

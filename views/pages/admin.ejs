@@ -1,14 +1,20 @@
 <h1>Panel de Administración</h1>
 <div class="button-container">
+    <p> JUEGOS </p>
     <form action="/games/addGame" method="GET">
         <button type="submit">Add Game</button>
     </form>
+    <p> TIENDAS </p>
+    <form action="/shop/addShop" method="GET">
+        <button type="submit">Add Shop</button>
+    <p> USUARIOS </p>
     <form action="/users/register" method="GET">
         <button type="submit">Add Special User</button>
     </form>
     <form action="/users/listausuarios" method="GET">
         <button type="submit">Delete User</button>
     </form>
+    <p> FOROS </p>
     <form action="/forum/deleteForum" method="POST">
         <button type="submit">Delete Forum</button>
     </form>

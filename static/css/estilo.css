@@ -449,6 +449,7 @@ div#game_list {
 
 .juego_info2 img{
     width: 60px;
+    margin-left: 25px;
 }
  
 
@@ -481,6 +482,28 @@ div#game_list {
 
 .juego_info3 h3{
     text-align: center;
+}
+
+.shop_info{
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    margin-top: 10px;
+}
+
+.shop_info1 {
+    width: 20%;
+    margin-left: 2%;
+}
+
+
+.shop_info1 img{
+    width: 100%;
+}
+
+.shop_info2 {
+    width: 50%;
+    margin-left: 15%;
 }
 
 

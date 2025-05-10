@@ -126,6 +126,47 @@ export function showGameInfo(req, res) {
 
 }
 
+export function addShopView(req, res) {
+
+    const id = req.params.id;
+    const game = Game.getGameById(id);
+    const contenido = 'pages/addShopToGame';
+    const shopList = Shop.getAllShops();
+    render(req, res, contenido, {
+        errores: {},
+        info: {},
+        shopList: shopList,
+        game: game
+    });
+}
+
+export function addShopDo(req, res) {
+
+    
+    const id = req.params.id;
+    const shop_option = req.body.shop_option;
+    const shop = Shop.getShopByName(shop_option);
+    const url = req.body.url.trim();
+    Game.addShopToGame(id, shop, url);
+    const game = Game.getGameById(id);
+    const shopList = Shop.getShopListByGameId(id);
+    const reviewListByGameId = Review.getAllReviewsByGameId(id);
+    const genres = Genre.getGameGenres(game);
+    const threadList = Forum.getThreadsByGame(id);
+
+    const contenido = 'pages/game';
+
+    render(req, res, contenido, {
+        errores: {},
+        info: {},
+        shopList: shopList,
+        game: game,
+        reviewList: reviewListByGameId,
+        genreList: genres,
+        threadList: threadList
+    });
+}
+
 export function viewAddGameBD(req, res) {
 
     let contenido = 'pages/addGameForm/addGamePage';

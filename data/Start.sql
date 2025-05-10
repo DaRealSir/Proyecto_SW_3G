@@ -38,12 +38,21 @@ VALUES (1, 2), -- Zelda - Adventure
 INSERT INTO shop (name, image )
 VALUES ('Steam', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/640px-Steam_icon_logo.svg.png'),
        ('PlayStation', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/PlayStation_logo.svg/991px-PlayStation_logo.svg.png'),
-       ('Nintendo', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Nintendo_red_logo.svg/1024px-Nintendo_red_logo.svg.png');
-
+       ('Nintendo', 'https://e7.pngegg.com/pngimages/485/678/png-clipart-wii-xbox-360-nintendo-switch-logo-nintendo-text-nintendo-thumbnail.png'),
+       ('Xbox', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8bqcn8xTGlSw5XjXm8-LKRnIfIa_uW2TCjA&s'),
+       ('EpicGames', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Epic_Games_logo.svg/1200px-Epic_Games_logo.svg.png');
 INSERT INTO game_shop (game_id, shop_id, url)
 VALUES (1, 3, 'https://store.nintendo.es/es/the-legend-of-zelda-breath-of-the-wild-000000000002560066?srsltid=AfmBOopx-0AUpxIQkwtamHZIwtZGI2sYD4DJYv6syEVK_UhSuAgikKtd'), -- Zelda - Nintendo
        (2, 2, 'https://store.playstation.com/es-es/product/EP9000-CUSA07411_00-0000000GODOFWARN'), -- God of War - PlayStation
-       (2, 1, 'https://store.steampowered.com/app/1593500/God_of_War/'); -- God of War - Steam
+       (2, 1, 'https://store.steampowered.com/app/1593500/God_of_War/'), -- God of War - Steam
+       (4, 1, 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/'), -- TW3 - Steam
+       (4, 2, 'https://store.playstation.com/es-es/product/EP4497-PPSA10408_00-00000000000000N1'), -- TW3 - PlaySation
+       (4, 3, 'https://www.nintendo.com/es-es/Juegos/Programas-descargables-Nintendo-Switch/The-Witcher-3-Wild-Hunt-1909183.html?srsltid=AfmBOorBHV-5UfWICf1C1T-1bm25LEHusUktOSNF3eBXdMGQwOCRtseQ'), -- TW3 - Switch
+       (4, 4, 'https://www.xbox.com/es-ES/games/store/the-witcher-3-wild-hunt/BR765873CQJD'), -- TW3 - xbox
+       (5, 1, 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/'), -- RDR 2 - Steam
+       (7, 1, 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/'); -- Cyberpunk - Steam
+       
+       
 
 
 INSERT INTO user (username, bio, password, profile_picture, user_type)
