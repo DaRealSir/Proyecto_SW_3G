@@ -77,7 +77,7 @@ VALUES (1, 1, '2025-03-20 08:20:07', 8, 'esta golden este juego'),
 
 
 INSERT INTO forum_post (id, game_id, original_post_id, title, description, user_id, replies, position_post) VALUES
-(-1,-1,-1, "DUMMY", "este post es falso",0,0,0)
+(-1,-1,-1, 'DUMMY', 'este post es falso',0,0,0),
 (1, 1, -1, 'Explorando Hyrule: Estrategias y builds', '¿Cómo optimizas tus habilidades y equipo en The Legend of Zelda: BotW? ¡Comparte tus mejores tácticas!', 2, 0, 1),
 (2, 1, -1, 'Descubre nuevas formas de abordar el juego', '¿Qué opinas de las diferentes formas de explorar Hyrule? ¿Cuál es tu estilo de juego?', 3, 0, 2),
 (3, 1, -1, 'El desafío de las tierras salvajes', 'Hablemos sobre las mejores builds y estrategias para sobrevivir en Hyrule. ¿Prefieres agilidad o poder?', 1, 0, 3),
@@ -115,6 +115,7 @@ INSERT INTO forum_post (id, game_id, original_post_id, title, description, user_
 (35, 3, 23, 'Re: ¿Qué opináis de Red Dead Redemption 2?', 'La banda sonora es una obra maestra. Las melodías quedan grabadas en tu cabeza.', 1, 0, 8),
 (36, 3, 23, 'Re: ¿Qué opináis de Red Dead Redemption 2?', 'El mundo abierto es impresionante, cada rincón está lleno de detalles que te hacen sentir parte del juego.', 2, 0, 9);
 
+
 UPDATE forum_post
 SET replies = (
     SELECT COUNT(*)
@@ -122,3 +123,12 @@ SET replies = (
     WHERE t2.original_post_id = forum_post.id
 )
 WHERE id IN (SELECT DISTINCT original_post_id FROM forum_post);
+
+/*
+UPDATE forum_post
+SET replies = (
+    SELECT COUNT(*)
+    FROM forum_post AS t2
+    WHERE t2.original_post_id = forum_post.id
+)
+WHERE id IN (SELECT DISTINCT original_post_id FROM forum_post);*/

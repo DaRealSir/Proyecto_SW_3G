@@ -72,7 +72,8 @@ CREATE TABLE user_game
     FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
 );
 -- Forum tables
-CREATE TABLE forum_post (
+CREATE TABLE forum_post 
+(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     game_id INTEGER NOT NULL,
     original_post_id INTEGER, -- "-1" si es un nuevo hilo, id del post original si es una respuesta
@@ -81,13 +82,14 @@ CREATE TABLE forum_post (
     user_id INTEGER NOT NULL,
     replies INTEGER DEFAULT 0 CHECK (replies >= 0),
     position_post INTEGER DEFAULT 1 CHECK (position_post >= 0),
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE,
     FOREIGN KEY (original_post_id) REFERENCES forum_post(id) ON DELETE CASCADE
 );
 
 
-CREATE TABLE review(   id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+CREATE TABLE review
+(   id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     game_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     date DATETIME NOT NULL,
@@ -97,7 +99,8 @@ CREATE TABLE review(   id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE
 );
 
-CREATE TABLE guides(
+CREATE TABLE guides
+(
     id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     user_id INTEGER NOT NULL,
     game_id INTEGER NOT NULL,
@@ -107,6 +110,7 @@ CREATE TABLE guides(
     content TEXT NOT NULL,
     FOREIGN KEY (game_id) REFERENCES game (id) on DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE
+    );
 -- Crear tabla de tiendas
 CREATE TABLE shop
 (

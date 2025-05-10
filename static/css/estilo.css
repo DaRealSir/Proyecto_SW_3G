@@ -239,6 +239,7 @@ div#contenedor {
     border-radius: 5px;
     margin-left: 10px;
     margin-right: 10px;
+
 }
 
 .bloque-index .game_title{
@@ -262,7 +263,16 @@ div#contenedor {
     
 }
 
+.bloque-index {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.bloque-index:hover{
+
+    transform: translate(2px, -4px);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
+}
 
 @media (max-width: 720px) {
     
@@ -332,6 +342,20 @@ div#contenedor {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+
+.game-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+     transform-style: preserve-3d;
+}
+
+.game-card:hover{
+
+    transform: rotateY(10deg) translate(2px, -4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
 }
 
 .game-card .game_title{
@@ -434,6 +458,8 @@ div#game_list {
     object-fit: cover;
 }
 
+
+
 .juego_info2 {
     width: 68%;
     /*float: right;*/
@@ -498,13 +524,25 @@ div#game_list {
 
 .shop_info1 img{
     width: 100%;
+    
+    transform: translateY(-4px);
 }
 
 .shop_info2 {
     width: 50%;
-    margin-left: 15%;
+    margin-left:
+     15%;
+}
+.shop_logo {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.shop_logo:hover{
+
+    transform: translate(2px, -4px);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
+}
 
 .review_juego{
     width: 70%;

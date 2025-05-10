@@ -123,8 +123,8 @@ export function showGameInfo(req, res) {
         guidesList: guidesListByGameId,
         genreList: genres,
         threadList: threadList,
-        shopList: shopList
-
+        shopList: shopList,
+        game_id: id
     });
 
 }
