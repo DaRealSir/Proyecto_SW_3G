@@ -2,6 +2,7 @@ import express from 'express';
 import session from 'express-session';
 import {config} from './config.js';
 import juegosRouter from './games/router.js';
+import shopRouter from './shop/router.js';
 import reviewRouter from './reviews/router.js';
 import informacionRouter from './information/router.js';
 import usersRouter from './users/router.js';
@@ -9,12 +10,15 @@ import contentRouter from './content/router.js';
 import apiRouter from './apiRouter.js';
 import { errorHandler } from './middleware/error.js';
 import forumRouter from './forum/router.js';
+import guidesRouter from "./guides/router.js";
 
 import { logger } from './logger.js';
 import pinoHttp  from 'pino-http';
 const pinoMiddleware = pinoHttp(config.logger.http(logger));
 
 import {Game} from "./games/Game.js";
+
+import {Shop} from "./shop/Shop.js";
 import genreRouter from './genres/router.js';
 
 
@@ -36,7 +40,8 @@ app.get('/', (req, res) => {
     const params = {
         contenido: 'pages/index',
         session: req.session,
-        gameList: Game.getGameListLimited(5, 0)
+        gameList: Game.getGameListLimited(5, 0),
+        shopList: Shop.getShopListLimited(5,0)
     }
     res.render('page', params);
 })
@@ -60,5 +65,8 @@ app.use('/reviews', reviewRouter);
 app.use('/genres', genreRouter);
 app.use('/content', contentRouter);
 app.use('/forum', forumRouter);
+app.use('/shop', shopRouter);
 app.use('/api',apiRouter);
+app.use('/guides', guidesRouter);
+app.use('/tinymce', express)
 app.use(errorHandler);

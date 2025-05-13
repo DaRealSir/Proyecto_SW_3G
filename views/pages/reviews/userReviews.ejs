@@ -29,9 +29,9 @@
 <%if(session.login) {%>
     <form action = "/games/addReview" method = "GET">
 
-        <% console.log("ADD REVIEW FUNCTION"); %>
-        <% console.log("GAMEID:" + game.id); %>
-        <% console.log("USERID:" + session.UserName); %>
+        <%  %>
+        <%  %>
+        <%  %>
         <input type = "hidden" name = "gameId" value = "<%= game.id %>">
         <input type = "hidden" name = "userName" value = "<%= session.UserName%>">
         <button type ="submit">Escribir review</button>

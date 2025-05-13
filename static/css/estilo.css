@@ -239,6 +239,7 @@ div#contenedor {
     border-radius: 5px;
     margin-left: 10px;
     margin-right: 10px;
+
 }
 
 .bloque-index .game_title{
@@ -262,7 +263,16 @@ div#contenedor {
     
 }
 
+.bloque-index {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.bloque-index:hover{
+
+    transform: translate(2px, -4px);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
+}
 
 @media (max-width: 720px) {
     
@@ -332,6 +342,20 @@ div#contenedor {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+
+.game-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+     transform-style: preserve-3d;
+}
+
+.game-card:hover{
+
+    transform: rotateY(10deg) translate(2px, -4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
 }
 
 .game-card .game_title{
@@ -435,6 +459,8 @@ div#game_list {
     object-fit: cover;
 }
 
+
+
 .juego_info2 {
     width: 68%;
     /*float: right;*/
@@ -447,6 +473,12 @@ div#game_list {
     margin-left : 10px;
 }
 
+
+.juego_info2 img{
+    width: 60px;
+    margin-left: 25px;
+}
+ 
 
 @media (max-width: 720px) {
     .juego_info_superior {
@@ -464,6 +496,7 @@ div#game_list {
     }
 }
 
+
 .juego_info3 {
     width: 100%;
     /*float: left;*/
@@ -478,7 +511,42 @@ div#game_list {
 .juego_info3 h3{
     text-align: center;
 }
- 
+
+.shop_info{
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    margin-top: 10px;
+}
+
+.shop_info1 {
+    width: 20%;
+    margin-left: 2%;
+}
+
+
+.shop_info1 img{
+    width: 100%;
+    
+    transform: translateY(-4px);
+}
+
+.shop_info2 {
+    width: 50%;
+    margin-left:
+     15%;
+}
+.shop_logo {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shop_logo:hover{
+
+    transform: translate(2px, -4px);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
+}
+
 .review_juego{
     width: 70%;
     background: white;
@@ -792,6 +860,103 @@ header::before {
     border: none;
     border-radius: 5px;
     background-color:rgb(113, 35, 87);
+}
+
+/* lista de guias*/
+.guide-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.guide-item {
+    background-color: #dccfdf;            /* color de tarjeta */
+    border-radius: 12px;                  /* esquinas redondeadas */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* sombra */
+    padding: 16px;                        /* relleno interno */
+    width: calc(33.333% - 2rem);          /* tres columnas con gap */
+    min-width: 240px;                     /* ancho mínimo */
+    transition: transform 0.2s ease;
+}
+
+.guide-item:hover {
+    transform: translateY(-4px);
+}
+
+.guide-link {
+    text-decoration: none;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.guide-type {
+    font-weight: bold;
+    font-size: 0.875rem;
+    color: #9b4ff3;
+}
+
+.guide-title {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: #333333;
+}
+
+.guide-date {
+    font-size: 0.875rem;
+    color: #333333;
+}
+
+/*para que sea responsive*/
+@media (max-width: 900px) {
+    .guide-item {
+        width: calc(50% - 2rem);
+    }
+}
+@media (max-width: 600px) {
+    .guide-item {
+        width: 100%;
+    }
+}
+
+
+.full-guide {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 16px;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.full-guide-title {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color: #333333;
+}
+
+.full-guide-meta {
+    font-size: 0.875rem;
+    color: #333333;
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.full-guide-meta span + span::before {
+    content: "|";
+    margin: 0 8px;
+    color: rgba(0,0,0,0.1);
+}
+
+.full-guide-content {
+    line-height: 1.6;
+    color: #333333;
 }
 /*Profile user*/
 .display_profile {

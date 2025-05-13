@@ -13,7 +13,7 @@
 
     <div class="juego_info3">
         <h3>NOTICIAS Y GUIAS</h3>
-        <% showGameInfo3() %>
+        <%- include('guides/guidesList') %>
     </div>
     <div class="juego_info3">
         <h3> REVIEWS </h3>
@@ -28,14 +28,14 @@
 
 
 
-<script>console.log("USERIDDDDD" + session.UserID)</script>
-
-
 <form action="/games/addReview/<%= game.id %>" method="GET">
     <input type="hidden" name="user_id" value="<%= session.UserID %>">
     <button type="submit">Añadir review </button>
 </form>
 
+<form action="/guides/addGuide/<%= game.id %>" method="GET">
+    <button type="submit">Escribir guia </button>
+</form>
 
 <% function showGameInfo(){ %>
     <h1><u><%= game.title %></u></h1>
@@ -51,24 +51,24 @@
     <p><u>Publicado por</u>: Empresa 2</p>
     <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
 
-    <p>Disponible en las siguientes tiendas :</p>
+    <form action="/games/addShop/<%= game.id %>" method="GET" style="display:inline;">
+    <p>Disponible en las siguientes tiendas :
+        <% if(session.esAdmin) { %>
+            <button type="submit">Añadir tienda</button>
+            
+        <% } %>
+    </p>
+    </form>
+    <div class="shop-games">
+    <% shopList.forEach(shop=>{ %>
+        
+            <a href="<%= shop.url %>"><img src="<%= shop.image %>" alt="Imagen de <%= shop.name %>" class = "shop_logo"></a>
+       
+     <% }) %>
+      </div>
 
-    <p><li>TIENDA1</li></p>
-    <p><li>TIENDA2</li></p>
-    <p><li>TIENDA3</li></p>
-    <p><li>TIENDA4</li></p>
-
-
+   
 <% } %>
-
-<% function showGameInfo3(){ %>
-
-
-
-    <p>......</p>
-    <p>......</p>
-<% } %>
-
 
 <% function adminOptions(session) { %>
     <% if(session.esAdmin) { %>
@@ -79,6 +79,11 @@
 
     <form action="/games/modifyGame/<%= game.id %>" method="GET" style="display:inline;">
         <button type="submit">Modificar juego</button>
+    </form>
+
+        <form action="/games/addShop/<%= game.id %>" method="GET" style="display:inline;">
+
+            <button type="submit">Añadir tienda</button>
     </form>
     <% } %>
 <% } %>

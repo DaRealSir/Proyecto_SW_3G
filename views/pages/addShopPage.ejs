@@ -1,0 +1,19 @@
+<h1>Añadir juego a Base de Datos</h1>
+
+<form id = "addPage" action="/shop/addShop" method="POST">
+    <fieldset>
+        <% if (locals.error) { %>
+            <p><strong><%= locals.error %></strong></p>
+        <% } %>
+        <% if (locals.exito) { %>
+            <p><strong><%= locals.exito %></strong></p>
+        <% } %>
+        <legend> Añadir Tienda</legend>
+        <label>Nombre:</label> <input type="text" name="name" value="<%= info.name %>"/><%- helpers.error(errores, 'title') %><span class="error"></span><span class="feedback"></span>
+        <p></p>
+        <label>Url imagen:</label> <input type="text" name="image" value="<%= info.image %>"/><%- helpers.error(errores, 'description') %>
+        <p></p>
+        <button type="submit">Enviar</button>
+    </fieldset>
+
+</form>

@@ -125,8 +125,6 @@ export class Review {
     static getAllReviewsByGameId(gameId) {
 
         const review = this.#getAllReviewsByGameIdStmt.all({gameId});
-        console.log("REVIEW");
-        console.log(review);
         if (review === undefined) throw new ReviewNotFound(gameId);
 
         return review;
@@ -147,9 +145,7 @@ export class Review {
     }
 
     static deleteReview(id) {
-        console.log("ANTES DELETE REVIEW DE REVIEW");
         const res = this.#deleteReviewByIdStmt.run({id});
-        console.log("DESPUES DELETE REVIEW DE REVIEW");
         if (res.changes === 0) throw new ReviewNotFound(id);
     }
 

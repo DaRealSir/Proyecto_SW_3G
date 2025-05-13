@@ -7,7 +7,6 @@ export function viewContenidoNormal(req, res) {
     if (req.session != null ) {//Si tiene la sesion activa y un nombre en la sesion, muestra la page normal
         contenido = 'pages/profileUser';
          user = User.getUserByID(req.session.UserID)
-         console.log(user);
     }
   
 

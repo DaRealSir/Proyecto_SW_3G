@@ -1,0 +1,76 @@
+<h1>
+    <%= info.guide_id ? 'Editar guía de' : 'Escribir guía para' %>
+    <%= game.title %>
+</h1>
+
+<form
+        action="<%= info.guide_id
+                ? '/guides/edit/' + info.guide_id
+                : '/guides/addGuide/' + game.id %>"
+        method="POST"
+>
+    <input type="hidden" name="game_id"  value="<%= gameId %>">
+    <input type="hidden" name="user_id"  value="<%= session.UserID %>">
+    <% if (info.guide_id) { %>
+        <input type="hidden" name="guide_id" value="<%= info.guide_id %>">
+    <% } %>
+
+    <fieldset>
+        <legend><%= info.guide_id ? 'Modifica tu guía' : 'Escribe tu guía' %></legend>
+
+        <label for="title">Título:</label>
+        <textarea id="title" name="title"><%= info.title %></textarea>
+        <%- helpers.error(errores, 'title') %>
+
+        <% if (locals.error) { %>
+            <p class="error"><%= locals.error %></p>
+        <% } %>
+        <% if (locals.exito) { %>
+            <p class="success"><%= locals.exito %></p>
+        <% } %>
+
+        <% if (session.esPeriodista || session.esAdmin) { %>
+            <div>
+                <label>
+                    <input
+                            type="radio" name="guide_type" value="G"
+                            <%= info.guide_type === 'G' ? 'checked' : '' %>
+                    > Guía
+                </label>
+                <label>
+                    <input
+                            type="radio" name="guide_type" value="N"
+                            <%= info.guide_type === 'N' ? 'checked' : '' %>
+                    > Noticia
+                </label>
+            </div>
+        <% } else { %>
+            <input type="hidden" name="guide_type" value="<%= info.guide_type %>">
+        <% } %>
+
+        <label for="guideContent">Contenido:</label>
+        <textarea id="guideContent" name="content"><%= info.content %></textarea>
+        <%- helpers.error(errores, 'content') %>
+
+        <button type="submit">
+            <%= info.guide_id ? 'Actualizar guía' : 'Guardar guía' %>
+        </button>
+    </fieldset>
+</form>
+
+<script src="/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        tinymce.init({
+            selector: '#guideContent',
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount emoticons ',
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor |' +
+                'bullist numlist outdent indent | ' +
+                'removeformat | image link | code | help | fontsize | fontfamily | h1 h2 h3 | aidialog | emoticons',
+            height: 700,
+            emoticons_database: 'emojiimages',
+        });
+    });
+</script>
