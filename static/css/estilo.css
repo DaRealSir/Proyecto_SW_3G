@@ -418,10 +418,11 @@ div#game_list {
 }
 
 .juego_info {
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     width: 25%;
     /*float: left;*/
     margin: auto;
-    border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
     text-align: center;
     border-radius: 5px;
@@ -437,9 +438,10 @@ div#game_list {
 .juego_info2 {
     width: 68%;
     /*float: right;*/
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
-    border-radius: 5px;
 }
 .juego_info2 p, li, button{
     margin-left : 10px;
@@ -465,11 +467,12 @@ div#game_list {
 .juego_info3 {
     width: 100%;
     /*float: left;*/
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     margin: auto;
     border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
     margin-top: 20px;
-    border-radius: 5px;
 }
 
 .juego_info3 h3{
@@ -478,9 +481,11 @@ div#game_list {
  
 .review_juego{
     width: 70%;
-    background-color: #ffffff;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     align-items: center;
-    border: 1px solid rgb(87, 69, 79);
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 15%;
@@ -590,17 +595,20 @@ h1 {
     text-align: center;
 }
 .buttons-page button{
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
     margin-left : 10px;
-    font-size: 18px;
     cursor: pointer;
     color: #fff;
-    background-color: #9b4ff3;
-    border-radius: 15px;
+    background-color: #007bff;
+    border: none;
+    
     
 }
 
 .buttons-page button:hover{
-    background-color: #6112bd
+    background-color: #0056b3
 }
 
 .buttons-page button:active{
@@ -671,7 +679,7 @@ header::before {
 .dialogo {
 	position: fixed;
 	top: 50%;
-	left: 50%;
+	left: 40%;
   	margin-top: -100px;
 	margin-left: -200px;
     background: white;
@@ -682,6 +690,30 @@ header::before {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: left;
     z-index: 1000;
+}
+
+@media (max-width: 550px) {
+    .dialogo {
+        left: 50%;
+    }
+}
+
+
+@media (max-width: 450px) {
+    .dialogo {
+        left: 55%;
+    }
+}
+
+@media (max-width: 400px) {
+    .dialogo {
+        left: 60%;
+    }
+}
+@media (max-width: 350px) {
+    .dialogo {
+        left: 75%;
+    }
 }
 
 .oscurecer.is-active {
