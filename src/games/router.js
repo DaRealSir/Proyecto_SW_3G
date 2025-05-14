@@ -14,7 +14,9 @@ import {
     viewModifyGameBD,
     deleteReview,
     doAddReviewBD,
-    viewAddReview
+    viewAddReview,
+    addShopView,
+    addShopDo
 } from "./controller.js";
 
 const juegosRouter = express.Router();
@@ -60,6 +62,9 @@ juegosRouter.post('/modifyGame/:id',
 juegosRouter.get('/:id', showGameInfo);
 juegosRouter.post('/deleteGame/:id', doDelete);
 juegosRouter.post('/deleteReview/:id', deleteReview);
+
+juegosRouter.get('/addShop/:id', addShopView);
+juegosRouter.post('/addShop/:id', addShopDo);
 
 juegosRouter.get('/addReview/:game_id', viewAddReview);
 juegosRouter.post('/addReview',

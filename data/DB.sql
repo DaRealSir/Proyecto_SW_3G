@@ -71,8 +71,8 @@ CREATE TABLE user_game
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
 );
--- Forum tables
-CREATE TABLE forum_post
+
+CREATE TABLE forum_post 
 (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     game_id INTEGER NOT NULL,

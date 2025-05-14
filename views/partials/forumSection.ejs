@@ -1,0 +1,32 @@
+<h1 class = thread-title><%= thread.title %></h1>
+<p class = thread-username>Creado por: <%= thread.user_name %></p>
+<p class = thread-message><%= thread.description %></p>
+<p>Respuestas: <%= thread.replies %></p>
+
+<% reply(thread.game_id, thread.id); %>
+<% eliminate(thread.game_id, thread.id); %>
+<% edit(thread.game_id, thread.id, thread.user_id); %>
+
+<% if (thread.replies > 0 && !first) { %>
+    <div id="ver_respuestas-<%= thread.id %>">
+        <a href="#" class="show-reply" data-game-id='<%= thread.game_id %>' data-last-id='<%= thread.id %>' data-offset="<%= thread.replies %>" data-where-id='<%= thread.id %>'>Ver respuestas</a>
+    </div>
+<% } %>
+
+<% function edit(g_id, id, user_id) { %>
+    <% if (session.login && session.UserID == user_id) { %>
+        <a href="#editModal" class="edit-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Editar</a>
+    <% } %>
+<% } %>
+
+<% function reply(g_id,id) { %>
+    <% if (session.login) { %>
+        <a href="#replyModal" class="reply-button" data-game-id= "<%= g_id %>" data-thread-id="<%= id %>">Responder</a>
+    <% } %>
+<% } %>
+
+<% function eliminate(g_id, id) { %>
+    <% if (session.esAdmin) { %>
+        <a href="#deleteModal" class="delete-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Eliminar</a>
+    <% } %>
+<% } %>

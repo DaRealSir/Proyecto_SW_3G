@@ -53,8 +53,6 @@ VALUES (1, 3, 'https://store.nintendo.es/es/the-legend-of-zelda-breath-of-the-wi
        (7, 1, 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/'); -- Cyberpunk - Steam
 
 
-
-
 INSERT INTO user (username, bio, password, profile_picture, user_type)
 VALUES ('User', 'Gamer de aventuras y RPGs.', '$2b$10$JdCg8yL3rRkkr.hhx1rjqOe30F9lhBlqA1sjYJW6ymzYExvQFHyjy',
         'alice.jpg', 'U'),

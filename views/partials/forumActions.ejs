@@ -1,0 +1,17 @@
+<% function edit(g_id, id, user_id) { %>
+    <% if (session.login && session.UserID == user_id) { %>
+        <a href="#editModal" class="edit-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Editar</a>
+    <% } %>
+<% } %>
+
+<% function reply(g_id,id) { %>
+    <% if (session.login) { %>
+        <a href="#replyModal" class="reply-button" data-game-id= "<%= g_id %>" data-thread-id="<%= id %>">Responder</a>
+    <% } %>
+<% } %>
+
+<% function eliminate(g_id, id) { %>
+    <% if (session.esAdmin) { %>
+        <a href="#deleteModal" class="delete-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Eliminar</a>
+    <% } %>
+<% } %>

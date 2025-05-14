@@ -1,0 +1,53 @@
+<h1>Lista de tiendas</h1>
+
+ <!-- Posibles futuros filtros
+<form id="filters" action="/shop/shopList/page/<%= page %>" method="POST">
+
+        <label for="options" style="margin-left: 20px;"> Tienda: </label>
+        <select id="shop_option" name="shop_option" style="margin-left: 10px;" value = "<%=filtersValues.shop_option%>">
+            <option value= "Cualquiera"  <%= filtersValues.shop_option ===  "cualquiera"  ? "selected" : "" %>> Cualquiera </option>
+            <% shopList.forEach(shop=>{ %>
+                <option value= "<%= shop.name %>"  <%= filtersValues.shop_option ===  shop.name  ? "selected" : "" %>> <%= shop.name %></option>
+            <% }) %>
+        </select>
+</form>-->
+<% if(session.esAdmin ) { %>
+ <p> Herramientas admin : <a href="/shop/addShop"> Añadir tienda</a> </p>
+ <% } %>
+<div class="game_list">
+    <div class="game_list_grid">
+        <% shopList.forEach(shop=>{ %>
+            <div class="game-card">
+                <h3 class = "game_title"><a href="/shop/<%= shop.id %>"><%= shop.name %></a></h3>
+                <a href="/shop/<%= shop.id %>"><img src="<%= shop.image %>" alt="Imagen de <%= shop.name %>"></a>
+            </div>
+         <% }) %>
+    </div>
+</div>
+
+<div class = "buttons-page">
+    <p>
+        <button onclick="goPreviousPage()" > Anterior </button>
+        <button onclick="goNextPage()"> Siguiente </button>
+    </p>
+</div>
+
+
+
+<script>
+
+
+    function goPreviousPage() {
+        let pageNumber = <%= page %> || 1;
+        if (pageNumber >= 2){
+            let numPage = pageNumber - 1;
+             window.location.href = `/shop/shopList/page/${pageNumber - 1}`;
+        }
+    }
+    function goNextPage() {
+        let pageNumber = <%= page %> || 1;
+        let numPage = pageNumber + 1;
+        
+         window.location.href = `/shop/shopList/page/${pageNumber + 1}`;
+    }
+</script>

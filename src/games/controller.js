@@ -2,6 +2,7 @@ import express from 'express';
 import {Game} from "./Game.js";
 import {Review} from "../reviews/Review.js";
 import {Genre} from "../genres/Genre.js"
+import {Shop} from "../shop/Shop.js"
 
 import {render} from '../utils/render.js';
 import {matchedData, validationResult} from 'express-validator';
@@ -115,15 +116,58 @@ export function showGameInfo(req, res) {
     const guidesListByGameId = Guides.getGuideByGame(id);
     const genres = Genre.getGameGenres(game);
     const threadList = Forum.getThreadsByGame(id);
+    const shopList = Shop.getShopListByGameId(id);
     render(req, res, contenido, {
         game: game,
         reviewList: reviewListByGameId,
         guidesList: guidesListByGameId,
         genreList: genres,
         threadList: threadList,
+        shopList: shopList,
         game_id: id
     });
 
+}
+
+export function addShopView(req, res) {
+
+    const id = req.params.id;
+    const game = Game.getGameById(id);
+    const contenido = 'pages/addShopToGame';
+    const shopList = Shop.getAllShops();
+    render(req, res, contenido, {
+        errores: {},
+        info: {},
+        shopList: shopList,
+        game: game
+    });
+}
+
+export function addShopDo(req, res) {
+
+    
+    const id = req.params.id;
+    const shop_option = req.body.shop_option;
+    const shop = Shop.getShopByName(shop_option);
+    const url = req.body.url.trim();
+    Game.addShopToGame(id, shop, url);
+    const game = Game.getGameById(id);
+    const shopList = Shop.getShopListByGameId(id);
+    const reviewListByGameId = Review.getAllReviewsByGameId(id);
+    const genres = Genre.getGameGenres(game);
+    const threadList = Forum.getThreadsByGame(id);
+
+    const contenido = 'pages/game';
+
+    render(req, res, contenido, {
+        errores: {},
+        info: {},
+        shopList: shopList,
+        game: game,
+        reviewList: reviewListByGameId,
+        genreList: genres,
+        threadList: threadList
+    });
 }
 
 export function viewAddGameBD(req, res) {
