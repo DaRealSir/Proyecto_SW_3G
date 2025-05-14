@@ -20,6 +20,7 @@ import {Game} from "./games/Game.js";
 
 import {Shop} from "./shop/Shop.js";
 import genreRouter from './genres/router.js';
+import {Guides} from "./guides/Guides.js";
 
 
 export const app = express();
@@ -41,7 +42,8 @@ app.get('/', (req, res) => {
         contenido: 'pages/index',
         session: req.session,
         gameList: Game.getGameListLimited(5, 0),
-        shopList: Shop.getShopListLimited(5,0)
+        shopList: Shop.getShopListLimited(5,0),
+        guidesList : Guides.getGuideListLimited(5, 0)
     }
     res.render('page', params);
 })

@@ -5,10 +5,10 @@
 
 <div class='contenedor-index'>
     <% gameList.forEach(game => { %>
-    <div class="bloque-index">
-        <div class = "game_title"> <h4><a href="/games/<%= game.id %>"><%= game.title %></a></h4> </div>
-        <p><a href="/games/<%= game.id %>"><img src="<%= game.image %>" alt="Imagen de <%= game.title %>"></a></p>
-    </div>
+        <div class="bloque-index">
+            <div class="game_title"><h4><a href="/games/<%= game.id %>"><%= game.title %></a></h4></div>
+            <p><a href="/games/<%= game.id %>"><img src="<%= game.image %>" alt="Imagen de <%= game.title %>"></a></p>
+        </div>
     <% }); %>
 </div>
 
@@ -18,9 +18,39 @@
 
 <div class='contenedor-index'>
     <% shopList.forEach(shop => { %>
-    <div class="bloque-index">
-        <div class = "game_title"> <h4><a href="/shop/<%= shop.id %>"><%= shop.name %></a></h4> </div>
-        <p><a href="/shop/<%= shop.id %>"><img src="<%= shop.image %>" alt="Imagen de <%= shop.title %>"></a></p>
-    </div>
+        <div class="bloque-index">
+            <div class="game_title"><h4><a href="/shop/<%= shop.id %>"><%= shop.name %></a></h4></div>
+            <p><a href="/shop/<%= shop.id %>"><img src="<%= shop.image %>" alt="Imagen de <%= shop.title %>"></a></p>
+        </div>
     <% }); %>
+</div>
+
+<ul>
+    <li><h3><a href="/guides">Lista de Guías</a></h3></li>
+</ul>
+
+<div class="contenedor-index">
+    <% if (guidesList && guidesList.length > 0) { %>
+        <% guidesList.forEach(guide => { %>
+            <div class="bloque-index">
+                <div class="game_title">
+                    <h4><%= guide.guide_title %></h4>
+                </div>
+                <p><strong>Autor:</strong> <%= guide.user_name %></p>
+                <p><strong>Juego:</strong> <a href="/games/<%= guide.game_id %>"><%= guide.game_name %></a></p>
+                <p>
+                    <strong>Tipo:</strong>
+                    <% if (guide.guide_type === 'G') { %>
+                        Guía
+                    <% } else { %>
+                        Normal
+                    <% } %>
+                </p>
+                <p><strong>Fecha:</strong> <%= new Date(guide.guide_date).toLocaleString() %></p>
+                <p><a href="/guides/<%= guide.guide_id %>">Ver más detalles</a></p>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>No hay guías disponibles por el momento.</p>
+    <% } %>
 </div>

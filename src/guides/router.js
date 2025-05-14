@@ -7,7 +7,7 @@ import {
     listGuidesByGameId,
     viewAddGuide,
     showFullGuide,
-    doEditGuide
+    doEditGuide,
 } from './controller.js';
 
 const guidesRouter = express.Router();
@@ -25,5 +25,4 @@ guidesRouter.post('/edit/:guide_id',
     body('content').trim().notEmpty(),
     asyncHandler(doEditGuide)
 );
-
 export default guidesRouter;
