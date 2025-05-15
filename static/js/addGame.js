@@ -17,8 +17,6 @@ function init() {
 
     const rating = form.elements.namedItem('rating');
     rating.addEventListener('input', checkRating);
-
-
 }
 
 /**
@@ -61,7 +59,6 @@ async function displayErrores(response) {
         }
     }
 }
-
 function checkRating(e) {
     const rating = e.target;
     const feedback = rating.form.querySelector(`*[name="${rating.name}"] ~ .feedback`);
@@ -76,10 +73,12 @@ function checkRating(e) {
     if (isValidRating) {
         rating.setCustomValidity('');
         feedback.textContent = '✔';
-        feedback.style.color = 'green';
+        feedback.classList.remove("red");
+        feedback.classList.add("green");
     } else {
         feedback.textContent = '⚠';
-        document.style.color = 'red';
+        feedback.classList.add("green");
+        feedback.classList.remove("red");
     }
     // Muestra el mensaje de validación
     rating.reportValidity();

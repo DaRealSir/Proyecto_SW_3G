@@ -503,3 +503,20 @@ header::before {
     border-radius: 5px;
     background-color:rgb(113, 35, 87);
 }
+
+
+/* Cosas de classList*/
+.red {
+    color: red;
+}
+.green {
+    color: green;
+}
+.visible{
+    visibility: visible;
+    max-height: 10000px;
+}
+.hidden{
+    visibility: hidden;
+    max-height: 0px;
+}

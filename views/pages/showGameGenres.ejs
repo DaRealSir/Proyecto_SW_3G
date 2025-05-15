@@ -23,12 +23,12 @@
 <script>
     function toggleVisibility() {
         let x = document.getElementById('dropdown_genres_content');
-        if (x.style.visibility === 'hidden') {
-            x.style.visibility = 'visible';
-            x.style.maxHeight = '1000px';
+        if (x.classList.contains('hidden')) {
+            x.classList.remove('hidden');
+            x.classList.add('visible');
         } else {
-            x.style.visibility = 'hidden';
-            x.style.maxHeight = '0px';
+            x.classList.remove('visible');
+            x.classList.add('hidden');
         }
     } 
     //cambiar estilo css dinamicamente a traves de js sacado de: https://www.w3schools.com/js/js_htmldom_css.asp

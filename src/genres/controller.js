@@ -10,17 +10,14 @@ export function deleteGenre(req,res){
     let aux = Genre.getGenreGames(genre);
     let aux_length = aux.length;
     if(aux_length == 1){
-        console.log(aux);
-        console.log(aux.lenght);
         Genre.delete(genre);
     }
     else Genre.deleteGenreFromGame(game,genre);
     res.redirect('/games/'+ game_id);
 }
 export function showGameGenres(req,res){
-
     const gameId = req.params.gameId;
-    const game = Game.getGameGenres(gameId);
+    const game = Game.getGameById(gameId);
     const genreList = Genre.getGameGenres(game);
     res.render(req,res,'pages/showGameGenres',{
         contenido,
@@ -28,9 +25,6 @@ export function showGameGenres(req,res){
         genreList: genreList
     }
     )
-}
-export function doModifyGenreBD(req,res){
-//WIP
 }
 
 export function doAddGenreBD(req, res){

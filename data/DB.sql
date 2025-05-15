@@ -8,14 +8,6 @@ DROP TABLE IF EXISTS forum_post;
 DROP TABLE IF EXISTS review;
 --Para pruebas
 
-
--- Crear tabla de empresas (con AUTOINCREMENT para el id)
-CREATE TABLE company
-(
-    id   INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT UNIQUE NOT NULL
-);
-
 -- Crear tabla de juegos (con AUTOINCREMENT para el id)
 CREATE TABLE game
 (
@@ -46,6 +38,21 @@ CREATE TABLE game_genre
     FOREIGN KEY (genre_id) REFERENCES genre (id) ON DELETE CASCADE
 );
 
+
+CREATE TABLE company
+(
+    id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE game_company(
+    game_id  INTEGER,
+    company_id INTEGER,
+    relation TEXT,
+    PRIMARY KEY (game_id, company_id),
+    FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE,
+    FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
+);
 
 CREATE TABLE user
 (

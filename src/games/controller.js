@@ -138,6 +138,7 @@ export function viewAddGameBD(req, res) {
 
 
 export function doAddGameBD(req, res) {
+
     const result = validationResult(req);
 
     const title = req.body.title.trim();
@@ -146,41 +147,12 @@ export function doAddGameBD(req, res) {
     const favNumber = parseInt(req.body.favNumber.trim());
     const company_id = parseInt(req.body.company_id.trim());
     const url_image =  req.body.url_image.trim();
-    if (! result.isEmpty()) {
-        const errores = result.mapped();
-        const datos = matchedData(req);
-        return render(req, res, 'pages/addGameForm/addGamePage', {
-            datos,
-            errores,
-            info:{
-                title: title,
-                description: description,
-                rating: rating,
-                favNumber: favNumber,
-                url_image: url_image,
-                company_id: company_id
-            }
-        });
-    }
-
-
     try {
         const game = new Game(title, description, rating, favNumber, url_image, company_id, null);
 
         const game2 = Game.insert(game);
-
-        render(req, res, 'pages/addGameForm/addGamePage', {
-            errores: {},
-            exito: 'Juego insertado con exito en la Base de Datos',
-            info:{
-                title: title,
-                description: description,
-                rating: rating,
-                favNumber: favNumber,
-                url_image: url_image,
-                company_id: company_id
-            }
-        });
+        const game_id = Game.getGameByTitle(title).id;
+        res.redirect(`/games/${game_id}`);
 
 
     } catch (e) {

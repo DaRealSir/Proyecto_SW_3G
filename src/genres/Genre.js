@@ -50,30 +50,45 @@ export class Genre {
     }
     static getAllGenres(){
         let res = this.#getAllGenres.all();
-        return res;
+        let ret = [];
+        res.forEach(genre => {
+            ret.push(new Genre(genre.id,genre.name));
+        });
+        return ret;
     }
     static getGameGenres(game) {
         let result = null;
+        let ret = [];
         const game_id = game.id;
         const data = {game_id};
         result = this.#getGenreWithGame.all(data);
-        return result;
+        result.forEach(genre => {
+            ret.push(new Genre(genre.id,genre.name));
+        });
+        return ret;
     } //Devuelve todos los genero de un juego
     static getGenreGames(genre){
         let result = null;
+        let ret = [];
         const genre_id = genre.id;
         const data = {genre_id};
         result = this.#getGameWithGenre.all(data);
-        return result;
+                result.forEach(genre => {
+            ret.push(new Genre(genre.id,genre.name));
+        });
+        return ret;
     } //Devuelve todos los juegos asociados a un genero
     static addGenreToGame(game, genre) {
         let result = null;
+        let ret = [];
         const game_id = game.id;
         try{
             result = this.getGenreByName(genre.name);
+            ret = new Genre(result.id,result.name);
         }
         catch(e){
             result = this.insert(genre.name);
+            ret = new Genre(result.id,result.name);
         }
 
         const genre_id = result.id;
@@ -83,6 +98,10 @@ export class Genre {
          if(result.length >= 5) throw new maxGenresAssigned(genre_id,game_id);
         try{
             result = this.#assignGenreGame.run(data);
+                    result = this.#getGameWithGenre.all(data);
+                result.forEach(genre => {
+            ret.push(new Genre(genre.id,genre.name));
+        });
         } catch (e) {
             throw new genreGameAlreadyExists(genre_id, game_id);
         }
@@ -122,18 +141,14 @@ export class Genre {
         const data = {genre_name};
         let id;
         try {
-            for(let i = 0; i < 10; i++) console.log('#');
             result = this.#insertGenre.run(data);
             id = result.lastInsertRowid;
-            for(let i = 0; i < 10; i++) console.log('!');
         } catch (e) {
             if (e.code === 'SQLITE_CONSTRAINT') {
                 throw new genreAlreadyExists(genre_name);
             }
             throw new ErrorDatos("Genre couldn't be inserted", {cause: e});
         }
-        for(let i = 0; i < 10; i++) console.log(' ');
-        console.log(id + ' ' + genre_name);
         return new Genre(id,genre_name);
     }
     /*Recive como parametros: Nuevo genero, el juego a modificar generos y la id del genero previo, para poder eliminarlo*/ 
