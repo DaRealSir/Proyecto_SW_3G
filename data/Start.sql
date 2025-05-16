@@ -1,7 +1,11 @@
 INSERT INTO company (name)
 VALUES ('Nintendo'),
+       ('Santa Monica Studio'),
+       ('Jetpack Interactive'),
+       ('Bluepoint Games'),
        ('Sony'),
-       ('Microsoft'),
+       ('Halo Studios'),
+       ('XBox Game Studios'),
        ('CD Projekt Red'),
        ('Rockstar Games');
 
@@ -55,7 +59,17 @@ VALUES (1, 3, 'https://store.nintendo.es/es/the-legend-of-zelda-breath-of-the-wi
 
 INSERT INTO game_company(game_id,company_id,relation)
 VALUES (1,1,'developer'), -- Zelda - Nintendo - Developer
-       (1,1,'publisher'); -- Zelda - Nintendo - Publisher
+       (1,1,'publisher'),-- Zelda - Nintendo - Publisher
+       (2,2,'developer'),
+       (2,3,'developer'),
+       (2,4,'developer'),
+       (2,5,'publisher'),
+       (3,6,'developer'),
+       (3,7,'publisher'),
+       (4,8,'developer'),
+       (4,8,'publisher'),
+       (5,9,'developer'),
+       (5,9,'publisher');
 INSERT INTO user (username, bio, password, profile_picture, user_type)
 VALUES ('User', 'Gamer de aventuras y RPGs.', '$2b$10$JdCg8yL3rRkkr.hhx1rjqOe30F9lhBlqA1sjYJW6ymzYExvQFHyjy',
         'alice.jpg', 'U'),
