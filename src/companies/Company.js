@@ -9,7 +9,6 @@ export class Company {
     static #getGameWithCompany = null;
     static #getCompanyWithGame = null;
     static #unassignCompanyGame = null;
-    static #deleteAllGameCompany = null;
     #id;
     name;
 
@@ -45,7 +44,6 @@ export class Company {
         this.#getGameWithCompany = db.prepare('SELECT DISTINCT game.* FROM company JOIN game_company ON game_company.company_id = @company_id JOIN game ON game.id = game_company.game_id WHERE game_company.relation = @relation');
         this.#assignCompanyGame = db.prepare('INSERT INTO game_company (game_id, company_id, relation) VALUES (@game_id,@company_id,@relation)');
         this.#unassignCompanyGame = db.prepare('DELETE FROM game_company WHERE game_id = @game_id AND company_id = @company_id AND game_company.relation = @relation');
-        this.#deleteAllGameCompany = db.prepare('DELETE FROM game_company WHERE company_id = @company_id');
     }
     static getAllCompanies(){
         let res = this.#getAllCompanies.all();
@@ -88,7 +86,6 @@ export class Company {
         catch(e){
             company_id = this.insert(company_name).id;
         }
-        console.log('\n\n\n' + company_id + '\n\n\n');
         let data = {game_id,company_id,relation};
 
         try{
@@ -147,7 +144,7 @@ export class Company {
         const data = {company_id};
         try {
             this.#deleteCompany.run(data);
-            this.#deleteAllGameCompany.run(data);
+            this.#deleteGameCompany.run(data);
         } catch (e) {
             throw new ErrorDatos("Company couldn't be deleted", {cause: e});
         }
