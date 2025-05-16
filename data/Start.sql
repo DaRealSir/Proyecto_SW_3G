@@ -33,7 +33,9 @@ VALUES (1, 2), -- Zelda - Adventure
        (4, 5), -- Witcher - Open World
        (5, 1), -- RDR2 - Action
        (5, 5); -- RDR2 - Open World
-
+INSERT INTO game_company(game_id,company_id,relation)
+VALUES (1,1,'developer'), -- Zelda - Nintendo - Developer
+       (1,1,'publisher'); -- Zelda - Nintendo - Publisher
 INSERT INTO user (username, bio, password, profile_picture, user_type)
 VALUES ('User', 'Gamer de aventuras y RPGs.', '$2b$10$JdCg8yL3rRkkr.hhx1rjqOe30F9lhBlqA1sjYJW6ymzYExvQFHyjy',
         'alice.jpg', 'U'),

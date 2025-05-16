@@ -9,7 +9,7 @@ export class Company {
     static #getGameWithCompany = null;
     static #getCompanyWithGame = null;
     static #unassignCompanyGame = null;
-    
+    static #deleteAllGameCompany = null;
     #id;
     name;
 
@@ -41,69 +41,68 @@ export class Company {
         this.#deleteCompany = db.prepare('DELETE FROM company WHERE id = @company_id');
         this.#deleteGameCompany = db.prepare('DELETE FROM game_company WHERE company_id = @company_id');
         this.#insertCompany = db.prepare('INSERT INTO company(name) VALUES (@company_name)');
-        this.#getCompanyWithGame = db.prepare('SELECT DISTINCT company.* FROM game JOIN game_company ON game_company.game_id = @game_id JOIN company ON game_company.company_id = company.id WHERE game_company.relation = @relacion');
-        this.#getGameWithCompany = db.prepare('SELECT DISTINCT game.* FROM company JOIN game_company ON game_company.company_id = @company_id JOIN game ON game.id = game_company.game_id WHERE game_company.relation = @relacion;');
-        this.#assignCompanyGame = db.prepare('INSERT INTO game_company (game_id, company_id) VALUES (@game_id,@company_id)');
-        this.#unassignCompanyGame = db.prepare('DELETE FROM game_company WHERE game_id = @game_id AND company_id = @company_id');
+        this.#getCompanyWithGame = db.prepare('SELECT DISTINCT company.* FROM game JOIN game_company ON game_company.game_id = @game_id JOIN company ON game_company.company_id = company.id WHERE game_company.relation = @relation');
+        this.#getGameWithCompany = db.prepare('SELECT DISTINCT game.* FROM company JOIN game_company ON game_company.company_id = @company_id JOIN game ON game.id = game_company.game_id WHERE game_company.relation = @relation');
+        this.#assignCompanyGame = db.prepare('INSERT INTO game_company (game_id, company_id, relation) VALUES (@game_id,@company_id,@relation)');
+        this.#unassignCompanyGame = db.prepare('DELETE FROM game_company WHERE game_id = @game_id AND company_id = @company_id AND game_company.relation = @relation');
+        this.#deleteAllGameCompany = db.prepare('DELETE FROM game_company WHERE company_id = @company_id');
     }
     static getAllCompanies(){
         let res = this.#getAllCompanies.all();
         let ret = [];
         res.forEach(company => {
-            ret.push(company.id,company.name);
+            ret.push(new Company(company.id,company.name));
         });
-        return res;
+        return ret;
     }
-    static getGameCompanies(game) {
+    static getGameCompanies(game,relation) {
         let result = null;
         let ret = [];
         const game_id = game.id;
-        const data = {game_id};
+        const data = {game_id,relation};
         result = this.#getCompanyWithGame.all(data);
         result.forEach(company=> {
             ret.push(new Company(company.id,company.name));
         });
-        return result;
+        return ret;
     }
-    static getCompanyGames(company){
+    static getCompanyGames(company, relation){
         let result = null;
-        let = [];
+        let ret = [];
         const company_id = company.id;
-        const data = {company_id};
+        const data = {company_id,relation};
         result = this.#getGameWithCompany.all(data);
         result.forEach(company => {
             ret.push(new Company(company.id,company.name));
         });
-        return result;
+        return ret;
     }
-    static addCompanyToGame(game, company, type) {
+    static addCompanyToGame(game, company, relation) {
         let result = null;
-        let ret = [];
         const game_id = game.id;
+        const company_name = company.name;
+        let company_id = null;
         try{
-            result = this.getCompanyByName(company.name);
-            ret.push(new Company(result.id,result.name));
+            company_id = this.getCompanyByName(company_name).id;
         }
         catch(e){
-            result = this.insert(company.name);
+            company_id = this.insert(company_name).id;
         }
+        console.log('\n\n\n' + company_id + '\n\n\n');
+        let data = {game_id,company_id,relation};
 
-        const company_id = result.id;
-        let data = {game_id,company_id};
-
-        result = this.#getCompanyWithGame.all(data);
         try{
             result = this.#assignCompanyGame.run(data);
         } catch (e) {
-            throw new companyGameAlreadyExists(company_id, game_id);
+            console.log(e);
+            throw new companyGameAlreadyExists(company_id, game_id,relation);
         }
         return result;
     }
-    static deleteCompanyFromGame(game,company){
-        let result = null;
+    static deleteCompanyFromGame(game,company,relation){
         const game_id = game.id;
         const company_id = company.id;
-        let data = {company_id,game_id};
+        let data = {company_id,game_id,relation};
         try{
             this.#unassignCompanyGame.run(data);
         }catch(e){
@@ -143,16 +142,12 @@ export class Company {
         }
         return new Company(id,company_name);
     }
-    static getGameCompany(game,type){
-        let result = null;
-        
-    }
     static delete(company) {
         const company_id = company.#id;
         const data = {company_id};
         try {
             this.#deleteCompany.run(data);
-            this.#deleteGameCompany.run(data);
+            this.#deleteAllGameCompany.run(data);
         } catch (e) {
             throw new ErrorDatos("Company couldn't be deleted", {cause: e});
         }
@@ -190,10 +185,11 @@ export class companyGameAlreadyExists extends Error {
      *
      * @param {string} companyId;
      * @param {string} gameId;
+     *  @param {string} relation;
      * @param {ErrorOptions} [options]
      */
-    constructor(companyId, gameId, options) {
-        super(`company ${companyId} is already present in game ${gameId}`, options);
+    constructor(companyId, gameId,relation, options) {
+        super(`company ${companyId} is already present in game ${gameId} with the relation ${relation}`, options);
         this.name = 'companyGameAlreadyExists';
     }
 

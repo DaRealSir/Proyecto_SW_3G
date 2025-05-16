@@ -1,0 +1,64 @@
+    <div id="game_companies" class="game_companies">
+    <span class = "companies_list">Desarrollador:
+    <% if (developerCompany && developerCompany.length > 0) { %>
+        <% developerCompany.forEach((company, index) => { %>
+            <%= company.name %>
+            <% if (session.esAdmin) { %>
+                <form id="filters" action="/companies/deleteCompany/<%= company.id %>/<%= game.id %>" method="POST">
+                    <input type="hidden" name="is_publisher" value="false">
+                    <input type="hidden" name="is_developer" value="true">
+                    <button type="submit">Borrar </button>
+                </form>
+            <% } %>
+            <%= index < developerCompany.length - 1 ? ', ' : '' %>
+        <% }) %>
+    <% } else { %>
+        No compañias asignadas aun
+    <% } %>
+    </span>
+    <p></p>
+    <span class = "companies_list">Publicador:
+    <% if (publisherCompany && publisherCompany.length > 0) { %>
+        <% publisherCompany.forEach((company, index) => { %>
+            <%= company.name %>
+            <% if (session.esAdmin) { %>
+                <form id="filters" action="/companies/deleteCompany/<%= company.id %>/<%= game.id %>" method="POST">
+                    <input type="hidden" name="is_publisher" value="true">
+                    <input type="hidden" name="is_developer" value="false">
+                    <button type="submit">Borrar</button>
+                </form>
+            <% } %>
+            <%= index < publisherCompany.length - 1 ? ', ' : '' %>
+
+        <% }) %>
+    <% } else { %>
+        No compañias asignadas aun
+    <% } %>
+    </span>
+    </div>
+
+    <% if(session.esAdmin) { %>
+        <p></p>
+        <button onclick="toggleVisibilityCompanies()" class="dropdown_genres_button">Añadir Compañias</button>
+
+    <div id = "dropdown_admin_company" class = "dropdown_admin_company hidden">
+    <form id="filters" action="/companies/addCompany/<%=game.id%>" method="POST">
+        <p>
+        <label>Nombre de la compañía:</label>
+        <input type="text" name="company_name" required>
+        <input type="checkbox" name="is_developer" value="false"> Developer
+        <input type="checkbox" name="is_publisher" value="false"> Publisher
+        <button type="submit"">Añadir</button>
+        </p>
+    </form>
+    </div>
+    <%}%>
+<script>
+    function toggleVisibilityCompanies() {
+        const dropdown = document.getElementById('dropdown_admin_company');
+        if (dropdown) {
+            dropdown.classList.toggle('hidden');
+            dropdown.classList.toggle('visible');
+        }
+    } 
+</script> 

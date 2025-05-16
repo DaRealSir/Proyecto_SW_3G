@@ -520,3 +520,12 @@ header::before {
     visibility: hidden;
     max-height: 0px;
 }
+.companies_list{
+    display: inline-flex;
+    margin-left: 10px;
+}
+
+.company_list form {
+    display: inline;
+    margin-left: 1px;
+}

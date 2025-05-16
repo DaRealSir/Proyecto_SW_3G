@@ -2,10 +2,12 @@ DROP TABLE IF EXISTS game_genre;
 DROP TABLE IF EXISTS genre;
 DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS company;
+DROP TABLE IF EXISTS game_company;
 DROP TABLE if EXISTS user;
 DROP TABLE IF EXISTS user_game;
 DROP TABLE IF EXISTS forum_post;
 DROP TABLE IF EXISTS review;
+
 --Para pruebas
 
 -- Crear tabla de juegos (con AUTOINCREMENT para el id)
@@ -42,14 +44,14 @@ CREATE TABLE game_genre
 CREATE TABLE company
 (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT UNIQUE NOT NULL
+    name TEXT NOT NULL
 );
 
 CREATE TABLE game_company(
     game_id  INTEGER,
     company_id INTEGER,
     relation TEXT,
-    PRIMARY KEY (game_id, company_id),
+    PRIMARY KEY (game_id, company_id,relation),
     FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE,
     FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
 );

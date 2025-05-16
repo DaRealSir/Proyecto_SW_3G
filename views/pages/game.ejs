@@ -45,9 +45,7 @@
 
 <% function showGameInfo2(){ %>
     <p><u>Descripción del juego</u>:  <%= game.description %></p>
-    <p><u>Desarrollado por</u>: Empresa 1</p>
-
-    <p><u>Publicado por</u>: Empresa 2</p>
+    <%- include('showGameCompanies') %>
     <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
 
     <p>Disponible en las siguientes tiendas :</p>
