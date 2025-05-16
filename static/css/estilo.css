@@ -987,3 +987,28 @@ header::before {
     border: 2px solid #4d0b5e;
     margin-bottom: 15px;
 }
+
+/* Cosas de classList*/
+.red {
+    color: red;
+}
+.green {
+    color: green;
+}
+.visible{
+    visibility: visible;
+    max-height: 10000px;
+}
+.hidden{
+    visibility: hidden;
+    max-height: 0px;
+}
+.companies_list{
+    display: inline-flex;
+    margin-left: 10px;
+}
+
+.company_list form {
+    display: inline;
+    margin-left: 1px;
+}

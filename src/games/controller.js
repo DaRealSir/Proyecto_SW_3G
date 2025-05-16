@@ -2,10 +2,9 @@ import express from 'express';
 import {Game} from "./Game.js";
 import {Review} from "../reviews/Review.js";
 import {Genre} from "../genres/Genre.js"
-import {Shop} from "../shop/Shop.js"
-
-import {render} from '../utils/render.js';
-import {matchedData, validationResult} from 'express-validator';
+import {Company} from "../companies/Company.js"
+import { render } from '../utils/render.js';
+import { validationResult, matchedData } from 'express-validator';
 
 import {logger} from '../logger.js';
 import {Forum} from '../forum/Forum.js';
@@ -159,12 +158,16 @@ export function addShopDo(req, res) {
 
     const contenido = 'pages/game';
 
+    const developerCompany = Company.getGameCompanies(game,'developer');
+    const publisherCompany = Company.getGameCompanies(game,'publisher');
     render(req, res, contenido, {
         errores: {},
         info: {},
         shopList: shopList,
         game: game,
         reviewList: reviewListByGameId,
+        developerCompany: developerCompany,
+        publisherCompany: publisherCompany,
         genreList: genres,
         threadList: threadList
     });
@@ -183,6 +186,7 @@ export function viewAddGameBD(req, res) {
 
 
 export function doAddGameBD(req, res) {
+
     const result = validationResult(req);
 
     const title = req.body.title.trim();

@@ -1,35 +1,36 @@
-<button onclick="toggleVisibility()" class="dropdown_genres_button">Géneros</button>
-<% if (genreList !== 'undefined') { %>
-    <div id="dropdown_genres_content" class="dropdown_genres_content">
-            <% genreList.forEach(genre => { %>
-                <div class="genre_block">
+<button onclick="toggleVisibilityGenres()" class="dropdown_genres_button">Géneros</button>
+<div id="dropdown_genres_content" class="dropdown_genres_content visible">
+    <% if (genreList && genreList.length > 0) { %>
+        <% genreList.forEach(genre => { %>
+            <div class="genre_block">
                 <p><%= genre.name %>
                     <% if(session.esAdmin) { %>
-                    <form id="filters" action="/genres/deleteGenre/<%= genre.id %>/<%=game.id%>" method="POST">
-                    <button type="submit">Borrar</button>
-                    </form>
+                        <form action="/genres/deleteGenre/<%= genre.id %>/<%=game.id%>" method="POST">
+                            <button type="submit">Borrar</button>
+                        </form>
                     <% } %>
                 </p>
+                <p></p>
             </div>
-            <p> </p>
-            <% }) %>
-        </div>
-    <% if(session.esAdmin) { %>
-    <form id="filters" action="/genres/addGenre/<%=game.id%>" method="POST">
-        <input type = "text" name="genre_name"><button type="submit"">Añadir</button>
-    </form>
+        <% }) %>
+    <% } else { %>
+        <p>No hay géneros asignados aún.</p>
     <% } %>
+</div>
+
+<% if(session.esAdmin) { %>
+    <form action="/genres/addGenre/<%=game.id%>" method="POST">
+        <input type="text" name="genre_name" required>
+        <button type="submit">Añadir</button>
+    </form>
 <% } %>
+
 <script>
-    function toggleVisibility() {
-        let x = document.getElementById('dropdown_genres_content');
-        if (x.style.visibility === 'hidden') {
-            x.style.visibility = 'visible';
-            x.style.maxHeight = '1000px';
-        } else {
-            x.style.visibility = 'hidden';
-            x.style.maxHeight = '0px';
+    function toggleVisibilityGenres() {
+        const dropdown = document.getElementById('dropdown_genres_content');
+        if (dropdown) {
+            dropdown.classList.toggle('hidden');
+            dropdown.classList.toggle('visible');
         }
-    } 
-    //cambiar estilo css dinamicamente a traves de js sacado de: https://www.w3schools.com/js/js_htmldom_css.asp
-</script> 
+    }
+</script>

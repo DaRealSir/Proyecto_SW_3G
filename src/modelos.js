@@ -7,6 +7,7 @@ import { Shop } from "./shop/Shop.js";
 import {Guides} from "./guides/Guides.js";
 
 
+import {Company} from "./companies/Company.js";
 export function inicializaModelos(db) {
     Game.initStatements(db);
     User.initStatements(db);
@@ -15,4 +16,5 @@ export function inicializaModelos(db) {
     Forum.initStatements(db);
     Shop.initStatements(db);
     Guides.initStatements(db);
+    Company.initStatements(db);
 }

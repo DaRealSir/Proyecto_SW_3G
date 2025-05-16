@@ -4,7 +4,6 @@ import asyncHandler from 'express-async-handler';
 import {
     deleteGenre,
     doAddGenreBD,
-    doModifyGenreBD,
     showGameGenres,
 } from './controller.js';
 
@@ -15,7 +14,6 @@ genreRouter.post('/addGenre/:gameId',
     asyncHandler(doAddGenreBD,)
 );
 genreRouter.get('/showGenres/:gameId', showGameGenres);
-genreRouter.post('/modifyGenre/:gameId/:newName', doModifyGenreBD);
 genreRouter.post('/deleteGenre/:id/:gameId', deleteGenre);
 
 

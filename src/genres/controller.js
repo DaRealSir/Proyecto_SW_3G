@@ -16,9 +16,8 @@ export function deleteGenre(req,res){
     res.redirect('/games/'+ game_id);
 }
 export function showGameGenres(req,res){
-
     const gameId = req.params.gameId;
-    const game = Game.getGameGenres(gameId);
+    const game = Game.getGameById(gameId);
     const genreList = Genre.getGameGenres(game);
     res.render(req,res,'pages/showGameGenres',{
         contenido,
@@ -26,9 +25,6 @@ export function showGameGenres(req,res){
         genreList: genreList
     }
     )
-}
-export function doModifyGenreBD(req,res){
-//WIP
 }
 
 export function doAddGenreBD(req, res){

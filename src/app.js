@@ -23,6 +23,7 @@ import genreRouter from './genres/router.js';
 import {Guides} from "./guides/Guides.js";
 
 
+import companyRouter from './companies/router.js';
 export const app = express();
 app.set('view engine', 'ejs');
 app.set('views', config.vistas);
@@ -65,6 +66,7 @@ app.use('/information', informacionRouter);
 app.use('/users', usersRouter);
 app.use('/reviews', reviewRouter);
 app.use('/genres', genreRouter);
+app.use('/companies', companyRouter);
 app.use('/content', contentRouter);
 app.use('/forum', forumRouter);
 app.use('/shop', shopRouter);
