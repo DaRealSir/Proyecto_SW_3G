@@ -78,8 +78,10 @@ export class Game {
     }
 
     set image(image) {
-        this.image = image//TODO No se como funciona esto
+        this.image = image
     }
+
+    
 
     get company() {
         return this.company;
@@ -183,6 +185,10 @@ export class Game {
         return new Game(title, description, rating, favNumber, image, company_id, id);
     }
 
+    static idGame(game){
+        return game.#id;
+    }
+
     static addShopToGame(id, shop, url){
 
 
@@ -261,7 +267,6 @@ export class Game {
             const image = game.image;
             const company = game.company;
 
-
             const data = {
                 title, description, rating, favNumber, image,
                 company
@@ -270,12 +275,12 @@ export class Game {
 
             result = this.#insertStmt.run(data);
 
-            game.#id = result.lastInsertRowid;
+            //game.#id = result.lastInsertRowid;
         } catch (e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
             if (e.code === 'SQLITE_CONSTRAINT') {
                 throw new GameExists(game.title);
             }
-            throw new ErrorDatos('No se ha insertado el Game', {cause: e});
+            throw new NoGameAdd();
         }
         return game;
     }
@@ -364,6 +369,15 @@ export class GameExists extends Error {
     constructor(title, options) {
         super(`Game already exists: ${title}`, options);
         this.name = 'GameExists';
+    }
+
+}
+
+export class NoGameAdd extends Error {
+
+    constructor() {
+        super(`Game no added`);
+        this.name = 'NoGameAdd';
     }
 
 }
