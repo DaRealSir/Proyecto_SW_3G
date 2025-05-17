@@ -1,2 +1,29 @@
-<h1>Bienvenido <%= session.UserName %></h1>
-<p>Usa el menú de la izquierda para navegar.</p>
+<h1 class="page-title">Mis Listas</h1>
+
+<div class="lists-container">
+  <div class="list-column">
+    <h2 class="list-title">My Games</h2>
+    <% listGames.forEach(game => { %>
+      <div class="list-item">
+        <a href="/games/<%= game.id %>" class="list-link list-item-bullet">
+          <%= game.title %>
+        </a>
+        <form action="/game_user/delete/<%= game.id %>" method="POST" style="display: inline;">
+          <button type="submit" class="delete-btn simple-delete-btn">x</button>
+        </form>
+      </div>
+    <% }) %>
+  </div>
+
+ 
+  <div class="list-column">
+    <h2 class="list-title">My Guides</h2>
+    <% listGuides.forEach(guide => { %>
+      <div class="list-item">
+        <a href="/guides/<%= guide.id %>" class="list-link list-item-bullet">
+          <%= guide.title %>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+</div>

@@ -140,7 +140,7 @@ SET replies = (
 WHERE id IN (SELECT DISTINCT original_post_id FROM forum_post);
 
 INSERT INTO guides (user_id, game_id, date, title, guide_type, content) VALUES
-  (2, 2, '2025-05-10 10:00:00', 'Novedades en God of War Ragnarök', 'N',
+  (3, 2, '2025-05-10 10:00:00', 'Novedades en God of War Ragnarök', 'N',
     '<p><b>Santa Monica Studio</b> ha publicado hoy una <i>actualización gratuita</i> para <i>God of War Ragnarök</i> que incluye nuevo contenido emocionante.</p>
      <p>La actualización <b>"Ecos de Yggdrasil"</b> trae:</p>
      <ul>

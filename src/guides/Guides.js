@@ -76,6 +76,8 @@ export class Guides{
     static #insertGuideStmt = null;
     static #deleteGuideStmtById = null;
     static #getByIdStmt = null;
+    static #getNewsbyIdStmt=null;
+    static #getGuidesbyIdStmt=null;
     static #updateGuideStmt = null;
     static #getListGuidesInitFinalStmt = null;
 
@@ -99,6 +101,8 @@ export class Guides{
         this.#insertGuideStmt = db.prepare('INSERT INTO guides(user_id, game_id, date, content, title, guide_type) VALUES (@user_id, @game_id, @date, @content, @title, @guide_type)');
         this.#deleteGuideStmtById = db.prepare('DELETE FROM guides WHERE id = @id');
         this.#getByIdStmt = db.prepare('SELECT * FROM guides WHERE id = @id');
+        this.#getNewsbyIdStmt=db.prepare("SELECT * FROM guides where user_id=@user_id AND guide_type='N'");
+        this.#getGuidesbyIdStmt=db.prepare("SELECT * FROM guides where user_id=@user_id AND guide_type='G'");
         this.#updateGuideStmt = db.prepare(`UPDATE guides SET title = @title,content = @content, guide_type = @guide_type WHERE id = @id`);
         this.#getListGuidesInitFinalStmt = db.prepare(`
             SELECT 
@@ -116,6 +120,20 @@ export class Guides{
             LIMIT @number OFFSET @offset;
         `);
 
+    }
+        
+
+    static getAllNewsbyUser(user_id)
+    {
+        const ret= this.#getNewsbyIdStmt.all({user_id});
+        console.log("newslist:",ret);
+        return ret;
+    }
+
+    static getAllGuidesbyUser(user_id)
+    {
+        const ret = this.#getGuidesbyIdStmt.all({user_id});
+        return ret;
     }
 
     static getGuideById(id){

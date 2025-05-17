@@ -1,5 +1,7 @@
 import {body} from 'express-validator';
 import {RolesEnum, User} from './User.js';
+import { UserGame } from '../game_user/GameUser.js';
+import { Guides } from '../guides/Guides.js';
 
 
 export function showUserEdit(req,res)
@@ -154,6 +156,7 @@ export function doRegister(req, res) {
     const username = req.body.username.trim();
     const password = req.body.password.trim();
     let userValue = RolesEnum.USER;
+
     if (req.session.login && req.session.esAdmin) {
         const user_type = req.body.userRole.trim();
         if (user_type === "admin") {
@@ -162,11 +165,13 @@ export function doRegister(req, res) {
             userValue = RolesEnum.PERIODISTA;
         }
         try {
-            const usuario = User.register(username,password,userValue);
-            
+            User.register(username,password,userValue);
+            const listGa=UserGame.getbyUserID(req.session.UserID);
+             const listGui=Guides.getAllGuidesbyUser(req.session.UserID);
             res.render('page', {
                 contenido: 'pages/homeUser',
-
+                listGames:listGa,
+                listGuides:listGui
             })
 
         } catch (e) {
@@ -185,10 +190,13 @@ export function doRegister(req, res) {
             req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
             req.session.name=usuario.username;
             req.session.picture=usuario.profile_picture;
+            const listGa=UserGame.getbyUserID(usuario.id);
+            const listGui=Guides.getAllGuidesbyUser(usuario.id);
 
             res.render('page', {
                 contenido: 'pages/homeUser',
-
+                listGames:listGa,
+                listGuides:listGui
             })
 
         } catch (e) {
@@ -212,7 +220,6 @@ export function doLogin(req, res) {
         const usuario = User.login(username, password);
         console.log(usuario);
         let content='pages/homeUser';
-        if(usuario.user_type!==RolesEnum.BANNED)
         {
             req.session.login = true;
             req.session.UserID = usuario.id;
@@ -221,16 +228,17 @@ export function doLogin(req, res) {
             req.session.name=usuario.username;
             req.session.picture=usuario.profile_picture;
         }
-        else{
-            content='pages/Banned';
-        }
+
       
     
 /*
-*/
+*/      const listGa=UserGame.getbyUserID( usuario.id);
+        const listGui=Guides.getAllGuidesbyUser( usuario.id);
         return res.render('page', {
             contenido: content,
-            session: req.session
+            session: req.session,
+            listGames: listGa,
+            listGuides:listGui
         });
 
     } catch (e) {

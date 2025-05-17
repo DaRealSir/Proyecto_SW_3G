@@ -14,31 +14,30 @@
 </header>
 
 <% function mostrarSaludo(session) { %>
-    <% if(session.login) { %>
+    <% if (session.login) { %>
         <img src="<%= session.picture %>" alt="Foto de perfil" />
         <p>
-            <a href="/content/normal"> <%= session.name %></a>
-            
+            <a href="/content/normal"><%= session.name %></a>
         </p>
         <p>
-            <a href='/users/logout'> Logout</a>
+            <a href="/users/logout">Logout</a>
         </p>
     <% } else { %>
-        <a href='/users/login'> Login</a>
-        <a href='/users/register'> Register</a>
+        <a href="/users/login">Login</a>
+        <a href="/users/register">Register</a>
     <% } %>
 <% } %>
 
 <% function mostrarOpciones(session) { %>
+    <% if (session.login) { %>
+        <a href="/content/library">Library</a><br>
+    <% } %>
 
- 
-        <% if (session.esAdmin) { %>
-            <a href="/content/admin">Administrador</a><br>
-        <% } %>
+    <% if (session.esAdmin) { %>
+        <a href="/content/admin">Admin</a><br>
+    <% } %>
 
-
-        <% if (session.esJournal) { %>
-            <a href="/content/journal">Artículos</a><br>
-        <% } %>
-
+    <% if (session.esJournal) { %>
+        <a href="/content/journal">My News</a><br>
+    <% } %>
 <% } %>

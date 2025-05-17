@@ -5,6 +5,7 @@ import {Review} from "./reviews/Review.js";
 import {Genre} from "./genres/Genre.js";
 import { Shop } from "./shop/Shop.js";
 import {Guides} from "./guides/Guides.js";
+import { UserGame } from "./game_user/GameUser.js";
 
 
 import {Company} from "./companies/Company.js";
@@ -17,4 +18,5 @@ export function inicializaModelos(db) {
     Shop.initStatements(db);
     Guides.initStatements(db);
     Company.initStatements(db);
+    UserGame.initStatements(db);
 }
