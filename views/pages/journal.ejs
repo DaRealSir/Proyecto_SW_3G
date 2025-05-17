@@ -1,16 +1,14 @@
-<h1>My Publications</h1>
+<h1 class="page-title">My Publications</h1>
 
-<div id="news_list">
- <% showNewsList() %>
-</div>
-
-<% function showUserList() { %>
-    <% newslist.forEach(News => { %>
-    <div id="Noticia">
-        <form action="/guides/<%= News._id %>" method="GET">
-            <button type="submit"><%= News._title %> <%= News._date %></button>
-        </form>
+<div class="list">
+  <% newslist.forEach(News => { %>
+    <div class="list-item">
+      <form action="/guides/<%= News.id %>" method="GET">
+        <button class="form-button" type="submit">
+          <span class="item-title"><%= News.title %></span>
+          <span class="item-subtitle"><%= News.date %></span>
+        </button>
+      </form>
     </div>
-    
-    <% }) %>
-<% } %>
+  <% }) %>
+</div>

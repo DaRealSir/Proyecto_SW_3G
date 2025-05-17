@@ -123,16 +123,16 @@ export class Guides{
     }
         
 
-    static getAllNews(user_id)
+    static getAllNewsbyUser(user_id)
     {
-        const ret= this.#getNewsbyIdStmt.run(user_id);
-
+        const ret= this.#getNewsbyIdStmt.all({user_id});
+        console.log("newslist:",ret);
         return ret;
     }
 
-    static getAllGuides(user_id)
+    static getAllGuidesbyUser(user_id)
     {
-        const ret = this.#getNewsbyIdStmt.run(user_id);
+        const ret = this.#getGuidesbyIdStmt.all({user_id});
         return ret;
     }
 

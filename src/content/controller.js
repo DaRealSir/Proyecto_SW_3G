@@ -1,5 +1,6 @@
 
 import { User } from "../users/User.js";
+import {Guides}  from "../guides/Guides.js";
 
 export function viewContenidoNormal(req, res) {
     let contenido=null;
@@ -29,8 +30,11 @@ export function viewContenidoAdmin(req, res) {
 export function viewContenidoJournal(req, res) {
     let contenido = 'pages/noPermisos';
     contenido = 'pages/journal';
+    const newslist= Guides.getAllNewsbyUser(req.session.UserID);
+
     res.render('page', {
         contenido,
-        session: req.session
+        session: req.session,
+        newslist:newslist
     });
 }

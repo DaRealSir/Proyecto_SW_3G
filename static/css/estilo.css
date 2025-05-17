@@ -1050,3 +1050,78 @@ header::before {
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Títulos */
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Listas genéricas */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-item {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Botones reutilizables */
+.form-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #e0e0e0;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-button:hover {
+  background-color: #d0d0d0;
+}
+
+.form-button.danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.form-button.danger:hover {
+  background-color: #c82333;
+}
+
+/* Texto dentro de botones o ítems */
+.item-title {
+  font-weight: bold;
+}
+
+.item-subtitle {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Formulario de búsqueda */
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-form input[type="text"],
+.search-form select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
