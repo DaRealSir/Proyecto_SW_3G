@@ -212,7 +212,6 @@ export function doLogin(req, res) {
         const usuario = User.login(username, password);
         console.log(usuario);
         let content='pages/homeUser';
-        if(usuario.user_type!==RolesEnum.BANNED)
         {
             req.session.login = true;
             req.session.UserID = usuario.id;
@@ -221,9 +220,7 @@ export function doLogin(req, res) {
             req.session.name=usuario.username;
             req.session.picture=usuario.profile_picture;
         }
-        else{
-            content='pages/Banned';
-        }
+
       
     
 /*

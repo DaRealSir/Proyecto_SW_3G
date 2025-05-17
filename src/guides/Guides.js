@@ -103,7 +103,6 @@ export class Guides{
         this.#getByIdStmt = db.prepare('SELECT * FROM guides WHERE id = @id');
         this.#getNewsbyIdStmt=db.prepare("SELECT * FROM guides where user_id=@user_id AND guide_type='N'");
         this.#getGuidesbyIdStmt=db.prepare("SELECT * FROM guides where user_id=@user_id AND guide_type='G'");
-    }
         this.#updateGuideStmt = db.prepare(`UPDATE guides SET title = @title,content = @content, guide_type = @guide_type WHERE id = @id`);
         this.#getListGuidesInitFinalStmt = db.prepare(`
             SELECT 
@@ -121,6 +120,8 @@ export class Guides{
             LIMIT @number OFFSET @offset;
         `);
 
+    }
+        
 
     static getAllNews(user_id)
     {

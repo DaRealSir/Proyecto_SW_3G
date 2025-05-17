@@ -1,26 +1,19 @@
+<div class="admin-panel">
+  <div class="card">
+    <h3 class="section-title">JUEGOS</h3>
+    <form action="/games/addGame" method="GET"><button>Add Game</button></form>
+  </div>
 
-<h1>Panel de Administración</h1>
-<div class="button-container">
-    <p> JUEGOS </p>
-    <form action="/games/addGame" method="GET">
-        <button type="submit">Add Game</button>
-    </form>
-    <p> TIENDAS </p>
-    <form action="/shop/addShop" method="GET">
-        <button type="submit">Add Shop</button>
-    <p> USUARIOS </p>
+  <div class="card">
+    <h3 class="section-title">TIENDAS</h3>
+    <form action="/shop/addshop" method="GET"><button>Add Shop</button></form>
+  </div>
 
-    <form action="/users/register" method="GET">
-        <button type="submit">Add Special User</button>
-    </form>
-    <p>
-        
-    </p>
-    <form action="/users/listausuarios" method="GET">
-        <button type="submit">Delete User</button>
-    </form>
-    <p> FOROS </p>
-    <form action="/forum/deleteForum" method="POST">
-        <button type="submit">Delete Forum</button>
-    </form>
+  <div class="card">
+    <h3 class="section-title">USUARIOS</h3>
+    <form action="/users/register" method="GET"><button>Add Special User</button></form>
+    <form action="/users/listausuarios" method="GET"><button>Delete User</button></form>
+  </div>
+
+  
 </div>
