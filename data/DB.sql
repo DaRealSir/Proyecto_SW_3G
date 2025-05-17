@@ -2,22 +2,18 @@ DROP TABLE IF EXISTS game_genre;
 DROP TABLE IF EXISTS genre;
 DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS company;
+DROP TABLE IF EXISTS game_company;
 DROP TABLE if EXISTS user;
 DROP TABLE IF EXISTS user_game;
 DROP TABLE IF EXISTS forum_post;
 DROP TABLE IF EXISTS review;
+
+DROP TABLE IF EXISTS shop;
+DROP TABLE IF EXISTS game_shop;
+
 DROP TABLE IF EXISTS guides;
 
-
 --Para pruebas
-
-
--- Crear tabla de empresas (con AUTOINCREMENT para el id)
-CREATE TABLE company
-(
-    id   INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT UNIQUE NOT NULL
-);
 
 -- Crear tabla de juegos (con AUTOINCREMENT para el id)
 CREATE TABLE game
@@ -27,19 +23,19 @@ CREATE TABLE game
     description TEXT,
     rating      REAL CHECK (rating BETWEEN 0 AND 10),
     favNumber   INTEGER DEFAULT 0 CHECK (favNumber >= 0),
-    image       TEXT, -- Columna para las imágenes (puedes almacenar varias rutas separadas por comas)
+    image       TEXT, -- Columna para las imÃ¡genes (puedes almacenar varias rutas separadas por comas)
     company_id  INTEGER NOT NULL,
     FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
 );
 
--- Crear tabla de géneros
+-- Crear tabla de generos
 CREATE TABLE genre
 (
     id   INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT UNIQUE NOT NULL
 );
 
--- Crear tabla de relación entre juegos y géneros
+-- Crear tabla de relacion entre juegos y generos
 CREATE TABLE game_genre
 (
     game_id  INTEGER,
@@ -49,6 +45,21 @@ CREATE TABLE game_genre
     FOREIGN KEY (genre_id) REFERENCES genre (id) ON DELETE CASCADE
 );
 
+
+CREATE TABLE company
+(
+    id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE game_company(
+    game_id  INTEGER,
+    company_id INTEGER,
+    relation TEXT,
+    PRIMARY KEY (game_id, company_id,relation),
+    FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE,
+    FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
+);
 
 CREATE TABLE user
 (
@@ -68,8 +79,9 @@ CREATE TABLE user_game
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
 );
--- Forum tables
-CREATE TABLE forum_post (
+
+CREATE TABLE forum_post 
+(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     game_id INTEGER NOT NULL,
     original_post_id INTEGER, -- "-1" si es un nuevo hilo, id del post original si es una respuesta
@@ -78,14 +90,14 @@ CREATE TABLE forum_post (
     user_id INTEGER NOT NULL,
     replies INTEGER DEFAULT 0 CHECK (replies >= 0),
     position_post INTEGER DEFAULT 1 CHECK (position_post >= 0),
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE,
     FOREIGN KEY (original_post_id) REFERENCES forum_post(id) ON DELETE CASCADE
 );
 
 
-CREATE TABLE review(
-    id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+CREATE TABLE review
+(   id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     game_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     date DATETIME NOT NULL,
@@ -95,7 +107,8 @@ CREATE TABLE review(
     FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE
 );
 
-CREATE TABLE guides(
+CREATE TABLE guides
+(
     id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     user_id INTEGER NOT NULL,
     game_id INTEGER NOT NULL,
@@ -105,4 +118,22 @@ CREATE TABLE guides(
     content TEXT NOT NULL,
     FOREIGN KEY (game_id) REFERENCES game (id) on DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user (id) on DELETE CASCADE
+    );
+-- Crear tabla de tiendas
+CREATE TABLE shop
+(
+    id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL,
+    image       TEXT
+);
+
+-- Crear tabla de relacion entre juegos y tiendas
+CREATE TABLE game_shop
+(
+    game_id  INTEGER,
+    shop_id INTEGER,
+    url TEXT,
+    PRIMARY KEY (game_id, shop_id),
+    FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE,
+    FOREIGN KEY (shop_id) REFERENCES shop (id) ON DELETE CASCADE
 );

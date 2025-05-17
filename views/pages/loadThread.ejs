@@ -5,36 +5,13 @@
 <% function showThreadInfo() { %>
 
     <% threadList.forEach(thread => { %>
-        <section class="forum-group">
-            <h1><%= thread.title %></h1>
-            <% reply(thread.game_id, thread.id); %>
-            <% eliminate(thread.game_id, thread.id); %>
-            <p>Creado por: <%= thread.user_name %></p>
-            <p>Descripción: <%= thread.description %></p>
-            <p>Respuestas: <%= thread.replies %></p>
-            
-            <% if (thread.replies > 0) { %>
-                <div id="ver_respuestas-<%= thread.id %>">
-                    <a href="#" class="show-reply" onclick="showMore('<%= thread.game_id %>',<%= thread.id %>, 0, 'ver_respuestas-<%= thread.id %>')">Ver respuestas</a>
-                </div>
-            <% } %>
+        <section class="forum-group" id = "thread-<%= thread.id %>">
+            <%- include('../partials/forumSection', { thread , first: false }) %>
         </section>
     <% }); %>
-    <% if (num_replies > last_position && last_position > 0) { %>
-        <div id="ver_mas-<%= last_id %>"> 
-            <button class="show-more" onclick="showMore(<%= game_id %>, <%= last_id %>, <%= last_position %> , 'ver_mas-<%= last_id %>')">Ver más</button>
+    <% if (last_position > 0) { %>
+        <div id="ver_mas-<%= last_id %>">    
+            <a href="#" class="show-more" data-game-id = '<%= game_id %>' data-last-id = '<%= last_id %>' data-offset = '<%= last_position - threadList.length %>' data-where-id = '<%= last_id %>'>Ver más</a>
         </div>
-    <% } %>
-<% } %>
-
-<% function reply(g_id, id) { %>
-    <% if (session.login) { %>
-        <button class="reply-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Responder</button>
-    <% } %>
-<% } %>
-
-<% function eliminate(g_id, id) { %>
-    <% if (session.esAdmin) { %>
-        <button class="delete-button" data-thread-id="<%= id %>" data-game-id="<%= g_id %>">Eliminar</button>
     <% } %>
 <% } %>

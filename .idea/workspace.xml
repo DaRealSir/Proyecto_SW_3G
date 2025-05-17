@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guides/Guides.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/guides/Guides.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guides/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/guides/controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/guides/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/guides/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/estilo.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/estilo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/guides/addGameGuide.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/guides/addGameGuide.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/pages/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/index.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +38,11 @@
         </map>
       </branch-storage>
     </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -63,11 +70,12 @@
   &quot;keyToString&quot;: {
     &quot;Database Script.DB.sql.executor&quot;: &quot;Run&quot;,
     &quot;Database Script.Start.sql.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;GameGuides&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G/static&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G/data/Start.sql&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -82,9 +90,9 @@
       &quot;sqlite&quot;
     ],
     &quot;RunConfigurationTargetLRU&quot;: [
+      &quot;c8526b50-dd49-465b-b5e4-45f9686a7356&quot;,
       &quot;2b62d813-a430-4477-aa6d-6135676f0823&quot;,
-      &quot;47e1ced0-d937-4b4b-8684-5538b5e3de77&quot;,
-      &quot;c8526b50-dd49-465b-b5e4-45f9686a7356&quot;
+      &quot;47e1ced0-d937-4b4b-8684-5538b5e3de77&quot;
     ]
   }
 }</component>
@@ -96,26 +104,14 @@
       <recent name="$PROJECT_DIR$/views/pages" />
     </key>
   </component>
-  <component name="RunManager" selected="Database Script.DB.sql">
-    <configuration name="DB.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="Unnamed" type="DatabaseScript" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/data/DB.sql" />
       <script-file value="$PROJECT_DIR$/data/Start.sql" />
       <script-mode>FILE</script-mode>
       <data-source id="c8526b50-dd49-465b-b5e4-45f9686a7356" />
       <method v="2" />
     </configuration>
-    <configuration name="Start.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
-      <script-file value="$PROJECT_DIR$/data/Start.sql" />
-      <script-mode>FILE</script-mode>
-      <data-source id="2b62d813-a430-4477-aa6d-6135676f0823" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Database Script.DB.sql" />
-        <item itemvalue="Database Script.Start.sql" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -165,7 +161,15 @@
       <workItem from="1746533747082" duration="1704000" />
       <workItem from="1746601197989" duration="1509000" />
       <workItem from="1746619065540" duration="7502000" />
-      <workItem from="1746687891869" duration="1750000" />
+      <workItem from="1746687891869" duration="3125000" />
+      <workItem from="1746692254789" duration="503000" />
+      <workItem from="1746727294476" duration="605000" />
+      <workItem from="1746808965515" duration="3876000" />
+      <workItem from="1746815506920" duration="3965000" />
+      <workItem from="1746890220840" duration="1606000" />
+      <workItem from="1747235004744" duration="170000" />
+      <workItem from="1747235196898" duration="35000" />
+      <workItem from="1747235243034" duration="3458000" />
     </task>
     <servers />
   </component>

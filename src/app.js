@@ -2,6 +2,7 @@ import express from 'express';
 import session from 'express-session';
 import {config} from './config.js';
 import juegosRouter from './games/router.js';
+import shopRouter from './shop/router.js';
 import reviewRouter from './reviews/router.js';
 import informacionRouter from './information/router.js';
 import usersRouter from './users/router.js';
@@ -16,9 +17,13 @@ import pinoHttp  from 'pino-http';
 const pinoMiddleware = pinoHttp(config.logger.http(logger));
 
 import {Game} from "./games/Game.js";
+
+import {Shop} from "./shop/Shop.js";
 import genreRouter from './genres/router.js';
+import {Guides} from "./guides/Guides.js";
 
 
+import companyRouter from './companies/router.js';
 export const app = express();
 app.set('view engine', 'ejs');
 app.set('views', config.vistas);
@@ -37,7 +42,9 @@ app.get('/', (req, res) => {
     const params = {
         contenido: 'pages/index',
         session: req.session,
-        gameList: Game.getGameListLimited(5, 0)
+        gameList: Game.getGameListLimited(5, 0),
+        shopList: Shop.getShopListLimited(5,0),
+        guidesList : Guides.getGuideListLimited(5, 0)
     }
     res.render('page', params);
 })
@@ -59,8 +66,10 @@ app.use('/information', informacionRouter);
 app.use('/users', usersRouter);
 app.use('/reviews', reviewRouter);
 app.use('/genres', genreRouter);
+app.use('/companies', companyRouter);
 app.use('/content', contentRouter);
 app.use('/forum', forumRouter);
+app.use('/shop', shopRouter);
 app.use('/api',apiRouter);
 app.use('/guides', guidesRouter);
 app.use('/tinymce', express)

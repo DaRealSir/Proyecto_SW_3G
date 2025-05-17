@@ -45,35 +45,50 @@ export class Genre {
         this.#insertGenre = db.prepare(     'INSERT INTO genre(name) VALUES (@genre_name)');
         this.#getGenreWithGame = db.prepare('SELECT DISTINCT genre.* FROM game JOIN game_genre ON game_genre.game_id = @game_id JOIN genre ON game_genre.genre_id = genre.id');
         this.#getGameWithGenre = db.prepare('SELECT DISTINCT game.* FROM genre JOIN game_genre ON game_genre.genre_id = @genre_id JOIN game ON game.id = game_genre.game_id');
-        this.#assignGenreGame = db.prepare('INSERT INTO game_genre (game_id, genre_id) VALUES (@game_id,@genre_id)');
+        this.#assignGenreGame = db.prepare('INSERT INTO game_genre (game_id, genre_id) VALUES (@game_id, @genre_id) ON CONFLICT(game_id, genre_id) DO NOTHING');
         this.#unassignGenreGame = db.prepare('DELETE FROM game_genre WHERE game_id = @game_id AND genre_id = @genre_id');
     }
     static getAllGenres(){
         let res = this.#getAllGenres.all();
-        return res;
+        let ret = [];
+        res.forEach(genre => {
+            ret.push(new Genre(genre.id,genre.name));
+        });
+        return ret;
     }
     static getGameGenres(game) {
         let result = null;
+        let ret = [];
         const game_id = game.id;
         const data = {game_id};
         result = this.#getGenreWithGame.all(data);
-        return result;
+        result.forEach(genre => {
+            ret.push(new Genre(genre.id,genre.name));
+        });
+        return ret;
     } //Devuelve todos los genero de un juego
     static getGenreGames(genre){
         let result = null;
+        let ret = [];
         const genre_id = genre.id;
         const data = {genre_id};
         result = this.#getGameWithGenre.all(data);
-        return result;
+                result.forEach(genre => {
+            ret.push(new Genre(genre.id,genre.name));
+        });
+        return ret;
     } //Devuelve todos los juegos asociados a un genero
     static addGenreToGame(game, genre) {
         let result = null;
+        let ret = [];
         const game_id = game.id;
         try{
             result = this.getGenreByName(genre.name);
+            ret = new Genre(result.id,result.name);
         }
         catch(e){
             result = this.insert(genre.name);
+            ret = new Genre(result.id,result.name);
         }
 
         const genre_id = result.id;
@@ -86,7 +101,6 @@ export class Genre {
         } catch (e) {
             throw new genreGameAlreadyExists(genre_id, game_id);
         }
-        return result;
     }
     static deleteGenreFromGame(game,genre){
         let result = null;
@@ -122,18 +136,14 @@ export class Genre {
         const data = {genre_name};
         let id;
         try {
-            for(let i = 0; i < 10; i++) console.log('#');
             result = this.#insertGenre.run(data);
             id = result.lastInsertRowid;
-            for(let i = 0; i < 10; i++) console.log('!');
         } catch (e) {
             if (e.code === 'SQLITE_CONSTRAINT') {
                 throw new genreAlreadyExists(genre_name);
             }
             throw new ErrorDatos("Genre couldn't be inserted", {cause: e});
         }
-        for(let i = 0; i < 10; i++) console.log(' ');
-        console.log(id + ' ' + genre_name);
         return new Genre(id,genre_name);
     }
     /*Recive como parametros: Nuevo genero, el juego a modificar generos y la id del genero previo, para poder eliminarlo*/ 
@@ -162,12 +172,8 @@ export class Genre {
     static delete(genre) {
         const genre_id = genre.#id;
         const data = {genre_id};
-        try {
             this.#deleteGenre.run(data); //Se borra de la base de datos de generos
             this.#deleteGameGenre.run(data); //Se desasignan juegos al genero
-        } catch (e) {
-            throw new ErrorDatos("Genre couldn't be deleted", {cause: e});
-        }
     }
 
 }

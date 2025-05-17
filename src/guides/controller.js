@@ -8,37 +8,42 @@ import {User} from "../users/User.js";
 const guidesRouter = express.Router();
 
 export function viewAddGuide(req, res) {
-    const gameId = req.params.game_id;
-    const userId = req.session.UserID;
+    const gameId  = req.params.game_id;
+    const userId  = req.session.UserID;
+    const editId  = req.query.guide_id;
 
-    console.log("VIEW ADD GUIDE");
-    console.log(gameId);
-    console.log(userId);
-
-    if (!userId) {
-        return res.redirect('/users/login');
-    }
+    if (!userId) return res.redirect('/users/login');
 
     try {
         const game = Game.getGameById(gameId);
-        console.log(game);
-        if (!game) {
-            logger.error(`Juego no encontrado`);
-            return res.status(404).render('pages/error', {message: 'Game not found'});
+        if (!game) return res.status(404).render('pages/error', { message: 'Game not found' });
+
+        let info = { title: '', content: '', guide_type: 'G' };
+        if (editId) {
+            const guide = Guides.getGuideById(editId);
+            // Cambiar guide.user_id por guide._user_id para coincidir con el formato usado
+            if (parseInt(guide._user_id) !== parseInt(userId)) {
+                return res.status(403).render('pages/error', { message: 'No permitido' });
+            }
+
+            info = {
+                title: guide._title, // Cambiar guide.title por guide._title
+                content: guide._content, // Cambiar guide.content por guide._content
+                guide_type: guide._guide_type, // Cambiar guide.guide_type por guide._guide_type
+                guide_id: guide.id // Mantener guide.id ya que así se usa en las vistas
+            };
         }
-        //const guide = Guides.getGuideById(guideId);
 
-        render(req, res, 'pages/guides/addGameGuide', {
+        return render(req, res, 'pages/guides/addGameGuide', {
             errores: {},
-            info: {},
-            gameId: gameId,
-            userId: userId,
-            game: game
+            info,
+            gameId,
+            userId,
+            game
         });
-
     } catch (e) {
-        logger.error(`Error, faltan datos , ${e.message}`);
-        res.status(500).render('pages/error', {message: 'Error loading guide creation page.'});
+        logger.error(`Error loading guide page: ${e.message}`);
+        return res.status(500).render('pages/error', { message: 'Error loading guide creation page.' });
     }
 }
 
@@ -48,6 +53,8 @@ export function doAddGuide(req, res) {
     const content = req.body.content;
     const title = req.body.title;
     const guide_type = req.body.guide_type;
+
+
     const date = getCurrentUTCTime();
 
 
@@ -109,16 +116,12 @@ export function showFullGuide(req, res){
     try {
         const guide = Guides.getGuideById(guideId);
 
-        console.log("GUIA");
-        console.log(guide);
         const user = User.getUserByID( guide._user_id);
         guide._user_name = user.username || user.name;
 
         const game = Game.getGameById(guide._game_id);
         guide._game_title = game.title;
 
-        console.log("GUIA");
-        console.log(guide);
 
         if (!guide) {
             logger.warn(`No existe la guía con ID ${guideId}`);
@@ -129,5 +132,22 @@ export function showFullGuide(req, res){
     } catch (e) {
         logger.error(`Error al obtener la guía ${guideId}: ${e.message}`);
         return res.status(500).render('pages/error', { message: 'Error al cargar la guía completa' });
+    }
+}
+
+export function doEditGuide(req, res) {
+    const { guide_id, game_id, user_id, title, content, guide_type } = req.body;
+    if (parseInt(user_id) !== req.session.UserID) {
+        return res.status(403).render('pages/error', { message: 'No autorizado' });
+    }
+
+    try {
+        const stmt = Guides.getUpdateStmt();
+        stmt.run({ id: guide_id, title, content, guide_type });
+
+        return res.redirect(`/guides/${guide_id}`);
+    } catch (e) {
+        logger.error(`Error al editar guía ${guide_id}: ${e.message}`);
+        return viewAddGuide(req, res);
     }
 }

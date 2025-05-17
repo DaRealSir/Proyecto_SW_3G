@@ -1,7 +1,11 @@
 INSERT INTO company (name)
 VALUES ('Nintendo'),
+       ('Santa Monica Studio'),
+       ('Jetpack Interactive'),
+       ('Bluepoint Games'),
        ('Sony'),
-       ('Microsoft'),
+       ('Halo Studios'),
+       ('XBox Game Studios'),
        ('CD Projekt Red'),
        ('Rockstar Games');
 
@@ -34,6 +38,38 @@ VALUES (1, 2), -- Zelda - Adventure
        (5, 1), -- RDR2 - Action
        (5, 5); -- RDR2 - Open World
 
+
+INSERT INTO shop (name, image )
+VALUES ('Steam', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/640px-Steam_icon_logo.svg.png'),
+       ('PlayStation', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/PlayStation_logo.svg/991px-PlayStation_logo.svg.png'),
+       ('Nintendo', 'https://e7.pngegg.com/pngimages/485/678/png-clipart-wii-xbox-360-nintendo-switch-logo-nintendo-text-nintendo-thumbnail.png'),
+       ('Xbox', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8bqcn8xTGlSw5XjXm8-LKRnIfIa_uW2TCjA&s'),
+       ('EpicGames', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Epic_Games_logo.svg/1200px-Epic_Games_logo.svg.png');
+INSERT INTO game_shop (game_id, shop_id, url)
+VALUES (1, 3, 'https://store.nintendo.es/es/the-legend-of-zelda-breath-of-the-wild-000000000002560066?srsltid=AfmBOopx-0AUpxIQkwtamHZIwtZGI2sYD4DJYv6syEVK_UhSuAgikKtd'), -- Zelda - Nintendo
+       (2, 2, 'https://store.playstation.com/es-es/product/EP9000-CUSA07411_00-0000000GODOFWARN'), -- God of War - PlayStation
+       (2, 1, 'https://store.steampowered.com/app/1593500/God_of_War/'), -- God of War - Steam
+       (4, 1, 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/'), -- TW3 - Steam
+       (4, 2, 'https://store.playstation.com/es-es/product/EP4497-PPSA10408_00-00000000000000N1'), -- TW3 - PlaySation
+       (4, 3, 'https://www.nintendo.com/es-es/Juegos/Programas-descargables-Nintendo-Switch/The-Witcher-3-Wild-Hunt-1909183.html?srsltid=AfmBOorBHV-5UfWICf1C1T-1bm25LEHusUktOSNF3eBXdMGQwOCRtseQ'), -- TW3 - Switch
+       (4, 4, 'https://www.xbox.com/es-ES/games/store/the-witcher-3-wild-hunt/BR765873CQJD'), -- TW3 - xbox
+       (5, 1, 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/'), -- RDR 2 - Steam
+       (7, 1, 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/'); -- Cyberpunk - Steam
+
+
+INSERT INTO game_company(game_id,company_id,relation)
+VALUES (1,1,'developer'), -- Zelda - Nintendo - Developer
+       (1,1,'publisher'),-- Zelda - Nintendo - Publisher
+       (2,2,'developer'),
+       (2,3,'developer'),
+       (2,4,'developer'),
+       (2,5,'publisher'),
+       (3,6,'developer'),
+       (3,7,'publisher'),
+       (4,8,'developer'),
+       (4,8,'publisher'),
+       (5,9,'developer'),
+       (5,9,'publisher');
 INSERT INTO user (username, bio, password, profile_picture, user_type)
 VALUES ('User', 'Gamer de aventuras y RPGs.', '$2b$10$JdCg8yL3rRkkr.hhx1rjqOe30F9lhBlqA1sjYJW6ymzYExvQFHyjy',
         'alice.jpg', 'U'),
@@ -56,6 +92,7 @@ VALUES (1, 1, '2025-03-20 08:20:07', 8, 'esta golden este juego'),
 
 
 INSERT INTO forum_post (id, game_id, original_post_id, title, description, user_id, replies, position_post) VALUES
+(-1,-1,-1, 'DUMMY', 'este post es falso',0,0,0),
 (1, 1, -1, 'Explorando Hyrule: Estrategias y builds', '¿Cómo optimizas tus habilidades y equipo en The Legend of Zelda: BotW? ¡Comparte tus mejores tácticas!', 2, 0, 1),
 (2, 1, -1, 'Descubre nuevas formas de abordar el juego', '¿Qué opinas de las diferentes formas de explorar Hyrule? ¿Cuál es tu estilo de juego?', 3, 0, 2),
 (3, 1, -1, 'El desafío de las tierras salvajes', 'Hablemos sobre las mejores builds y estrategias para sobrevivir en Hyrule. ¿Prefieres agilidad o poder?', 1, 0, 3),
@@ -93,6 +130,7 @@ INSERT INTO forum_post (id, game_id, original_post_id, title, description, user_
 (35, 3, 23, 'Re: ¿Qué opináis de Red Dead Redemption 2?', 'La banda sonora es una obra maestra. Las melodías quedan grabadas en tu cabeza.', 1, 0, 8),
 (36, 3, 23, 'Re: ¿Qué opináis de Red Dead Redemption 2?', 'El mundo abierto es impresionante, cada rincón está lleno de detalles que te hacen sentir parte del juego.', 2, 0, 9);
 
+
 UPDATE forum_post
 SET replies = (
     SELECT COUNT(*)
@@ -100,3 +138,48 @@ SET replies = (
     WHERE t2.original_post_id = forum_post.id
 )
 WHERE id IN (SELECT DISTINCT original_post_id FROM forum_post);
+
+INSERT INTO guides (user_id, game_id, date, title, guide_type, content) VALUES
+  (2, 2, '2025-05-10 10:00:00', 'Novedades en God of War Ragnarök', 'N',
+    '<p><b>Santa Monica Studio</b> ha publicado hoy una <i>actualización gratuita</i> para <i>God of War Ragnarök</i> que incluye nuevo contenido emocionante.</p>
+     <p>La actualización <b>"Ecos de Yggdrasil"</b> trae:</p>
+     <ul>
+       <li><b>2 misiones secundarias</b> inéditas</li>
+       <li><b>Armaduras legendarias</b> inspiradas en la mitología nórdica</li>
+       <li><b>Modo Foto</b> ampliado con filtros dinámicos</li>
+     </ul>
+     <p>Disponible en PlayStation 4 y PlayStation 5 a partir del <b>15 de mayo de 2025</b>.</p>'
+  ),
+  (1, 2, '2025-05-10 11:15:00', 'Guía de Combos Básicos', 'G',
+    '<p>Domina los <b>combos</b> encadenando ataques ligeros y pesados:</p>
+     <table border="1" cellpadding="4" cellspacing="0">
+       <thead>
+         <tr><th><b>Secuencia</b></th><th><b>Controles (PS5)</b></th><th><b>Descripción</b></th></tr>
+       </thead>
+       <tbody>
+         <tr><td>Combo rápido</td><td>R1, R1, R2</td><td>Cadena ligera seguida de pesado</td></tr>
+         <tr><td>Remate giratorio</td><td>R2 + ←/→</td><td>Gira con el Hacha Leviatán para derribar</td></tr>
+         <tr><td>Interrupción</td><td>L1 + R1</td><td>Bloqueo y contraataque inmediato</td></tr>
+       </tbody>
+     </table>
+     <p>Intercala <i>bloqueos</i> (L1) tras cada combo para recuperar salud.</p>'
+  ),
+  (2, 2, '2025-05-10 11:45:00', 'Cómo Equipar las Mejores Runas', 'G',
+    '<p>Para maximizar tu <b>build</b>, busca runas que añadan <i>daño de empuje</i> y <i>ralentización</i>.</p>
+     <p>Pasos para equipar:</p>
+     <ol>
+       <li>Accede al menú <b>Equipo &gt; Runas</b>.</li>
+       <li>Selecciona la runa deseada y arrástrala al hueco del arma.</li>
+       <li>Comprueba que el borde se torne <b>verde</b> para indicar que mejora tu build.</li>
+     </ol>
+     <p>Consigue runas completando <i>desafíos de combate</i> y misiones secundarias.</p>'
+  ),
+  (3, 2, '2025-05-10 12:30:00', 'Secretos de Midgard', 'G',
+    '<p>Midgard esconde cofres rúnicos tras muros fracturables: busca las <b>grietas iluminadas</b>.</p>
+     <p>Para desbloquear cámaras:</p>
+     <ul>
+       <li>Golpea las runas con el <b>Hacha Leviatán</b>.</li>
+       <li>Resuelve el puzle de esferas rúnicas alineando los símbolos.</li>
+     </ul>
+     <p><i>Pista:</i> Si una sala parpadea en azul, presiona R3 para revelar pasadizos ocultos.</p>'
+  );

@@ -1,3 +1,5 @@
+import {GameNotFound} from "../games/Game.js";
+
 export const GuideTypeEnum = Object.freeze({
     NEWS: 'N',
     GUIDE: 'G'
@@ -76,6 +78,9 @@ export class Guides{
     static #getByIdStmt = null;
     static #getNewsbyIdStmt=null;
     static #getGuidesbyIdStmt=null;
+    static #updateGuideStmt = null;
+    static #getListGuidesInitFinalStmt = null;
+
 
     constructor(id, user_id, game_id, date, content, title, guide_type) {
         this._id = id;
@@ -99,6 +104,22 @@ export class Guides{
         this.#getNewsbyIdStmt=db.prepare("SELECT * FROM guides where user_id=@user_id AND guide_type='N'");
         this.#getGuidesbyIdStmt=db.prepare("SELECT * FROM guides where user_id=@user_id AND guide_type='G'");
     }
+        this.#updateGuideStmt = db.prepare(`UPDATE guides SET title = @title,content = @content, guide_type = @guide_type WHERE id = @id`);
+        this.#getListGuidesInitFinalStmt = db.prepare(`
+            SELECT 
+                g.id AS guide_id, 
+                u.username AS user_name, 
+                game.title AS game_name, 
+                g.title AS guide_title, 
+                g.content AS guide_content, 
+                g.guide_type AS guide_type, 
+                g.date AS guide_date
+            FROM guides g
+            JOIN user u ON g.user_id = u.id
+            JOIN game ON g.game_id = game.id
+            ORDER BY g.date DESC
+            LIMIT @number OFFSET @offset;
+        `);
 
 
     static getAllNews(user_id)
@@ -162,6 +183,18 @@ export class Guides{
     static deleteGuide(id){
         const result = this.#deleteGuideStmtById.run(id);
         if(result.changes === 0) throw new GuideNotFound();
+    }
+
+    static getUpdateStmt() {
+
+        return this.#updateGuideStmt;
+    }
+
+    static getGuideListLimited(number, offset) {
+        const gameList = this.#getListGuidesInitFinalStmt.all({number, offset});
+        if (gameList === undefined) throw new GameNotFound(gameList);
+
+        return gameList;
     }
 }
 

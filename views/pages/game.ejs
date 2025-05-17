@@ -46,19 +46,26 @@
 
 <% function showGameInfo2(){ %>
     <p><u>Descripción del juego</u>:  <%= game.description %></p>
-    <p><u>Desarrollado por</u>: Empresa 1</p>
-
-    <p><u>Publicado por</u>: Empresa 2</p>
+    <%- include('showGameCompanies') %>
     <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
 
-    <p>Disponible en las siguientes tiendas :</p>
+    <form action="/games/addShop/<%= game.id %>" method="GET" style="display:inline;">
+    <p>Disponible en las siguientes tiendas :
+        <% if(session.esAdmin) { %>
+            <button type="submit">Añadir tienda</button>
+            
+        <% } %>
+    </p>
+    </form>
+    <div class="shop-games">
+    <% shopList.forEach(shop=>{ %>
+        
+            <a href="<%= shop.url %>"><img src="<%= shop.image %>" alt="Imagen de <%= shop.name %>" class = "shop_logo"></a>
+       
+     <% }) %>
+      </div>
 
-    <p><li>TIENDA1</li></p>
-    <p><li>TIENDA2</li></p>
-    <p><li>TIENDA3</li></p>
-    <p><li>TIENDA4</li></p>
-
-
+   
 <% } %>
 
 <% function adminOptions(session) { %>
@@ -70,6 +77,11 @@
 
     <form action="/games/modifyGame/<%= game.id %>" method="GET" style="display:inline;">
         <button type="submit">Modificar juego</button>
+    </form>
+
+        <form action="/games/addShop/<%= game.id %>" method="GET" style="display:inline;">
+
+            <button type="submit">Añadir tienda</button>
     </form>
     <% } %>
 <% } %>

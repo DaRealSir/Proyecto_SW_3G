@@ -239,6 +239,7 @@ div#contenedor {
     border-radius: 5px;
     margin-left: 10px;
     margin-right: 10px;
+
 }
 
 .bloque-index .game_title{
@@ -262,7 +263,16 @@ div#contenedor {
     
 }
 
+.bloque-index {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.bloque-index:hover{
+
+    transform: translate(2px, -4px);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
+}
 
 @media (max-width: 720px) {
     
@@ -332,6 +342,20 @@ div#contenedor {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+
+.game-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+     transform-style: preserve-3d;
+}
+
+.game-card:hover{
+
+    transform: rotateY(10deg) translate(2px, -4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
 }
 
 .game-card .game_title{
@@ -418,10 +442,11 @@ div#game_list {
 }
 
 .juego_info {
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     width: 25%;
     /*float: left;*/
     margin: auto;
-    border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
     text-align: center;
     border-radius: 5px;
@@ -434,17 +459,26 @@ div#game_list {
     object-fit: cover;
 }
 
+
+
 .juego_info2 {
     width: 68%;
     /*float: right;*/
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
-    border-radius: 5px;
 }
 .juego_info2 p, li, button{
     margin-left : 10px;
 }
 
+
+.juego_info2 img{
+    width: 60px;
+    margin-left: 25px;
+}
+ 
 
 @media (max-width: 720px) {
     .juego_info_superior {
@@ -462,25 +496,64 @@ div#game_list {
     }
 }
 
+
 .juego_info3 {
     width: 100%;
     /*float: left;*/
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     margin: auto;
     border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
     margin-top: 20px;
-    border-radius: 5px;
 }
 
 .juego_info3 h3{
     text-align: center;
 }
- 
+
+.shop_info{
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    margin-top: 10px;
+}
+
+.shop_info1 {
+    width: 20%;
+    margin-left: 2%;
+}
+
+
+.shop_info1 img{
+    width: 100%;
+    
+    transform: translateY(-4px);
+}
+
+.shop_info2 {
+    width: 50%;
+    margin-left:
+     15%;
+}
+.shop_logo {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shop_logo:hover{
+
+    transform: translate(2px, -4px);
+    /*transform: translateY(-4px);
+    transform: translateX(2px);*/
+}
+
 .review_juego{
     width: 70%;
-    background-color: #ffffff;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     align-items: center;
-    border: 1px solid rgb(87, 69, 79);
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 15%;
@@ -565,17 +638,20 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
 }
 
 .forum-group {
     background: white;
     padding: 15px;
     border-radius: 8px;
-    width: 80%;
+    width: 90%;
     max-width: 600px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: left;
+    contain: content;
+    margin: 10px;
+    position: relative;
+    z-index: 30;
 }
 
 
@@ -587,17 +663,20 @@ h1 {
     text-align: center;
 }
 .buttons-page button{
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
     margin-left : 10px;
-    font-size: 18px;
     cursor: pointer;
     color: #fff;
-    background-color: #9b4ff3;
-    border-radius: 15px;
+    background-color: #007bff;
+    border: none;
+    
     
 }
 
 .buttons-page button:hover{
-    background-color: #6112bd
+    background-color: #0056b3
 }
 
 .buttons-page button:active{
@@ -665,6 +744,93 @@ header::before {
         align-self: right;
         margin: 0;
 }
+.dialogo {
+	position: fixed;
+	top: 50%;
+	left: 40%;
+  	margin-top: -100px;
+	margin-left: -200px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    z-index: 1000;
+}
+
+@media (max-width: 550px) {
+    .dialogo {
+        left: 50%;
+    }
+}
+
+
+@media (max-width: 450px) {
+    .dialogo {
+        left: 55%;
+    }
+}
+
+@media (max-width: 400px) {
+    .dialogo {
+        left: 60%;
+    }
+}
+@media (max-width: 350px) {
+    .dialogo {
+        left: 75%;
+    }
+}
+
+.oscurecer.is-active {
+    display: block;
+}
+.oscurecer {
+    display: none;
+    position: fixed;
+    width: 100%;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.8);
+	transition: opacity 200ms;
+    z-index: 999;
+}
+.close-reply-modal, .close-delete-modal, .close-edit-modal ,.delete-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 3px;
+}
+.reply-button, .edit-button ,.delete-sumit-button {
+    background-color: #4CAF50;
+    float: right;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 3px;
+}
+.input-modal {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
     /* Cosas para los géneros en la creación de un juego */
 .genre_list_grid{
     display: grid;
@@ -695,6 +861,103 @@ header::before {
     border-radius: 5px;
     background-color:rgb(113, 35, 87);
 }
+
+/* lista de guias*/
+.guide-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.guide-item {
+    background-color: #dccfdf;            /* color de tarjeta */
+    border-radius: 12px;                  /* esquinas redondeadas */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* sombra */
+    padding: 16px;                        /* relleno interno */
+    width: calc(33.333% - 2rem);          /* tres columnas con gap */
+    min-width: 240px;                     /* ancho mínimo */
+    transition: transform 0.2s ease;
+}
+
+.guide-item:hover {
+    transform: translateY(-4px);
+}
+
+.guide-link {
+    text-decoration: none;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.guide-type {
+    font-weight: bold;
+    font-size: 0.875rem;
+    color: #9b4ff3;
+}
+
+.guide-title {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: #333333;
+}
+
+.guide-date {
+    font-size: 0.875rem;
+    color: #333333;
+}
+
+/*para que sea responsive*/
+@media (max-width: 900px) {
+    .guide-item {
+        width: calc(50% - 2rem);
+    }
+}
+@media (max-width: 600px) {
+    .guide-item {
+        width: 100%;
+    }
+}
+
+
+.full-guide {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 16px;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.full-guide-title {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color: #333333;
+}
+
+.full-guide-meta {
+    font-size: 0.875rem;
+    color: #333333;
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.full-guide-meta span + span::before {
+    content: "|";
+    margin: 0 8px;
+    color: rgba(0,0,0,0.1);
+}
+
+.full-guide-content {
+    line-height: 1.6;
+    color: #333333;
+}
 /*Profile user*/
 .display_profile {
     background-color: #dccfdf;
@@ -723,4 +986,29 @@ header::before {
     object-fit: cover;
     border: 2px solid #4d0b5e;
     margin-bottom: 15px;
+}
+
+/* Cosas de classList*/
+.red {
+    color: red;
+}
+.green {
+    color: green;
+}
+.visible{
+    visibility: visible;
+    max-height: 10000px;
+}
+.hidden{
+    visibility: hidden;
+    max-height: 0px;
+}
+.companies_list{
+    display: inline-flex;
+    margin-left: 10px;
+}
+
+.company_list form {
+    display: inline;
+    margin-left: 1px;
 }
