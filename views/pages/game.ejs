@@ -47,7 +47,11 @@
 <% function showGameInfo2(){ %>
     <p><u>Descripción del juego</u>:  <%= game.description %></p>
     <%- include('showGameCompanies') %>
-    <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
+   
+    <form action="/user_game/add/<%= game.id %> " method="POST" style="display:inline;">
+    <p><u>Añadir a tu lista personal: </u>
+    <button> Añadir</button></p>    
+    </form> 
 
     <form action="/games/addShop/<%= game.id %>" method="GET" style="display:inline;">
     <p>Disponible en las siguientes tiendas :

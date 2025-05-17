@@ -1,6 +1,20 @@
 
 import { User } from "../users/User.js";
 import {Guides}  from "../guides/Guides.js";
+import { UserGame } from "../game_user/GameUser.js";
+
+export function viewLibrary(req,res)
+{
+    const content='pages/homeUser';
+    const listGa=UserGame.getbyUserID(req.session.UserID);;
+    const listGui=Guides.getAllGuidesbyUser(req.session.UserID);
+    res.render('page',{
+        contenido: content,
+        listGames:listGa,
+        listGuides:listGui
+
+    });
+}
 
 export function viewContenidoNormal(req, res) {
     let contenido=null;
