@@ -160,7 +160,7 @@ export function addShopDo(req, res) {
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
     const genres = Genre.getGameGenres(game);
     const threadList = Forum.getThreadsByGame(id);
-
+    const guidesListByGameId = Guides.getGuideByGame(id);
     const contenido = 'pages/game';
 
     const developerCompany = Company.getGameCompanies(game,'developer');
@@ -173,8 +173,10 @@ export function addShopDo(req, res) {
         reviewList: reviewListByGameId,
         developerCompany: developerCompany,
         publisherCompany: publisherCompany,
+        guidesList: guidesListByGameId,
         genreList: genres,
-        threadList: threadList
+        threadList: threadList,
+        game_id: id
     });
 }
 
@@ -192,6 +194,7 @@ export function viewAddGameBD(req, res) {
 
 export function doAddGameBD(req, res) {
 
+
     const result = validationResult(req);
 
     const title = req.body.title.trim();
@@ -203,9 +206,12 @@ export function doAddGameBD(req, res) {
     if (!result.isEmpty()) {
         const errores = result.mapped();
         const datos = matchedData(req);
+         let genreList = Genre.getAllGenres();
         return render(req, res, 'pages/addGameForm/addGamePage', {
             datos,
             errores,
+            error: "Datos erroneos",
+            genreList: genreList,
             info: {
                 title: title,
                 description: description,
@@ -217,23 +223,18 @@ export function doAddGameBD(req, res) {
         });
     }
 
-
     try {
         const game = new Game(title, description, rating, favNumber, url_image, company_id, null);
 
         const game2 = Game.insert(game);
+         let genreList = Genre.getAllGenres();
 
         render(req, res, 'pages/addGameForm/addGamePage', {
             errores: {},
             exito: 'Juego insertado con exito en la Base de Datos',
-            info: {
-                title: title,
-                description: description,
-                rating: rating,
-                favNumber: favNumber,
-                url_image: url_image,
-                company_id: company_id
-            }
+            genreList: genreList,
+            info: {},
+            game : game2,
         });
 
 
@@ -323,15 +324,22 @@ export function doModifyGameBD(req, res) {
         const reviewListByGameId = Review.getAllReviewsByGameId(gameId);
         const genres = Genre.getGameGenres(game2);
         const threadList = Forum.getThreadsByGame(gameId);
-
-
+        const shopList = Shop.getShopListByGameId(gameId);
+        const developerCompany = Company.getGameCompanies(game2,'developer');
+        const publisherCompany = Company.getGameCompanies(game2,'publisher');
+         const guidesListByGameId = Guides.getGuideByGame(gameId);
         render(req, res, 'pages/game', {
             errores: {},
             exito: 'Juego modificado con exito en la Base de Datos',
             game: game2,
             reviewList: reviewListByGameId,
             genreList: genres,
-            threadList: threadList
+            threadList: threadList,
+             shopList: shopList,
+            developerCompany: developerCompany,
+            publisherCompany: publisherCompany,
+             guidesList: guidesListByGameId,
+             game_id: gameId
         });
 
 
