@@ -48,7 +48,7 @@
     <p><u>Descripción del juego</u>:  <%= game.description %></p>
     <%- include('showGameCompanies') %>
    
-    <form action="/user_game/add/<%= game.id %> " method="POST" style="display:inline;">
+    <form action="/game_user/add/<%= game.id %>" method="POST" style="display:inline;">
     <p><u>Añadir a tu lista personal: </u>
     <button> Añadir</button></p>    
     </form> 

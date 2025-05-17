@@ -7,7 +7,7 @@ import { UserGame } from './GameUser.js';
 export function addFav(req,res)
 {
     const game= req.params.game;
-    const name= re1.session.UserID;
+    const name= req.session.UserID;
     UserGame.newUserGame(name,game);
      res.redirect(req.get('referer') || '/');
 }
