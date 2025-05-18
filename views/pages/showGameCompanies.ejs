@@ -43,13 +43,18 @@
 
     <div id = "dropdown_admin_company" class = "dropdown_admin_company hidden">
     <form id="filters" action="/companies/addCompany/<%=game.id%>" method="POST">
-        <p>
+    <p>
         <label>Nombre de la compañía:</label>
         <input type="text" name="company_name" required>
-        <input type="checkbox" name="is_developer" value="false"> Developer
-        <input type="checkbox" name="is_publisher" value="false"> Publisher
-        <button type="submit"">Añadir</button>
-        </p>
+        
+        <input type="hidden" name="is_developer" value="false">
+        <input type="checkbox" name="is_developer" value = "true"> Developer
+
+        <input type="hidden" name="is_publisher" value="false">
+        <input type="checkbox" name="is_publisher" value = "true"> Publisher
+
+        <button type="submit">Añadir</button>
+    </p>
     </form>
     </div>
     <%}%>

@@ -3,7 +3,6 @@ import {Company} from "./Company.js";
 import {Game} from "../games/Game.js";
 import { validationResult, matchedData } from 'express-validator';
 export function deleteCompanyGame(req, res) {
-    let i = 1;
     const result = validationResult(req);
 
     if (!result.isEmpty()) {
@@ -26,28 +25,24 @@ export function deleteCompanyGame(req, res) {
 
     res.redirect('/games/' + game_id);
 }
+function normalizeBool(value){
+  if(Array.isArray(value)) return value.includes('true');
+  else return value === 'true';
+}
 export function doAddCompanyBD(req, res) {
   const result = validationResult(req);
   if (!result.isEmpty()) {
     const errores = result.array();
     const datos = req.body;
     const game_id = req.params.gameId;
-
-    return res.status(400).render('pages/addCompanyPage', {
-      datos,
-      errores,
-      info: {
-        company_name: req.body.company_name,
-        is_developer: req.body.is_developer,
-        is_publisher: req.body.is_publisher,
-        game_id
-      }
-    });
+    return res.status(400).json({ errores: result.array() });
   }
 
   const company_name = req.body.company_name.trim();
-  const is_developer = req.body.is_developer === 'true' || req.body.is_developer === true;
-  const is_publisher = req.body.is_publisher === 'true' || req.body.is_publisher === true;
+
+  const is_developer = normalizeBool(req.body.is_developer);
+  const is_publisher = normalizeBool(req.body.is_publisher);
+
   const game_id = req.params.gameId;
 
   let company = new Company(null, company_name);
